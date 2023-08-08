@@ -68,6 +68,8 @@ Im ersten Schritt müsste eine Masse (zwischen 15k und 500k) packages aus Github
 -   https://laraverse.test/packagist-search/tallui - basic api call done - create and write to packagist-cache-table
 -   do same for npm
 -   create a merge-data-controller that reads from all three tables and merges to item-table, keep track on changes then
+-   curated means there are changes locally, that should not be overwritten by the merge
+-   prepare your first output
 
 ## Github Data
 
