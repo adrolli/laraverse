@@ -56,9 +56,9 @@ Im ersten Schritt müsste eine Masse (zwischen 15k und 500k) packages aus Github
 ### Todo
 
 -   Github API - try https://github.com/GrahamCampbell/Laravel-GitHub - or do it as GPT
--   Packagist API - https://packagist.org/search.json?q=laravel, see https://packagist.org/apidoc
+-   Packagist API - https://packagist.org/search.json?q=laravel, see https://packagist.org/apidoc oder am besten alles: https://packagist.org/packages/list.json
 -   Packalyst RSS - https://packalyst.com/resources (new and requested)
--   NPM - https://api-docs.npms.io/ or directly https://stackoverflow.com/questions/34071621/query-npmjs-registry-via-api
+-   NPM - https://api-docs.npms.io/ or directly https://stackoverflow.com/questions/34071621/query-npmjs-registry-via-api ... step by step https://www.edoardoscibona.com/exploring-the-npm-registry-api
 -   Laracasts, Codecourse, Laravel-Daily, Laravel-News, YT, VS Code Marketplace and many more waiting ...
 
 ## Devlog

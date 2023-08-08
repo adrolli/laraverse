@@ -52,4 +52,4 @@ Route::prefix('/')
     });
 
 Route::get('/github-search/{query}', 'App\Http\Controllers\ConsumeGitHubController@searchRepositories');
-Route::get('/packagist-search/{query}', 'App\Http\Controllers\ConsumePackagistController@searchRepositories');
+Route::get('/packagist-search', 'App\Http\Controllers\ConsumePackagistController@searchRepositories');

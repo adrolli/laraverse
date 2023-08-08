@@ -4,12 +4,12 @@ namespace App\Http\Controllers;
 
 use App\Models\Item;
 use GuzzleHttp\Client;
-use Illuminate\Http\Request;
 
 class ConsumePackagistController extends Controller
 {
-    public function searchRepositories($query)
+    public function searchRepositories()
     {
+        $query = 'laravel';
         $packagistApiUrl = 'https://packagist.org/search.json';
         $client = new Client();
 
@@ -25,12 +25,13 @@ class ConsumePackagistController extends Controller
 
             $data = json_decode($response->getBody(), true);
 
+            dd($data);
+
             // Process the data or return it to the view...
             $repositories = $data['items'];
             $processedData = [];
 
             /*
-                        dd($data);
 
             "name" => "usetall/tallui-web-components"
             "description" => "This is my package tallui-web-components"
@@ -38,8 +39,7 @@ class ConsumePackagistController extends Controller
             "repository" => "https://github.com/usetall/tallui-web-components"
             "downloads" => 2
             "favers" => 4
-            */‚
-
+            */
 
             foreach ($repositories as $repository) {
                 // Fetch detailed repository information
@@ -97,7 +97,6 @@ class ConsumePackagistController extends Controller
                 Item::create($itemData);
 
                 return response()->json(['message' => 'Item inserted successfully']);
-
 
                 echo "Repository: {$repoDetails['full_name']}<br>";
                 echo "Owner: {$repoDetails['owner']['login']}<br>";
