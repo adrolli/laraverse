@@ -40,6 +40,7 @@ Im ersten Schritt müsste eine Masse (zwischen 15k und 500k) packages aus Github
 -   eigene Recherche (z. B. von Filament und anderen größeren Laravel-Plattformen)
 -   Aus der Codebase (v. a. composer.json und package.json)
 -   User-driven, v. a. Rating für Sortierung
+-   Blogs (Scraping mit Guzzle und )
 
 ### Wettbewerb
 
@@ -63,13 +64,13 @@ Im ersten Schritt müsste eine Masse (zwischen 15k und 500k) packages aus Github
 
 ## Devlog
 
--   Vemto and Filament 2 platform ready
--   https://laraverse.test/github-search/laravel - basic api call done - create and write to github-cache-table
--   https://laraverse.test/packagist-search/tallui - basic api call done - create and write to packagist-cache-table
--   do same for npm
--   create a merge-data-controller that reads from all three tables and merges to item-table, keep track on changes then
--   curated means there are changes locally, that should not be overwritten by the merge
--   prepare your first output
+-   [x] Vemto and Filament 2 platform ready
+-   [ ] https://laraverse.test/github-search/laravel - basic api call done - create and write to github-cache-table
+-   [ ] https://laraverse.test/packagist-search/tallui - basic api call done - create and write to packagist-cache-table
+-   [ ] do same for npm
+-   [ ] create a merge-data-controller that reads from all three tables and merges to item-table, keep track on changes then
+-   [ ] curated means - there are changes locally, that should not be overwritten by the merge - https://laraverse.test/admin/platforms should be set as first attempt
+-   [ ] prepare your first output
 
 ## Github Data
 

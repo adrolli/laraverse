@@ -59,6 +59,9 @@
                                     @lang('crud.items.inputs.description')
                                 </th>
                                 <th class="px-4 py-3 text-left">
+                                    @lang('crud.items.inputs.latest_version')
+                                </th>
+                                <th class="px-4 py-3 text-left">
                                     @lang('crud.items.inputs.vendor_id')
                                 </th>
                                 <th class="px-4 py-3 text-left">
@@ -78,12 +81,6 @@
                                 </th>
                                 <th class="px-4 py-3 text-right">
                                     @lang('crud.items.inputs.github_stars')
-                                </th>
-                                <th class="px-4 py-3 text-right">
-                                    @lang('crud.items.inputs.github_forks')
-                                </th>
-                                <th class="px-4 py-3 text-left">
-                                    @lang('crud.items.inputs.github_json')
                                 </th>
                                 <th class="px-4 py-3 text-left">
                                     @lang('crud.items.inputs.packagist_url')
@@ -106,6 +103,15 @@
                                 <th class="px-4 py-3 text-right">
                                     @lang('crud.items.inputs.github_maintainers')
                                 </th>
+                                <th class="px-4 py-3 text-left">
+                                    @lang('crud.items.inputs.github_repo_id')
+                                </th>
+                                <th class="px-4 py-3 text-left">
+                                    @lang('crud.items.inputs.npm_package_id')
+                                </th>
+                                <th class="px-4 py-3 text-left">
+                                    @lang('crud.items.inputs.packagist_package_id')
+                                </th>
                                 <th></th>
                             </tr>
                         </thead>
@@ -120,6 +126,9 @@
                                 </td>
                                 <td class="px-4 py-3 text-left">
                                     {{ $item->description ?? '-' }}
+                                </td>
+                                <td class="px-4 py-3 text-left">
+                                    {{ $item->latest_version ?? '-' }}
                                 </td>
                                 <td class="px-4 py-3 text-left">
                                     {{ optional($item->vendor)->title ?? '-' }}
@@ -142,14 +151,6 @@
                                 <td class="px-4 py-3 text-right">
                                     {{ $item->github_stars ?? '-' }}
                                 </td>
-                                <td class="px-4 py-3 text-right">
-                                    {{ $item->github_forks ?? '-' }}
-                                </td>
-                                <td class="px-4 py-3 text-right">
-                                    <pre>
-{{ json_encode($item->github_json) ?? '-' }}</pre
-                                    >
-                                </td>
                                 <td class="px-4 py-3 text-left">
                                     {{ $item->packagist_url ?? '-' }}
                                 </td>
@@ -170,6 +171,18 @@
                                 </td>
                                 <td class="px-4 py-3 text-right">
                                     {{ $item->github_maintainers ?? '-' }}
+                                </td>
+                                <td class="px-4 py-3 text-left">
+                                    {{ optional($item->githubRepo)->title ?? '-'
+                                    }}
+                                </td>
+                                <td class="px-4 py-3 text-left">
+                                    {{ optional($item->npmPackage)->title ?? '-'
+                                    }}
+                                </td>
+                                <td class="px-4 py-3 text-left">
+                                    {{ optional($item->packagistPackage)->title
+                                    ?? '-' }}
                                 </td>
                                 <td
                                     class="px-4 py-3 text-center"
@@ -236,7 +249,7 @@
                             </tr>
                             @empty
                             <tr>
-                                <td colspan="20">
+                                <td colspan="22">
                                     @lang('crud.common.no_items_found')
                                 </td>
                             </tr>
@@ -244,7 +257,7 @@
                         </tbody>
                         <tfoot>
                             <tr>
-                                <td colspan="20">
+                                <td colspan="22">
                                     <div class="mt-10 px-4">
                                         {!! $items->render() !!}
                                     </div>

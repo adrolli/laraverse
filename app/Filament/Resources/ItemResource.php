@@ -8,7 +8,6 @@ use Filament\Resources\{Form, Table, Resource};
 use Filament\Forms\Components\Grid;
 use Filament\Forms\Components\Card;
 use Filament\Forms\Components\Select;
-use Filament\Forms\Components\KeyValue;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\RichEditor;
 use Filament\Tables\Filters\SelectFilter;
@@ -58,6 +57,16 @@ class ItemResource extends Resource
                             'lg' => 12,
                         ]),
 
+                    TextInput::make('latest_version')
+                        ->rules(['max:255', 'string'])
+                        ->required()
+                        ->placeholder('Latest Version')
+                        ->columnSpan([
+                            'default' => 12,
+                            'md' => 12,
+                            'lg' => 12,
+                        ]),
+
                     Select::make('vendor_id')
                         ->rules(['exists:vendors,id'])
                         ->required()
@@ -84,7 +93,7 @@ class ItemResource extends Resource
 
                     TextInput::make('website')
                         ->rules(['max:255', 'string'])
-                        ->required()
+                        ->nullable()
                         ->placeholder('Website')
                         ->columnSpan([
                             'default' => 12,
@@ -94,7 +103,7 @@ class ItemResource extends Resource
 
                     TextInput::make('rating')
                         ->rules(['max:255', 'string'])
-                        ->required()
+                        ->nullable()
                         ->placeholder('Rating')
                         ->columnSpan([
                             'default' => 12,
@@ -104,7 +113,7 @@ class ItemResource extends Resource
 
                     TextInput::make('health')
                         ->rules(['max:255', 'string'])
-                        ->required()
+                        ->nullable()
                         ->placeholder('Health')
                         ->columnSpan([
                             'default' => 12,
@@ -114,7 +123,7 @@ class ItemResource extends Resource
 
                     TextInput::make('github_url')
                         ->rules(['max:255', 'string'])
-                        ->required()
+                        ->nullable()
                         ->placeholder('Github Url')
                         ->columnSpan([
                             'default' => 12,
@@ -124,7 +133,7 @@ class ItemResource extends Resource
 
                     TextInput::make('github_stars')
                         ->rules(['numeric'])
-                        ->required()
+                        ->nullable()
                         ->numeric()
                         ->placeholder('Github Stars')
                         ->columnSpan([
@@ -133,29 +142,9 @@ class ItemResource extends Resource
                             'lg' => 12,
                         ]),
 
-                    TextInput::make('github_forks')
-                        ->rules(['numeric'])
-                        ->required()
-                        ->numeric()
-                        ->placeholder('Github Forks')
-                        ->columnSpan([
-                            'default' => 12,
-                            'md' => 12,
-                            'lg' => 12,
-                        ]),
-
-                    KeyValue::make('github_json')
-                        ->required()
-                        ->required()
-                        ->columnSpan([
-                            'default' => 12,
-                            'md' => 12,
-                            'lg' => 12,
-                        ]),
-
                     TextInput::make('packagist_url')
                         ->rules(['max:255', 'string'])
-                        ->required()
+                        ->nullable()
                         ->placeholder('Packagist Url')
                         ->columnSpan([
                             'default' => 12,
@@ -165,7 +154,7 @@ class ItemResource extends Resource
 
                     TextInput::make('packagist_name')
                         ->rules(['max:255', 'string'])
-                        ->required()
+                        ->nullable()
                         ->placeholder('Packagist Name')
                         ->columnSpan([
                             'default' => 12,
@@ -175,7 +164,7 @@ class ItemResource extends Resource
 
                     TextInput::make('packagist_description')
                         ->rules(['max:255', 'string'])
-                        ->required()
+                        ->nullable()
                         ->placeholder('Packagist Description')
                         ->columnSpan([
                             'default' => 12,
@@ -185,7 +174,7 @@ class ItemResource extends Resource
 
                     TextInput::make('packagist_downloads')
                         ->rules(['numeric'])
-                        ->required()
+                        ->nullable()
                         ->numeric()
                         ->placeholder('Packagist Downloads')
                         ->columnSpan([
@@ -196,7 +185,7 @@ class ItemResource extends Resource
 
                     TextInput::make('packagist_favers')
                         ->rules(['numeric'])
-                        ->required()
+                        ->nullable()
                         ->numeric()
                         ->placeholder('Packagist Favers')
                         ->columnSpan([
@@ -207,7 +196,7 @@ class ItemResource extends Resource
 
                     TextInput::make('npm_url')
                         ->rules(['max:255', 'string'])
-                        ->required()
+                        ->nullable()
                         ->placeholder('Npm Url')
                         ->columnSpan([
                             'default' => 12,
@@ -217,9 +206,45 @@ class ItemResource extends Resource
 
                     TextInput::make('github_maintainers')
                         ->rules(['numeric'])
-                        ->required()
+                        ->nullable()
                         ->numeric()
                         ->placeholder('Github Maintainers')
+                        ->columnSpan([
+                            'default' => 12,
+                            'md' => 12,
+                            'lg' => 12,
+                        ]),
+
+                    Select::make('github_repo_id')
+                        ->rules(['exists:github_repos,id'])
+                        ->nullable()
+                        ->relationship('githubRepo', 'title')
+                        ->searchable()
+                        ->placeholder('Github Repo')
+                        ->columnSpan([
+                            'default' => 12,
+                            'md' => 12,
+                            'lg' => 12,
+                        ]),
+
+                    Select::make('npm_package_id')
+                        ->rules(['exists:npm_packages,id'])
+                        ->nullable()
+                        ->relationship('npmPackage', 'title')
+                        ->searchable()
+                        ->placeholder('Npm Package')
+                        ->columnSpan([
+                            'default' => 12,
+                            'md' => 12,
+                            'lg' => 12,
+                        ]),
+
+                    Select::make('packagist_package_id')
+                        ->rules(['exists:packagist_packages,id'])
+                        ->nullable()
+                        ->relationship('packagistPackage', 'title')
+                        ->searchable()
+                        ->placeholder('Packagist Package')
                         ->columnSpan([
                             'default' => 12,
                             'md' => 12,
@@ -247,6 +272,10 @@ class ItemResource extends Resource
                     ->toggleable()
                     ->searchable()
                     ->limit(50),
+                Tables\Columns\TextColumn::make('latest_version')
+                    ->toggleable()
+                    ->searchable(true, null, true)
+                    ->limit(50),
                 Tables\Columns\TextColumn::make('vendor.title')
                     ->toggleable()
                     ->limit(50),
@@ -270,9 +299,6 @@ class ItemResource extends Resource
                     ->searchable(true, null, true)
                     ->limit(50),
                 Tables\Columns\TextColumn::make('github_stars')
-                    ->toggleable()
-                    ->searchable(true, null, true),
-                Tables\Columns\TextColumn::make('github_forks')
                     ->toggleable()
                     ->searchable(true, null, true),
                 Tables\Columns\TextColumn::make('packagist_url')
@@ -300,6 +326,15 @@ class ItemResource extends Resource
                 Tables\Columns\TextColumn::make('github_maintainers')
                     ->toggleable()
                     ->searchable(true, null, true),
+                Tables\Columns\TextColumn::make('githubRepo.title')
+                    ->toggleable()
+                    ->limit(50),
+                Tables\Columns\TextColumn::make('npmPackage.title')
+                    ->toggleable()
+                    ->limit(50),
+                Tables\Columns\TextColumn::make('packagistPackage.title')
+                    ->toggleable()
+                    ->limit(50),
             ])
             ->filters([
                 DateRangeFilter::make('created_at'),
@@ -315,13 +350,30 @@ class ItemResource extends Resource
                     ->indicator('Type')
                     ->multiple()
                     ->label('Type'),
+
+                SelectFilter::make('github_repo_id')
+                    ->relationship('githubRepo', 'title')
+                    ->indicator('GithubRepo')
+                    ->multiple()
+                    ->label('GithubRepo'),
+
+                SelectFilter::make('npm_package_id')
+                    ->relationship('npmPackage', 'title')
+                    ->indicator('NpmPackage')
+                    ->multiple()
+                    ->label('NpmPackage'),
+
+                SelectFilter::make('packagist_package_id')
+                    ->relationship('packagistPackage', 'title')
+                    ->indicator('PackagistPackage')
+                    ->multiple()
+                    ->label('PackagistPackage'),
             ]);
     }
 
     public static function getRelations(): array
     {
         return [
-            ItemResource\RelationManagers\VersionsRelationManager::class,
             ItemResource\RelationManagers\PlatformsRelationManager::class,
             ItemResource\RelationManagers\TagsRelationManager::class,
             ItemResource\RelationManagers\CategoriesRelationManager::class,

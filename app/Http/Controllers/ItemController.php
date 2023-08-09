@@ -6,7 +6,10 @@ use App\Models\Item;
 use App\Models\Type;
 use App\Models\Vendor;
 use Illuminate\View\View;
+use App\Models\GithubRepo;
+use App\Models\NpmPackage;
 use Illuminate\Http\Request;
+use App\Models\PackagistPackage;
 use Illuminate\Http\RedirectResponse;
 use App\Http\Requests\ItemStoreRequest;
 use App\Http\Requests\ItemUpdateRequest;
@@ -39,8 +42,20 @@ class ItemController extends Controller
 
         $vendors = Vendor::pluck('title', 'id');
         $types = Type::pluck('title', 'id');
+        $githubRepos = GithubRepo::pluck('title', 'id');
+        $npmPackages = NpmPackage::pluck('title', 'id');
+        $packagistPackages = PackagistPackage::pluck('title', 'id');
 
-        return view('app.items.create', compact('vendors', 'types'));
+        return view(
+            'app.items.create',
+            compact(
+                'vendors',
+                'types',
+                'githubRepos',
+                'npmPackages',
+                'packagistPackages'
+            )
+        );
     }
 
     /**
@@ -51,10 +66,6 @@ class ItemController extends Controller
         $this->authorize('create', Item::class);
 
         $validated = $request->validated();
-        $validated['github_json'] = json_decode(
-            $validated['github_json'],
-            true
-        );
 
         $item = Item::create($validated);
 
@@ -82,8 +93,21 @@ class ItemController extends Controller
 
         $vendors = Vendor::pluck('title', 'id');
         $types = Type::pluck('title', 'id');
+        $githubRepos = GithubRepo::pluck('title', 'id');
+        $npmPackages = NpmPackage::pluck('title', 'id');
+        $packagistPackages = PackagistPackage::pluck('title', 'id');
 
-        return view('app.items.edit', compact('item', 'vendors', 'types'));
+        return view(
+            'app.items.edit',
+            compact(
+                'item',
+                'vendors',
+                'types',
+                'githubRepos',
+                'npmPackages',
+                'packagistPackages'
+            )
+        );
     }
 
     /**
@@ -96,10 +120,6 @@ class ItemController extends Controller
         $this->authorize('update', $item);
 
         $validated = $request->validated();
-        $validated['github_json'] = json_decode(
-            $validated['github_json'],
-            true
-        );
 
         $item->update($validated);
 

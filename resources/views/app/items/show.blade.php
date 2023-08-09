@@ -35,6 +35,12 @@
                     </div>
                     <div class="mb-4">
                         <h5 class="font-medium text-gray-700">
+                            @lang('crud.items.inputs.latest_version')
+                        </h5>
+                        <span>{{ $item->latest_version ?? '-' }}</span>
+                    </div>
+                    <div class="mb-4">
+                        <h5 class="font-medium text-gray-700">
                             @lang('crud.items.inputs.vendor_id')
                         </h5>
                         <span>{{ optional($item->vendor)->title ?? '-' }}</span>
@@ -77,18 +83,6 @@
                     </div>
                     <div class="mb-4">
                         <h5 class="font-medium text-gray-700">
-                            @lang('crud.items.inputs.github_forks')
-                        </h5>
-                        <span>{{ $item->github_forks ?? '-' }}</span>
-                    </div>
-                    <div class="mb-4">
-                        <h5 class="font-medium text-gray-700">
-                            @lang('crud.items.inputs.github_json')
-                        </h5>
-                        <pre>{{ json_encode($item->github_json) ?? '-' }}</pre>
-                    </div>
-                    <div class="mb-4">
-                        <h5 class="font-medium text-gray-700">
                             @lang('crud.items.inputs.packagist_url')
                         </h5>
                         <span>{{ $item->packagist_url ?? '-' }}</span>
@@ -128,6 +122,33 @@
                             @lang('crud.items.inputs.github_maintainers')
                         </h5>
                         <span>{{ $item->github_maintainers ?? '-' }}</span>
+                    </div>
+                    <div class="mb-4">
+                        <h5 class="font-medium text-gray-700">
+                            @lang('crud.items.inputs.github_repo_id')
+                        </h5>
+                        <span
+                            >{{ optional($item->githubRepo)->title ?? '-'
+                            }}</span
+                        >
+                    </div>
+                    <div class="mb-4">
+                        <h5 class="font-medium text-gray-700">
+                            @lang('crud.items.inputs.npm_package_id')
+                        </h5>
+                        <span
+                            >{{ optional($item->npmPackage)->title ?? '-'
+                            }}</span
+                        >
+                    </div>
+                    <div class="mb-4">
+                        <h5 class="font-medium text-gray-700">
+                            @lang('crud.items.inputs.packagist_package_id')
+                        </h5>
+                        <span
+                            >{{ optional($item->packagistPackage)->title ?? '-'
+                            }}</span
+                        >
                     </div>
                 </div>
 

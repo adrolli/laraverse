@@ -79,7 +79,7 @@ class StackResource extends Resource
                     Select::make('user_id')
                         ->rules(['exists:users,id'])
                         ->required()
-                        ->relationship('created_by', 'name')
+                        ->relationship('user', 'name')
                         ->searchable()
                         ->placeholder('Created By')
                         ->columnSpan([
@@ -115,7 +115,7 @@ class StackResource extends Resource
                 Tables\Columns\IconColumn::make('major')
                     ->toggleable()
                     ->boolean(),
-                Tables\Columns\TextColumn::make('createdBy.name')
+                Tables\Columns\TextColumn::make('user.name')
                     ->toggleable()
                     ->limit(50),
             ])
@@ -123,7 +123,7 @@ class StackResource extends Resource
                 DateRangeFilter::make('created_at'),
 
                 SelectFilter::make('user_id')
-                    ->relationship('created_by', 'name')
+                    ->relationship('user', 'name')
                     ->indicator('User')
                     ->multiple()
                     ->label('User'),

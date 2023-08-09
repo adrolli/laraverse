@@ -23,11 +23,6 @@
                         Categories
                         </x-dropdown-link>
                         @endcan
-                        @can('view-any', App\Models\Item::class)
-                        <x-dropdown-link href="{{ route('items.index') }}">
-                        Items
-                        </x-dropdown-link>
-                        @endcan
                         @can('view-any', App\Models\Platform::class)
                         <x-dropdown-link href="{{ route('platforms.index') }}">
                         Platforms
@@ -58,9 +53,39 @@
                         Vendors
                         </x-dropdown-link>
                         @endcan
-                        @can('view-any', App\Models\Version::class)
-                        <x-dropdown-link href="{{ route('versions.index') }}">
-                        Versions
+                        @can('view-any', App\Models\GithubOrganization::class)
+                        <x-dropdown-link href="{{ route('github-organizations.index') }}">
+                        Github Organizations
+                        </x-dropdown-link>
+                        @endcan
+                        @can('view-any', App\Models\GithubOwner::class)
+                        <x-dropdown-link href="{{ route('github-owners.index') }}">
+                        Github Owners
+                        </x-dropdown-link>
+                        @endcan
+                        @can('view-any', App\Models\GithubRepo::class)
+                        <x-dropdown-link href="{{ route('github-repos.index') }}">
+                        Github Repos
+                        </x-dropdown-link>
+                        @endcan
+                        @can('view-any', App\Models\GithubTag::class)
+                        <x-dropdown-link href="{{ route('github-tags.index') }}">
+                        Github Tags
+                        </x-dropdown-link>
+                        @endcan
+                        @can('view-any', App\Models\NpmPackage::class)
+                        <x-dropdown-link href="{{ route('npm-packages.index') }}">
+                        Npm Packages
+                        </x-dropdown-link>
+                        @endcan
+                        @can('view-any', App\Models\PackagistPackage::class)
+                        <x-dropdown-link href="{{ route('packagist-packages.index') }}">
+                        Packagist Packages
+                        </x-dropdown-link>
+                        @endcan
+                        @can('view-any', App\Models\Item::class)
+                        <x-dropdown-link href="{{ route('items.index') }}">
+                        Items
                         </x-dropdown-link>
                         @endcan
                 </x-nav-dropdown>
@@ -210,11 +235,6 @@
                 Categories
                 </x-responsive-nav-link>
                 @endcan
-                @can('view-any', App\Models\Item::class)
-                <x-responsive-nav-link href="{{ route('items.index') }}">
-                Items
-                </x-responsive-nav-link>
-                @endcan
                 @can('view-any', App\Models\Platform::class)
                 <x-responsive-nav-link href="{{ route('platforms.index') }}">
                 Platforms
@@ -245,9 +265,39 @@
                 Vendors
                 </x-responsive-nav-link>
                 @endcan
-                @can('view-any', App\Models\Version::class)
-                <x-responsive-nav-link href="{{ route('versions.index') }}">
-                Versions
+                @can('view-any', App\Models\GithubOrganization::class)
+                <x-responsive-nav-link href="{{ route('github-organizations.index') }}">
+                Github Organizations
+                </x-responsive-nav-link>
+                @endcan
+                @can('view-any', App\Models\GithubOwner::class)
+                <x-responsive-nav-link href="{{ route('github-owners.index') }}">
+                Github Owners
+                </x-responsive-nav-link>
+                @endcan
+                @can('view-any', App\Models\GithubRepo::class)
+                <x-responsive-nav-link href="{{ route('github-repos.index') }}">
+                Github Repos
+                </x-responsive-nav-link>
+                @endcan
+                @can('view-any', App\Models\GithubTag::class)
+                <x-responsive-nav-link href="{{ route('github-tags.index') }}">
+                Github Tags
+                </x-responsive-nav-link>
+                @endcan
+                @can('view-any', App\Models\NpmPackage::class)
+                <x-responsive-nav-link href="{{ route('npm-packages.index') }}">
+                Npm Packages
+                </x-responsive-nav-link>
+                @endcan
+                @can('view-any', App\Models\PackagistPackage::class)
+                <x-responsive-nav-link href="{{ route('packagist-packages.index') }}">
+                Packagist Packages
+                </x-responsive-nav-link>
+                @endcan
+                @can('view-any', App\Models\Item::class)
+                <x-responsive-nav-link href="{{ route('items.index') }}">
+                Items
                 </x-responsive-nav-link>
                 @endcan
 

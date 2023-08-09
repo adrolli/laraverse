@@ -89,8 +89,7 @@
                                     {{ $stack->major ?? '-' }}
                                 </td>
                                 <td class="px-4 py-3 text-left">
-                                    {{ optional($stack->created_by)->name ?? '-'
-                                    }}
+                                    {{ optional($stack->user)->name ?? '-' }}
                                 </td>
                                 <td
                                     class="px-4 py-3 text-center"

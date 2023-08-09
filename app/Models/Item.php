@@ -15,6 +15,7 @@ class Item extends Model
         'title',
         'slug',
         'description',
+        'latest_version',
         'vendor_id',
         'type_id',
         'website',
@@ -22,8 +23,6 @@ class Item extends Model
         'health',
         'github_url',
         'github_stars',
-        'github_forks',
-        'github_json',
         'packagist_url',
         'packagist_name',
         'packagist_description',
@@ -31,18 +30,12 @@ class Item extends Model
         'packagist_favers',
         'npm_url',
         'github_maintainers',
+        'github_repo_id',
+        'npm_package_id',
+        'packagist_package_id',
     ];
 
     protected $searchableFields = ['*'];
-
-    protected $casts = [
-        'github_json' => 'array',
-    ];
-
-    public function versions()
-    {
-        return $this->hasMany(Version::class);
-    }
 
     public function vendor()
     {
@@ -52,6 +45,21 @@ class Item extends Model
     public function type()
     {
         return $this->belongsTo(Type::class);
+    }
+
+    public function githubRepo()
+    {
+        return $this->belongsTo(GithubRepo::class);
+    }
+
+    public function npmPackage()
+    {
+        return $this->belongsTo(NpmPackage::class);
+    }
+
+    public function packagistPackage()
+    {
+        return $this->belongsTo(PackagistPackage::class);
     }
 
     public function platforms()

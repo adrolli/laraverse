@@ -35,6 +35,17 @@
     </x-inputs.group>
 
     <x-inputs.group class="w-full">
+        <x-inputs.text
+            name="latest_version"
+            label="Latest Version"
+            :value="old('latest_version', ($editing ? $item->latest_version : ''))"
+            maxlength="255"
+            placeholder="Latest Version"
+            required
+        ></x-inputs.text>
+    </x-inputs.group>
+
+    <x-inputs.group class="w-full">
         <x-inputs.select name="vendor_id" label="Vendor" required>
             @php $selected = old('vendor_id', ($editing ? $item->vendor_id : '')) @endphp
             <option disabled {{ empty($selected) ? 'selected' : '' }}>Please select the Vendor</option>
@@ -61,7 +72,6 @@
             :value="old('website', ($editing ? $item->website : ''))"
             maxlength="255"
             placeholder="Website"
-            required
         ></x-inputs.text>
     </x-inputs.group>
 
@@ -72,7 +82,6 @@
             :value="old('rating', ($editing ? $item->rating : ''))"
             maxlength="255"
             placeholder="Rating"
-            required
         ></x-inputs.text>
     </x-inputs.group>
 
@@ -83,7 +92,6 @@
             :value="old('health', ($editing ? $item->health : ''))"
             maxlength="255"
             placeholder="Health"
-            required
         ></x-inputs.text>
     </x-inputs.group>
 
@@ -94,7 +102,6 @@
             :value="old('github_url', ($editing ? $item->github_url : ''))"
             maxlength="255"
             placeholder="Github Url"
-            required
         ></x-inputs.text>
     </x-inputs.group>
 
@@ -105,30 +112,7 @@
             :value="old('github_stars', ($editing ? $item->github_stars : ''))"
             max="255"
             placeholder="Github Stars"
-            required
         ></x-inputs.number>
-    </x-inputs.group>
-
-    <x-inputs.group class="w-full">
-        <x-inputs.number
-            name="github_forks"
-            label="Github Forks"
-            :value="old('github_forks', ($editing ? $item->github_forks : ''))"
-            max="255"
-            placeholder="Github Forks"
-            required
-        ></x-inputs.number>
-    </x-inputs.group>
-
-    <x-inputs.group class="w-full">
-        <x-inputs.textarea
-            name="github_json"
-            label="Github Json"
-            maxlength="255"
-            required
-            >{{ old('github_json', ($editing ? json_encode($item->github_json) :
-            '')) }}</x-inputs.textarea
-        >
     </x-inputs.group>
 
     <x-inputs.group class="w-full">
@@ -138,7 +122,6 @@
             :value="old('packagist_url', ($editing ? $item->packagist_url : ''))"
             maxlength="255"
             placeholder="Packagist Url"
-            required
         ></x-inputs.text>
     </x-inputs.group>
 
@@ -149,7 +132,6 @@
             :value="old('packagist_name', ($editing ? $item->packagist_name : ''))"
             maxlength="255"
             placeholder="Packagist Name"
-            required
         ></x-inputs.text>
     </x-inputs.group>
 
@@ -160,7 +142,6 @@
             :value="old('packagist_description', ($editing ? $item->packagist_description : ''))"
             maxlength="255"
             placeholder="Packagist Description"
-            required
         ></x-inputs.text>
     </x-inputs.group>
 
@@ -171,7 +152,6 @@
             :value="old('packagist_downloads', ($editing ? $item->packagist_downloads : ''))"
             max="255"
             placeholder="Packagist Downloads"
-            required
         ></x-inputs.number>
     </x-inputs.group>
 
@@ -182,7 +162,6 @@
             :value="old('packagist_favers', ($editing ? $item->packagist_favers : ''))"
             max="255"
             placeholder="Packagist Favers"
-            required
         ></x-inputs.number>
     </x-inputs.group>
 
@@ -193,7 +172,6 @@
             :value="old('npm_url', ($editing ? $item->npm_url : ''))"
             maxlength="255"
             placeholder="Npm Url"
-            required
         ></x-inputs.text>
     </x-inputs.group>
 
@@ -204,7 +182,36 @@
             :value="old('github_maintainers', ($editing ? $item->github_maintainers : ''))"
             max="255"
             placeholder="Github Maintainers"
-            required
         ></x-inputs.number>
+    </x-inputs.group>
+
+    <x-inputs.group class="w-full">
+        <x-inputs.select name="github_repo_id" label="Github Repo">
+            @php $selected = old('github_repo_id', ($editing ? $item->github_repo_id : '')) @endphp
+            <option disabled {{ empty($selected) ? 'selected' : '' }}>Please select the Github Repo</option>
+            @foreach($githubRepos as $value => $label)
+            <option value="{{ $value }}" {{ $selected == $value ? 'selected' : '' }} >{{ $label }}</option>
+            @endforeach
+        </x-inputs.select>
+    </x-inputs.group>
+
+    <x-inputs.group class="w-full">
+        <x-inputs.select name="npm_package_id" label="Npm Package">
+            @php $selected = old('npm_package_id', ($editing ? $item->npm_package_id : '')) @endphp
+            <option disabled {{ empty($selected) ? 'selected' : '' }}>Please select the Npm Package</option>
+            @foreach($npmPackages as $value => $label)
+            <option value="{{ $value }}" {{ $selected == $value ? 'selected' : '' }} >{{ $label }}</option>
+            @endforeach
+        </x-inputs.select>
+    </x-inputs.group>
+
+    <x-inputs.group class="w-full">
+        <x-inputs.select name="packagist_package_id" label="Packagist Package">
+            @php $selected = old('packagist_package_id', ($editing ? $item->packagist_package_id : '')) @endphp
+            <option disabled {{ empty($selected) ? 'selected' : '' }}>Please select the Packagist Package</option>
+            @foreach($packagistPackages as $value => $label)
+            <option value="{{ $value }}" {{ $selected == $value ? 'selected' : '' }} >{{ $label }}</option>
+            @endforeach
+        </x-inputs.select>
     </x-inputs.group>
 </div>

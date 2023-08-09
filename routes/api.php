@@ -3,31 +3,41 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\TagController;
-use App\Http\Controllers\Api\ItemController;
 use App\Http\Controllers\Api\TypeController;
 use App\Http\Controllers\Api\UserController;
+use App\Http\Controllers\Api\ItemController;
 use App\Http\Controllers\Api\AuthController;
 use App\Http\Controllers\Api\RoleController;
 use App\Http\Controllers\Api\StackController;
 use App\Http\Controllers\Api\VendorController;
-use App\Http\Controllers\Api\VersionController;
 use App\Http\Controllers\Api\CategoryController;
-use App\Http\Controllers\Api\ItemTagsController;
 use App\Http\Controllers\Api\PlatformController;
 use App\Http\Controllers\Api\TagItemsController;
-use App\Http\Controllers\Api\ItemItemsController;
+use App\Http\Controllers\Api\ItemTagsController;
 use App\Http\Controllers\Api\TypeItemsController;
-use App\Http\Controllers\Api\ItemStacksController;
+use App\Http\Controllers\Api\GithubTagController;
+use App\Http\Controllers\Api\ItemItemsController;
 use App\Http\Controllers\Api\StackItemsController;
 use App\Http\Controllers\Api\UserStacksController;
+use App\Http\Controllers\Api\GithubRepoController;
+use App\Http\Controllers\Api\NpmPackageController;
+use App\Http\Controllers\Api\ItemStacksController;
 use App\Http\Controllers\Api\PermissionController;
 use App\Http\Controllers\Api\VendorItemsController;
-use App\Http\Controllers\Api\ItemVersionsController;
+use App\Http\Controllers\Api\GithubOwnerController;
 use App\Http\Controllers\Api\CategoryItemsController;
-use App\Http\Controllers\Api\ItemPlatformsController;
 use App\Http\Controllers\Api\PlatformItemsController;
+use App\Http\Controllers\Api\ItemPlatformsController;
 use App\Http\Controllers\Api\ItemCategoriesController;
-use App\Http\Controllers\Api\VersionVersionsController;
+use App\Http\Controllers\Api\GithubRepoItemsController;
+use App\Http\Controllers\Api\NpmPackageItemsController;
+use App\Http\Controllers\Api\PackagistPackageController;
+use App\Http\Controllers\Api\GithubOrganizationController;
+use App\Http\Controllers\Api\GithubRepoGithubTagsController;
+use App\Http\Controllers\Api\GithubTagGithubReposController;
+use App\Http\Controllers\Api\PackagistPackageItemsController;
+use App\Http\Controllers\Api\GithubOwnerGithubReposController;
+use App\Http\Controllers\Api\GithubOrganizationGithubReposController;
 
 /*
 |--------------------------------------------------------------------------
@@ -69,102 +79,6 @@ Route::name('api.')
             CategoryItemsController::class,
             'destroy',
         ])->name('categories.items.destroy');
-
-        Route::apiResource('items', ItemController::class);
-
-        // Item Versions
-        Route::get('/items/{item}/versions', [
-            ItemVersionsController::class,
-            'index',
-        ])->name('items.versions.index');
-        Route::post('/items/{item}/versions', [
-            ItemVersionsController::class,
-            'store',
-        ])->name('items.versions.store');
-
-        // Item Platforms
-        Route::get('/items/{item}/platforms', [
-            ItemPlatformsController::class,
-            'index',
-        ])->name('items.platforms.index');
-        Route::post('/items/{item}/platforms/{platform}', [
-            ItemPlatformsController::class,
-            'store',
-        ])->name('items.platforms.store');
-        Route::delete('/items/{item}/platforms/{platform}', [
-            ItemPlatformsController::class,
-            'destroy',
-        ])->name('items.platforms.destroy');
-
-        // Item Tags
-        Route::get('/items/{item}/tags', [
-            ItemTagsController::class,
-            'index',
-        ])->name('items.tags.index');
-        Route::post('/items/{item}/tags/{tag}', [
-            ItemTagsController::class,
-            'store',
-        ])->name('items.tags.store');
-        Route::delete('/items/{item}/tags/{tag}', [
-            ItemTagsController::class,
-            'destroy',
-        ])->name('items.tags.destroy');
-
-        // Item Categories
-        Route::get('/items/{item}/categories', [
-            ItemCategoriesController::class,
-            'index',
-        ])->name('items.categories.index');
-        Route::post('/items/{item}/categories/{category}', [
-            ItemCategoriesController::class,
-            'store',
-        ])->name('items.categories.store');
-        Route::delete('/items/{item}/categories/{category}', [
-            ItemCategoriesController::class,
-            'destroy',
-        ])->name('items.categories.destroy');
-
-        // Item Stacks
-        Route::get('/items/{item}/stacks', [
-            ItemStacksController::class,
-            'index',
-        ])->name('items.stacks.index');
-        Route::post('/items/{item}/stacks/{stack}', [
-            ItemStacksController::class,
-            'store',
-        ])->name('items.stacks.store');
-        Route::delete('/items/{item}/stacks/{stack}', [
-            ItemStacksController::class,
-            'destroy',
-        ])->name('items.stacks.destroy');
-
-        // Item Dependencies
-        Route::get('/items/{item}/items', [
-            ItemItemsController::class,
-            'index',
-        ])->name('items.items.index');
-        Route::post('/items/{item}/items/{item}', [
-            ItemItemsController::class,
-            'store',
-        ])->name('items.items.store');
-        Route::delete('/items/{item}/items/{item}', [
-            ItemItemsController::class,
-            'destroy',
-        ])->name('items.items.destroy');
-
-        // Item Items
-        Route::get('/items/{item}/items', [
-            ItemItemsController::class,
-            'index',
-        ])->name('items.items.index');
-        Route::post('/items/{item}/items/{item}', [
-            ItemItemsController::class,
-            'store',
-        ])->name('items.items.store');
-        Route::delete('/items/{item}/items/{item}', [
-            ItemItemsController::class,
-            'destroy',
-        ])->name('items.items.destroy');
 
         Route::apiResource('platforms', PlatformController::class);
 
@@ -250,33 +164,185 @@ Route::name('api.')
             'store',
         ])->name('vendors.items.store');
 
-        Route::apiResource('versions', VersionController::class);
+        Route::apiResource(
+            'github-organizations',
+            GithubOrganizationController::class
+        );
 
-        // Version Dependencies
-        Route::get('/versions/{version}/versions', [
-            VersionVersionsController::class,
+        // GithubOrganization Github Repos
+        Route::get('/github-organizations/{githubOrganization}/github-repos', [
+            GithubOrganizationGithubReposController::class,
             'index',
-        ])->name('versions.versions.index');
-        Route::post('/versions/{version}/versions/{version}', [
-            VersionVersionsController::class,
+        ])->name('github-organizations.github-repos.index');
+        Route::post('/github-organizations/{githubOrganization}/github-repos', [
+            GithubOrganizationGithubReposController::class,
             'store',
-        ])->name('versions.versions.store');
-        Route::delete('/versions/{version}/versions/{version}', [
-            VersionVersionsController::class,
-            'destroy',
-        ])->name('versions.versions.destroy');
+        ])->name('github-organizations.github-repos.store');
 
-        // Version Versions
-        Route::get('/versions/{version}/versions', [
-            VersionVersionsController::class,
+        Route::apiResource('github-owners', GithubOwnerController::class);
+
+        // GithubOwner Github Repos
+        Route::get('/github-owners/{githubOwner}/github-repos', [
+            GithubOwnerGithubReposController::class,
             'index',
-        ])->name('versions.versions.index');
-        Route::post('/versions/{version}/versions/{version}', [
-            VersionVersionsController::class,
+        ])->name('github-owners.github-repos.index');
+        Route::post('/github-owners/{githubOwner}/github-repos', [
+            GithubOwnerGithubReposController::class,
             'store',
-        ])->name('versions.versions.store');
-        Route::delete('/versions/{version}/versions/{version}', [
-            VersionVersionsController::class,
+        ])->name('github-owners.github-repos.store');
+
+        Route::apiResource('github-repos', GithubRepoController::class);
+
+        // GithubRepo Items
+        Route::get('/github-repos/{githubRepo}/items', [
+            GithubRepoItemsController::class,
+            'index',
+        ])->name('github-repos.items.index');
+        Route::post('/github-repos/{githubRepo}/items', [
+            GithubRepoItemsController::class,
+            'store',
+        ])->name('github-repos.items.store');
+
+        // GithubRepo Github Tags
+        Route::get('/github-repos/{githubRepo}/github-tags', [
+            GithubRepoGithubTagsController::class,
+            'index',
+        ])->name('github-repos.github-tags.index');
+        Route::post('/github-repos/{githubRepo}/github-tags/{githubTag}', [
+            GithubRepoGithubTagsController::class,
+            'store',
+        ])->name('github-repos.github-tags.store');
+        Route::delete('/github-repos/{githubRepo}/github-tags/{githubTag}', [
+            GithubRepoGithubTagsController::class,
             'destroy',
-        ])->name('versions.versions.destroy');
+        ])->name('github-repos.github-tags.destroy');
+
+        Route::apiResource('github-tags', GithubTagController::class);
+
+        // GithubTag Github Repos
+        Route::get('/github-tags/{githubTag}/github-repos', [
+            GithubTagGithubReposController::class,
+            'index',
+        ])->name('github-tags.github-repos.index');
+        Route::post('/github-tags/{githubTag}/github-repos/{githubRepo}', [
+            GithubTagGithubReposController::class,
+            'store',
+        ])->name('github-tags.github-repos.store');
+        Route::delete('/github-tags/{githubTag}/github-repos/{githubRepo}', [
+            GithubTagGithubReposController::class,
+            'destroy',
+        ])->name('github-tags.github-repos.destroy');
+
+        Route::apiResource('npm-packages', NpmPackageController::class);
+
+        // NpmPackage Items
+        Route::get('/npm-packages/{npmPackage}/items', [
+            NpmPackageItemsController::class,
+            'index',
+        ])->name('npm-packages.items.index');
+        Route::post('/npm-packages/{npmPackage}/items', [
+            NpmPackageItemsController::class,
+            'store',
+        ])->name('npm-packages.items.store');
+
+        Route::apiResource(
+            'packagist-packages',
+            PackagistPackageController::class
+        );
+
+        // PackagistPackage Items
+        Route::get('/packagist-packages/{packagistPackage}/items', [
+            PackagistPackageItemsController::class,
+            'index',
+        ])->name('packagist-packages.items.index');
+        Route::post('/packagist-packages/{packagistPackage}/items', [
+            PackagistPackageItemsController::class,
+            'store',
+        ])->name('packagist-packages.items.store');
+
+        Route::apiResource('items', ItemController::class);
+
+        // Item Platforms
+        Route::get('/items/{item}/platforms', [
+            ItemPlatformsController::class,
+            'index',
+        ])->name('items.platforms.index');
+        Route::post('/items/{item}/platforms/{platform}', [
+            ItemPlatformsController::class,
+            'store',
+        ])->name('items.platforms.store');
+        Route::delete('/items/{item}/platforms/{platform}', [
+            ItemPlatformsController::class,
+            'destroy',
+        ])->name('items.platforms.destroy');
+
+        // Item Tags
+        Route::get('/items/{item}/tags', [
+            ItemTagsController::class,
+            'index',
+        ])->name('items.tags.index');
+        Route::post('/items/{item}/tags/{tag}', [
+            ItemTagsController::class,
+            'store',
+        ])->name('items.tags.store');
+        Route::delete('/items/{item}/tags/{tag}', [
+            ItemTagsController::class,
+            'destroy',
+        ])->name('items.tags.destroy');
+
+        // Item Categories
+        Route::get('/items/{item}/categories', [
+            ItemCategoriesController::class,
+            'index',
+        ])->name('items.categories.index');
+        Route::post('/items/{item}/categories/{category}', [
+            ItemCategoriesController::class,
+            'store',
+        ])->name('items.categories.store');
+        Route::delete('/items/{item}/categories/{category}', [
+            ItemCategoriesController::class,
+            'destroy',
+        ])->name('items.categories.destroy');
+
+        // Item Stacks
+        Route::get('/items/{item}/stacks', [
+            ItemStacksController::class,
+            'index',
+        ])->name('items.stacks.index');
+        Route::post('/items/{item}/stacks/{stack}', [
+            ItemStacksController::class,
+            'store',
+        ])->name('items.stacks.store');
+        Route::delete('/items/{item}/stacks/{stack}', [
+            ItemStacksController::class,
+            'destroy',
+        ])->name('items.stacks.destroy');
+
+        // Item Dependencies
+        Route::get('/items/{item}/items', [
+            ItemItemsController::class,
+            'index',
+        ])->name('items.items.index');
+        Route::post('/items/{item}/items/{item}', [
+            ItemItemsController::class,
+            'store',
+        ])->name('items.items.store');
+        Route::delete('/items/{item}/items/{item}', [
+            ItemItemsController::class,
+            'destroy',
+        ])->name('items.items.destroy');
+
+        // Item Items
+        Route::get('/items/{item}/items', [
+            ItemItemsController::class,
+            'index',
+        ])->name('items.items.index');
+        Route::post('/items/{item}/items/{item}', [
+            ItemItemsController::class,
+            'store',
+        ])->name('items.items.store');
+        Route::delete('/items/{item}/items/{item}', [
+            ItemItemsController::class,
+            'destroy',
+        ])->name('items.items.destroy');
     });

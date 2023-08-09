@@ -7,7 +7,6 @@ use Filament\Tables;
 use Filament\Resources\{Form, Table};
 use Filament\Forms\Components\Grid;
 use Filament\Forms\Components\Select;
-use Filament\Forms\Components\KeyValue;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\RichEditor;
 use Illuminate\Database\Eloquent\Builder;
@@ -46,6 +45,15 @@ class ItemsRelationManager extends RelationManager
                 RichEditor::make('description')
                     ->rules(['max:255', 'string'])
                     ->placeholder('Description')
+                    ->columnSpan([
+                        'default' => 12,
+                        'md' => 12,
+                        'lg' => 12,
+                    ]),
+
+                TextInput::make('latest_version')
+                    ->rules(['max:255', 'string'])
+                    ->placeholder('Latest Version')
                     ->columnSpan([
                         'default' => 12,
                         'md' => 12,
@@ -103,24 +111,6 @@ class ItemsRelationManager extends RelationManager
                     ->rules(['numeric'])
                     ->numeric()
                     ->placeholder('Github Stars')
-                    ->columnSpan([
-                        'default' => 12,
-                        'md' => 12,
-                        'lg' => 12,
-                    ]),
-
-                TextInput::make('github_forks')
-                    ->rules(['numeric'])
-                    ->numeric()
-                    ->placeholder('Github Forks')
-                    ->columnSpan([
-                        'default' => 12,
-                        'md' => 12,
-                        'lg' => 12,
-                    ]),
-
-                KeyValue::make('github_json')
-                    ->required()
                     ->columnSpan([
                         'default' => 12,
                         'md' => 12,
@@ -192,6 +182,39 @@ class ItemsRelationManager extends RelationManager
                         'md' => 12,
                         'lg' => 12,
                     ]),
+
+                Select::make('github_repo_id')
+                    ->rules(['exists:github_repos,id'])
+                    ->relationship('githubRepo', 'title')
+                    ->searchable()
+                    ->placeholder('Github Repo')
+                    ->columnSpan([
+                        'default' => 12,
+                        'md' => 12,
+                        'lg' => 12,
+                    ]),
+
+                Select::make('npm_package_id')
+                    ->rules(['exists:npm_packages,id'])
+                    ->relationship('npmPackage', 'title')
+                    ->searchable()
+                    ->placeholder('Npm Package')
+                    ->columnSpan([
+                        'default' => 12,
+                        'md' => 12,
+                        'lg' => 12,
+                    ]),
+
+                Select::make('packagist_package_id')
+                    ->rules(['exists:packagist_packages,id'])
+                    ->relationship('packagistPackage', 'title')
+                    ->searchable()
+                    ->placeholder('Packagist Package')
+                    ->columnSpan([
+                        'default' => 12,
+                        'md' => 12,
+                        'lg' => 12,
+                    ]),
             ]),
         ]);
     }
@@ -203,6 +226,7 @@ class ItemsRelationManager extends RelationManager
                 Tables\Columns\TextColumn::make('title')->limit(50),
                 Tables\Columns\TextColumn::make('slug')->limit(50),
                 Tables\Columns\TextColumn::make('description')->limit(50),
+                Tables\Columns\TextColumn::make('latest_version')->limit(50),
                 Tables\Columns\TextColumn::make('vendor.title')->limit(50),
                 Tables\Columns\TextColumn::make('type.title')->limit(50),
                 Tables\Columns\TextColumn::make('website')->limit(50),
@@ -210,7 +234,6 @@ class ItemsRelationManager extends RelationManager
                 Tables\Columns\TextColumn::make('health')->limit(50),
                 Tables\Columns\TextColumn::make('github_url')->limit(50),
                 Tables\Columns\TextColumn::make('github_stars'),
-                Tables\Columns\TextColumn::make('github_forks'),
                 Tables\Columns\TextColumn::make('packagist_url')->limit(50),
                 Tables\Columns\TextColumn::make('packagist_name')->limit(50),
                 Tables\Columns\TextColumn::make('packagist_description')->limit(
@@ -220,6 +243,11 @@ class ItemsRelationManager extends RelationManager
                 Tables\Columns\TextColumn::make('packagist_favers'),
                 Tables\Columns\TextColumn::make('npm_url')->limit(50),
                 Tables\Columns\TextColumn::make('github_maintainers'),
+                Tables\Columns\TextColumn::make('githubRepo.title')->limit(50),
+                Tables\Columns\TextColumn::make('npmPackage.title')->limit(50),
+                Tables\Columns\TextColumn::make(
+                    'packagistPackage.title'
+                )->limit(50),
             ])
             ->filters([
                 Tables\Filters\Filter::make('created_at')
@@ -260,6 +288,21 @@ class ItemsRelationManager extends RelationManager
 
                 MultiSelectFilter::make('type_id')->relationship(
                     'type',
+                    'title'
+                ),
+
+                MultiSelectFilter::make('github_repo_id')->relationship(
+                    'githubRepo',
+                    'title'
+                ),
+
+                MultiSelectFilter::make('npm_package_id')->relationship(
+                    'npmPackage',
+                    'title'
+                ),
+
+                MultiSelectFilter::make('packagist_package_id')->relationship(
+                    'packagistPackage',
                     'title'
                 ),
             ])

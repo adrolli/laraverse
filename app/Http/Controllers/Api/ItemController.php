@@ -31,10 +31,6 @@ class ItemController extends Controller
         $this->authorize('create', Item::class);
 
         $validated = $request->validated();
-        $validated['github_json'] = json_decode(
-            $validated['github_json'],
-            true
-        );
 
         $item = Item::create($validated);
 
@@ -53,11 +49,6 @@ class ItemController extends Controller
         $this->authorize('update', $item);
 
         $validated = $request->validated();
-
-        $validated['github_json'] = json_decode(
-            $validated['github_json'],
-            true
-        );
 
         $item->update($validated);
 
