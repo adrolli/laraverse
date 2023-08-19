@@ -6,7 +6,7 @@ use App\Models\Item;
 use GuzzleHttp\Client;
 use Illuminate\Http\Request;
 
-class GitHubController extends Controller
+class ConsumeGitHubController extends Controller
 {
     public function searchRepositories($query)
     {

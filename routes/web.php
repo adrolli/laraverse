@@ -1,23 +1,22 @@
 <?php
 
-use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\TagController;
-use App\Http\Controllers\HomeController;
-use App\Http\Controllers\TypeController;
-use App\Http\Controllers\UserController;
+use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\GithubOrganizationController;
+use App\Http\Controllers\GithubOwnerController;
+use App\Http\Controllers\GithubRepoController;
+use App\Http\Controllers\GithubTagController;
 use App\Http\Controllers\ItemController;
+use App\Http\Controllers\NpmPackageController;
+use App\Http\Controllers\PackagistPackageController;
+use App\Http\Controllers\PermissionController;
+use App\Http\Controllers\PlatformController;
 use App\Http\Controllers\RoleController;
 use App\Http\Controllers\StackController;
+use App\Http\Controllers\TagController;
+use App\Http\Controllers\TypeController;
+use App\Http\Controllers\UserController;
 use App\Http\Controllers\VendorController;
-use App\Http\Controllers\CategoryController;
-use App\Http\Controllers\PlatformController;
-use App\Http\Controllers\GithubTagController;
-use App\Http\Controllers\GithubRepoController;
-use App\Http\Controllers\NpmPackageController;
-use App\Http\Controllers\PermissionController;
-use App\Http\Controllers\GithubOwnerController;
-use App\Http\Controllers\PackagistPackageController;
-use App\Http\Controllers\GithubOrganizationController;
+use Illuminate\Support\Facades\Route;
 
 /*
 |--------------------------------------------------------------------------
@@ -33,6 +32,9 @@ use App\Http\Controllers\GithubOrganizationController;
 Route::get('/', function () {
     return view('welcome');
 });
+
+Route::get('/github-search/{query}', 'App\Http\Controllers\ConsumeGitHubController@searchRepositories');
+Route::get('/packagist-search', 'App\Http\Controllers\ConsumePackagistController@searchRepositories');
 
 Route::middleware(['auth:sanctum', 'verified'])
     ->get('/dashboard', function () {

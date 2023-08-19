@@ -7,6 +7,12 @@
 -   Es sollten nicht nur Packages sein, sondern auch Apps, Tooling etc.
 -   News, von überall, auch neue Videos, Training, etc.
 
+-   Viral ...
+    -   Show your techstack feature
+    -   Share your techstack feature
+    -   Vote for your techstack
+    -   Donate to your techstacks devs
+
 ## Model
 
 ![Vemto Model](laraverse_exported_image.png)
