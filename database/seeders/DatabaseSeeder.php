@@ -20,20 +20,20 @@ class DatabaseSeeder extends Seeder
             ]);
         $this->call(PermissionsSeeder::class);
 
-        $this->call(CategorySeeder::class);
-        $this->call(CommentSeeder::class);
-        $this->call(GithubOrganizationSeeder::class);
-        $this->call(GithubOwnerSeeder::class);
-        $this->call(GithubRepoSeeder::class);
-        $this->call(GithubTagSeeder::class);
-        $this->call(ItemSeeder::class);
-        $this->call(ItemTypeSeeder::class);
-        $this->call(NpmPackageSeeder::class);
-        $this->call(PackagistPackageSeeder::class);
-        $this->call(PlatformSeeder::class);
-        $this->call(StackSeeder::class);
-        $this->call(TagSeeder::class);
-        $this->call(UserSeeder::class);
-        $this->call(VendorSeeder::class);
+        // $this->call(CategorySeeder::class);
+        // $this->call(CommentSeeder::class);
+        // $this->call(GithubOrganizationSeeder::class);
+        // $this->call(GithubOwnerSeeder::class);
+        // $this->call(GithubRepoSeeder::class);
+        // $this->call(GithubTagSeeder::class);
+        // $this->call(ItemSeeder::class);
+        // $this->call(ItemTypeSeeder::class);
+        // $this->call(NpmPackageSeeder::class);
+        // $this->call(PackagistPackageSeeder::class);
+        // $this->call(PlatformSeeder::class);
+        // $this->call(StackSeeder::class);
+        // $this->call(TagSeeder::class);
+        // $this->call(UserSeeder::class);
+        // $this->call(VendorSeeder::class);
     }
 }
