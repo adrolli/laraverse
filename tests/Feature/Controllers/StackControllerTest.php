@@ -26,6 +26,19 @@ class StackControllerTest extends TestCase
         $this->withoutExceptionHandling();
     }
 
+    protected function castToJson($json)
+    {
+        if (is_array($json)) {
+            $json = addslashes(json_encode($json));
+        } elseif (is_null($json) || is_null(json_decode($json))) {
+            throw new \Exception(
+                'A valid JSON string was not provided for casting.'
+            );
+        }
+
+        return \DB::raw("CAST('{$json}' AS JSON)");
+    }
+
     /**
      * @test
      */
@@ -62,7 +75,11 @@ class StackControllerTest extends TestCase
             ->make()
             ->toArray();
 
+        $data['build'] = json_encode($data['build']);
+
         $response = $this->post(route('stacks.store'), $data);
+
+        $data['build'] = $this->castToJson($data['build']);
 
         $this->assertDatabaseHas('stacks', $data);
 
@@ -114,14 +131,19 @@ class StackControllerTest extends TestCase
             'title' => $this->faker->sentence(10),
             'slug' => $this->faker->slug(),
             'description' => $this->faker->sentence(15),
+            'build' => [],
             'public' => $this->faker->boolean(),
             'major' => $this->faker->boolean(),
-            'user_id' => $user->id,
+            'created_by' => $user->id,
         ];
+
+        $data['build'] = json_encode($data['build']);
 
         $response = $this->put(route('stacks.update', $stack), $data);
 
         $data['id'] = $stack->id;
+
+        $data['build'] = $this->castToJson($data['build']);
 
         $this->assertDatabaseHas('stacks', $data);
 

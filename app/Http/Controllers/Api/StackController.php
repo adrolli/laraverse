@@ -31,6 +31,7 @@ class StackController extends Controller
         $this->authorize('create', Stack::class);
 
         $validated = $request->validated();
+        $validated['build'] = json_decode($validated['build'], true);
 
         $stack = Stack::create($validated);
 
@@ -51,6 +52,8 @@ class StackController extends Controller
         $this->authorize('update', $stack);
 
         $validated = $request->validated();
+
+        $validated['build'] = json_decode($validated['build'], true);
 
         $stack->update($validated);
 

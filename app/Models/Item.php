@@ -16,8 +16,9 @@ class Item extends Model
         'slug',
         'description',
         'latest_version',
+        'versions',
         'vendor_id',
-        'type_id',
+        'itemType_id',
         'website',
         'rating',
         'health',
@@ -37,14 +38,13 @@ class Item extends Model
 
     protected $searchableFields = ['*'];
 
+    protected $casts = [
+        'versions' => 'array',
+    ];
+
     public function vendor()
     {
         return $this->belongsTo(Vendor::class);
-    }
-
-    public function type()
-    {
-        return $this->belongsTo(Type::class);
     }
 
     public function githubRepo()
@@ -60,6 +60,16 @@ class Item extends Model
     public function packagistPackage()
     {
         return $this->belongsTo(PackagistPackage::class);
+    }
+
+    public function itemType()
+    {
+        return $this->belongsTo(ItemType::class, 'itemType_id');
+    }
+
+    public function comments()
+    {
+        return $this->hasMany(Comment::class);
     }
 
     public function platforms()

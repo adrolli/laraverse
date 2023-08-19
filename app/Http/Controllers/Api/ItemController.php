@@ -31,6 +31,7 @@ class ItemController extends Controller
         $this->authorize('create', Item::class);
 
         $validated = $request->validated();
+        $validated['versions'] = json_decode($validated['versions'], true);
 
         $item = Item::create($validated);
 
@@ -49,6 +50,8 @@ class ItemController extends Controller
         $this->authorize('update', $item);
 
         $validated = $request->validated();
+
+        $validated['versions'] = json_decode($validated['versions'], true);
 
         $item->update($validated);
 

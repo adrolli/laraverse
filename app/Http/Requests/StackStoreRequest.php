@@ -23,9 +23,10 @@ class StackStoreRequest extends FormRequest
             'title' => ['required', 'max:255', 'string'],
             'slug' => ['required', 'max:255', 'string'],
             'description' => ['required', 'max:255', 'string'],
+            'build' => ['required', 'max:255', 'json'],
             'public' => ['required', 'boolean'],
             'major' => ['required', 'boolean'],
-            'user_id' => ['required', 'exists:users,id'],
+            'created_by' => ['required', 'exists:users,id'],
         ];
     }
 }

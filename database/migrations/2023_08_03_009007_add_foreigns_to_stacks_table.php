@@ -12,7 +12,7 @@ return new class extends Migration {
     {
         Schema::table('stacks', function (Blueprint $table) {
             $table
-                ->foreign('user_id')
+                ->foreign('created_by')
                 ->references('id')
                 ->on('users')
                 ->onUpdate('CASCADE')
@@ -26,7 +26,7 @@ return new class extends Migration {
     public function down(): void
     {
         Schema::table('stacks', function (Blueprint $table) {
-            $table->dropForeign(['user_id']);
+            $table->dropForeign(['created_by']);
         });
     }
 };

@@ -62,10 +62,13 @@
                                     @lang('crud.items.inputs.latest_version')
                                 </th>
                                 <th class="px-4 py-3 text-left">
+                                    @lang('crud.items.inputs.versions')
+                                </th>
+                                <th class="px-4 py-3 text-left">
                                     @lang('crud.items.inputs.vendor_id')
                                 </th>
                                 <th class="px-4 py-3 text-left">
-                                    @lang('crud.items.inputs.type_id')
+                                    @lang('crud.items.inputs.itemType_id')
                                 </th>
                                 <th class="px-4 py-3 text-left">
                                     @lang('crud.items.inputs.website')
@@ -130,11 +133,17 @@
                                 <td class="px-4 py-3 text-left">
                                     {{ $item->latest_version ?? '-' }}
                                 </td>
+                                <td class="px-4 py-3 text-right">
+                                    <pre>
+{{ json_encode($item->versions) ?? '-' }}</pre
+                                    >
+                                </td>
                                 <td class="px-4 py-3 text-left">
                                     {{ optional($item->vendor)->title ?? '-' }}
                                 </td>
                                 <td class="px-4 py-3 text-left">
-                                    {{ optional($item->type)->title ?? '-' }}
+                                    {{ optional($item->itemType)->title ?? '-'
+                                    }}
                                 </td>
                                 <td class="px-4 py-3 text-left">
                                     {{ $item->website ?? '-' }}
@@ -249,7 +258,7 @@
                             </tr>
                             @empty
                             <tr>
-                                <td colspan="22">
+                                <td colspan="23">
                                     @lang('crud.common.no_items_found')
                                 </td>
                             </tr>
@@ -257,7 +266,7 @@
                         </tbody>
                         <tfoot>
                             <tr>
-                                <td colspan="22">
+                                <td colspan="23">
                                     <div class="mt-10 px-4">
                                         {!! $items->render() !!}
                                     </div>

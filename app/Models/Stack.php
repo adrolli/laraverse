@@ -15,25 +15,37 @@ class Stack extends Model
         'title',
         'slug',
         'description',
+        'build',
         'public',
         'major',
-        'user_id',
+        'created_by',
     ];
 
     protected $searchableFields = ['*'];
 
     protected $casts = [
+        'build' => 'array',
         'public' => 'boolean',
         'major' => 'boolean',
     ];
 
+    public function comments()
+    {
+        return $this->hasMany(Comment::class);
+    }
+
     public function user()
     {
-        return $this->belongsTo(User::class);
+        return $this->belongsTo(User::class, 'created_by');
     }
 
     public function items()
     {
         return $this->belongsToMany(Item::class);
+    }
+
+    public function users()
+    {
+        return $this->belongsToMany(User::class);
     }
 }

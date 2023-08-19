@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Item;
+use App\Models\GithubRepo;
 use GuzzleHttp\Client;
 use Illuminate\Http\Request;
 
@@ -71,7 +71,7 @@ class ConsumeGitHubController extends Controller
 
                 // dd($repoDetails['security_and_analysis']);
 
-                // Transform the data to match your schema
+                // Transform the data to match the schema
                 $itemData = [
                     'title' => $repoDetails['full_name'],
                     'slug' => $repoDetails['full_name'],
@@ -84,7 +84,7 @@ class ConsumeGitHubController extends Controller
                 ];
 
                 // Store the transformed data in the database
-                Item::create($itemData);
+                GithubRepo::create($itemData);
 
                 return response()->json(['message' => 'Item inserted successfully']);
 

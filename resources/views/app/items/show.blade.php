@@ -41,15 +41,23 @@
                     </div>
                     <div class="mb-4">
                         <h5 class="font-medium text-gray-700">
+                            @lang('crud.items.inputs.versions')
+                        </h5>
+                        <pre>{{ json_encode($item->versions) ?? '-' }}</pre>
+                    </div>
+                    <div class="mb-4">
+                        <h5 class="font-medium text-gray-700">
                             @lang('crud.items.inputs.vendor_id')
                         </h5>
                         <span>{{ optional($item->vendor)->title ?? '-' }}</span>
                     </div>
                     <div class="mb-4">
                         <h5 class="font-medium text-gray-700">
-                            @lang('crud.items.inputs.type_id')
+                            @lang('crud.items.inputs.itemType_id')
                         </h5>
-                        <span>{{ optional($item->type)->title ?? '-' }}</span>
+                        <span
+                            >{{ optional($item->itemType)->title ?? '-' }}</span
+                        >
                     </div>
                     <div class="mb-4">
                         <h5 class="font-medium text-gray-700">

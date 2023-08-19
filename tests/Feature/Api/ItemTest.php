@@ -5,8 +5,8 @@ namespace Tests\Feature\Api;
 use App\Models\User;
 use App\Models\Item;
 
-use App\Models\Type;
 use App\Models\Vendor;
+use App\Models\ItemType;
 use App\Models\GithubRepo;
 use App\Models\NpmPackage;
 use App\Models\PackagistPackage;
@@ -71,16 +71,17 @@ class ItemTest extends TestCase
         $item = Item::factory()->create();
 
         $vendor = Vendor::factory()->create();
-        $type = Type::factory()->create();
         $githubRepo = GithubRepo::factory()->create();
         $npmPackage = NpmPackage::factory()->create();
         $packagistPackage = PackagistPackage::factory()->create();
+        $itemType = ItemType::factory()->create();
 
         $data = [
             'title' => $this->faker->sentence(10),
             'slug' => $this->faker->slug(),
             'description' => $this->faker->sentence(15),
             'latest_version' => $this->faker->text(255),
+            'versions' => [],
             'website' => $this->faker->text(255),
             'rating' => $this->faker->text(255),
             'health' => $this->faker->text(255),
@@ -94,10 +95,10 @@ class ItemTest extends TestCase
             'npm_url' => $this->faker->text(255),
             'github_maintainers' => $this->faker->randomNumber(0),
             'vendor_id' => $vendor->id,
-            'type_id' => $type->id,
             'github_repo_id' => $githubRepo->id,
             'npm_package_id' => $npmPackage->id,
             'packagist_package_id' => $packagistPackage->id,
+            'itemType_id' => $itemType->id,
         ];
 
         $response = $this->putJson(route('api.items.update', $item), $data);

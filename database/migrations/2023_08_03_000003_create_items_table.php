@@ -16,8 +16,9 @@ return new class extends Migration {
             $table->string('slug');
             $table->text('description');
             $table->string('latest_version');
+            $table->json('versions')->nullable();
             $table->unsignedBigInteger('vendor_id');
-            $table->unsignedBigInteger('type_id');
+            $table->unsignedBigInteger('itemType_id');
             $table->string('website')->nullable();
             $table->string('rating')->nullable();
             $table->string('health')->nullable();

@@ -1,11 +1,11 @@
 <?php
-
 namespace App\Http\Controllers\Api;
 
 use App\Models\User;
+use App\Models\Stack;
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 use App\Http\Controllers\Controller;
-use App\Http\Resources\StackResource;
 use App\Http\Resources\StackCollection;
 
 class UserStacksController extends Controller
@@ -17,7 +17,7 @@ class UserStacksController extends Controller
         $search = $request->get('search', '');
 
         $stacks = $user
-            ->stacks()
+            ->stacksUsed()
             ->search($search)
             ->latest()
             ->paginate();
@@ -25,20 +25,24 @@ class UserStacksController extends Controller
         return new StackCollection($stacks);
     }
 
-    public function store(Request $request, User $user): StackResource
+    public function store(Request $request, User $user, Stack $stack): Response
     {
-        $this->authorize('create', Stack::class);
+        $this->authorize('update', $user);
 
-        $validated = $request->validate([
-            'title' => ['required', 'max:255', 'string'],
-            'slug' => ['required', 'max:255', 'string'],
-            'description' => ['required', 'max:255', 'string'],
-            'public' => ['required', 'boolean'],
-            'major' => ['required', 'boolean'],
-        ]);
+        $user->stacksUsed()->syncWithoutDetaching([$stack->id]);
 
-        $stack = $user->stacks()->create($validated);
+        return response()->noContent();
+    }
 
-        return new StackResource($stack);
+    public function destroy(
+        Request $request,
+        User $user,
+        Stack $stack
+    ): Response {
+        $this->authorize('update', $user);
+
+        $user->stacksUsed()->detach($stack);
+
+        return response()->noContent();
     }
 }

@@ -7,6 +7,7 @@ use Filament\Tables;
 use Filament\Resources\{Form, Table};
 use Filament\Forms\Components\Grid;
 use Filament\Forms\Components\Select;
+use Filament\Forms\Components\KeyValue;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\RichEditor;
 use Illuminate\Database\Eloquent\Builder;
@@ -60,11 +61,17 @@ class ItemsRelationManager extends RelationManager
                         'lg' => 12,
                     ]),
 
-                Select::make('type_id')
-                    ->rules(['exists:types,id'])
-                    ->relationship('type', 'title')
+                KeyValue::make('versions')->columnSpan([
+                    'default' => 12,
+                    'md' => 12,
+                    'lg' => 12,
+                ]),
+
+                Select::make('itemType_id')
+                    ->rules(['exists:item_types,id'])
+                    ->relationship('itemType', 'title')
                     ->searchable()
-                    ->placeholder('Type')
+                    ->placeholder('Item Type')
                     ->columnSpan([
                         'default' => 12,
                         'md' => 12,
@@ -228,7 +235,7 @@ class ItemsRelationManager extends RelationManager
                 Tables\Columns\TextColumn::make('description')->limit(50),
                 Tables\Columns\TextColumn::make('latest_version')->limit(50),
                 Tables\Columns\TextColumn::make('vendor.title')->limit(50),
-                Tables\Columns\TextColumn::make('type.title')->limit(50),
+                Tables\Columns\TextColumn::make('itemType.title')->limit(50),
                 Tables\Columns\TextColumn::make('website')->limit(50),
                 Tables\Columns\TextColumn::make('rating')->limit(50),
                 Tables\Columns\TextColumn::make('health')->limit(50),
@@ -286,8 +293,8 @@ class ItemsRelationManager extends RelationManager
                     'title'
                 ),
 
-                MultiSelectFilter::make('type_id')->relationship(
-                    'type',
+                MultiSelectFilter::make('itemType_id')->relationship(
+                    'itemType',
                     'title'
                 ),
 

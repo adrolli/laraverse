@@ -8,6 +8,7 @@ use Filament\Resources\{Form, Table, Resource};
 use Filament\Forms\Components\Grid;
 use Filament\Forms\Components\Card;
 use Filament\Forms\Components\Select;
+use Filament\Forms\Components\KeyValue;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\RichEditor;
 use Filament\Tables\Filters\SelectFilter;
@@ -67,6 +68,14 @@ class ItemResource extends Resource
                             'lg' => 12,
                         ]),
 
+                    KeyValue::make('versions')
+                        ->nullable()
+                        ->columnSpan([
+                            'default' => 12,
+                            'md' => 12,
+                            'lg' => 12,
+                        ]),
+
                     Select::make('vendor_id')
                         ->rules(['exists:vendors,id'])
                         ->required()
@@ -79,12 +88,12 @@ class ItemResource extends Resource
                             'lg' => 12,
                         ]),
 
-                    Select::make('type_id')
-                        ->rules(['exists:types,id'])
+                    Select::make('itemType_id')
+                        ->rules(['exists:item_types,id'])
                         ->required()
-                        ->relationship('type', 'title')
+                        ->relationship('itemType', 'title')
                         ->searchable()
-                        ->placeholder('Type')
+                        ->placeholder('Item Type')
                         ->columnSpan([
                             'default' => 12,
                             'md' => 12,
@@ -279,7 +288,7 @@ class ItemResource extends Resource
                 Tables\Columns\TextColumn::make('vendor.title')
                     ->toggleable()
                     ->limit(50),
-                Tables\Columns\TextColumn::make('type.title')
+                Tables\Columns\TextColumn::make('itemType.title')
                     ->toggleable()
                     ->limit(50),
                 Tables\Columns\TextColumn::make('website')
@@ -345,11 +354,11 @@ class ItemResource extends Resource
                     ->multiple()
                     ->label('Vendor'),
 
-                SelectFilter::make('type_id')
-                    ->relationship('type', 'title')
-                    ->indicator('Type')
+                SelectFilter::make('itemType_id')
+                    ->relationship('itemType', 'title')
+                    ->indicator('ItemType')
                     ->multiple()
-                    ->label('Type'),
+                    ->label('ItemType'),
 
                 SelectFilter::make('github_repo_id')
                     ->relationship('githubRepo', 'title')
@@ -374,6 +383,7 @@ class ItemResource extends Resource
     public static function getRelations(): array
     {
         return [
+            ItemResource\RelationManagers\CommentsRelationManager::class,
             ItemResource\RelationManagers\PlatformsRelationManager::class,
             ItemResource\RelationManagers\TagsRelationManager::class,
             ItemResource\RelationManagers\CategoriesRelationManager::class,

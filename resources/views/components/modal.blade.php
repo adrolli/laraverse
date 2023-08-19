@@ -1,5 +1,3 @@
-{{-- This modal modal was copied from Jetstream components --}}
-
 @props(['id', 'maxWidth'])
 
 @php

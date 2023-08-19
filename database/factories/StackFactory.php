@@ -26,9 +26,10 @@ class StackFactory extends Factory
             'title' => $this->faker->sentence(10),
             'slug' => $this->faker->slug(),
             'description' => $this->faker->sentence(15),
+            'build' => [],
             'public' => $this->faker->boolean(),
             'major' => $this->faker->boolean(),
-            'user_id' => \App\Models\User::factory(),
+            'created_by' => \App\Models\User::factory(),
         ];
     }
 }

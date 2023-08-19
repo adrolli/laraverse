@@ -35,6 +35,12 @@
                     </div>
                     <div class="mb-4">
                         <h5 class="font-medium text-gray-700">
+                            @lang('crud.stacks.inputs.build')
+                        </h5>
+                        <pre>{{ json_encode($stack->build) ?? '-' }}</pre>
+                    </div>
+                    <div class="mb-4">
+                        <h5 class="font-medium text-gray-700">
                             @lang('crud.stacks.inputs.public')
                         </h5>
                         <span>{{ $stack->public ?? '-' }}</span>
@@ -47,7 +53,7 @@
                     </div>
                     <div class="mb-4">
                         <h5 class="font-medium text-gray-700">
-                            @lang('crud.stacks.inputs.user_id')
+                            @lang('crud.stacks.inputs.created_by')
                         </h5>
                         <span>{{ optional($stack->user)->name ?? '-' }}</span>
                     </div>

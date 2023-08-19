@@ -33,40 +33,56 @@ class UserStacksTest extends TestCase
     public function it_gets_user_stacks(): void
     {
         $user = User::factory()->create();
-        $stacks = Stack::factory()
-            ->count(2)
-            ->create([
-                'user_id' => $user->id,
-            ]);
+        $stack = Stack::factory()->create();
+
+        $user->stacksUsed()->attach($stack);
 
         $response = $this->getJson(route('api.users.stacks.index', $user));
 
-        $response->assertOk()->assertSee($stacks[0]->title);
+        $response->assertOk()->assertSee($stack->title);
     }
 
     /**
      * @test
      */
-    public function it_stores_the_user_stacks(): void
+    public function it_can_attach_stacks_to_user(): void
     {
         $user = User::factory()->create();
-        $data = Stack::factory()
-            ->make([
-                'user_id' => $user->id,
-            ])
-            ->toArray();
+        $stack = Stack::factory()->create();
 
         $response = $this->postJson(
-            route('api.users.stacks.store', $user),
-            $data
+            route('api.users.stacks.store', [$user, $stack])
         );
 
-        $this->assertDatabaseHas('stacks', $data);
+        $response->assertNoContent();
 
-        $response->assertStatus(201)->assertJsonFragment($data);
+        $this->assertTrue(
+            $user
+                ->stacksUsed()
+                ->where('stacks.id', $stack->id)
+                ->exists()
+        );
+    }
 
-        $stack = Stack::latest('id')->first();
+    /**
+     * @test
+     */
+    public function it_can_detach_stacks_from_user(): void
+    {
+        $user = User::factory()->create();
+        $stack = Stack::factory()->create();
 
-        $this->assertEquals($user->id, $stack->user_id);
+        $response = $this->deleteJson(
+            route('api.users.stacks.store', [$user, $stack])
+        );
+
+        $response->assertNoContent();
+
+        $this->assertFalse(
+            $user
+                ->stacksUsed()
+                ->where('stacks.id', $stack->id)
+                ->exists()
+        );
     }
 }

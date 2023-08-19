@@ -182,5 +182,6 @@ As a relation or within the main table?
 ## Other ideas
 
 -   Stack-Installer ... is it possible to combine all install commands automagically to an "installer"? Like laravel.build
+-   Receipes and compatibility checks (people can check a stack compat)
 -   Stack the big picture ... see the stack as a fancy image
 -   Safe stack ... how safe (active dev, bottlenecks) is your stack?

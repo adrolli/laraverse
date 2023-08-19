@@ -46,6 +46,13 @@
     </x-inputs.group>
 
     <x-inputs.group class="w-full">
+        <x-inputs.textarea name="versions" label="Versions" maxlength="255"
+            >{{ old('versions', ($editing ? json_encode($item->versions) : ''))
+            }}</x-inputs.textarea
+        >
+    </x-inputs.group>
+
+    <x-inputs.group class="w-full">
         <x-inputs.select name="vendor_id" label="Vendor" required>
             @php $selected = old('vendor_id', ($editing ? $item->vendor_id : '')) @endphp
             <option disabled {{ empty($selected) ? 'selected' : '' }}>Please select the Vendor</option>
@@ -56,10 +63,10 @@
     </x-inputs.group>
 
     <x-inputs.group class="w-full">
-        <x-inputs.select name="type_id" label="Type" required>
-            @php $selected = old('type_id', ($editing ? $item->type_id : '')) @endphp
-            <option disabled {{ empty($selected) ? 'selected' : '' }}>Please select the Type</option>
-            @foreach($types as $value => $label)
+        <x-inputs.select name="itemType_id" label="Item Type" required>
+            @php $selected = old('itemType_id', ($editing ? $item->itemType_id : '')) @endphp
+            <option disabled {{ empty($selected) ? 'selected' : '' }}>Please select the Item Type</option>
+            @foreach($itemTypes as $value => $label)
             <option value="{{ $value }}" {{ $selected == $value ? 'selected' : '' }} >{{ $label }}</option>
             @endforeach
         </x-inputs.select>

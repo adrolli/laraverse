@@ -8,6 +8,7 @@ use Filament\Resources\{Form, Table};
 use Filament\Forms\Components\Grid;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\Toggle;
+use Filament\Forms\Components\KeyValue;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\RichEditor;
 use Illuminate\Database\Eloquent\Builder;
@@ -52,6 +53,14 @@ class StacksRelationManager extends RelationManager
                         'lg' => 12,
                     ]),
 
+                KeyValue::make('build')
+                    ->required()
+                    ->columnSpan([
+                        'default' => 12,
+                        'md' => 12,
+                        'lg' => 12,
+                    ]),
+
                 Toggle::make('public')
                     ->rules(['boolean'])
                     ->columnSpan([
@@ -68,11 +77,11 @@ class StacksRelationManager extends RelationManager
                         'lg' => 12,
                     ]),
 
-                Select::make('user_id')
+                Select::make('created_by')
                     ->rules(['exists:users,id'])
                     ->relationship('user', 'name')
                     ->searchable()
-                    ->placeholder('Created By')
+                    ->placeholder('User')
                     ->columnSpan([
                         'default' => 12,
                         'md' => 12,
@@ -125,7 +134,7 @@ class StacksRelationManager extends RelationManager
                             );
                     }),
 
-                MultiSelectFilter::make('user_id')->relationship(
+                MultiSelectFilter::make('created_by')->relationship(
                     'user',
                     'name'
                 ),

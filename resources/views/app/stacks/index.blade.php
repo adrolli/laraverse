@@ -59,13 +59,16 @@
                                     @lang('crud.stacks.inputs.description')
                                 </th>
                                 <th class="px-4 py-3 text-left">
+                                    @lang('crud.stacks.inputs.build')
+                                </th>
+                                <th class="px-4 py-3 text-left">
                                     @lang('crud.stacks.inputs.public')
                                 </th>
                                 <th class="px-4 py-3 text-left">
                                     @lang('crud.stacks.inputs.major')
                                 </th>
                                 <th class="px-4 py-3 text-left">
-                                    @lang('crud.stacks.inputs.user_id')
+                                    @lang('crud.stacks.inputs.created_by')
                                 </th>
                                 <th></th>
                             </tr>
@@ -81,6 +84,11 @@
                                 </td>
                                 <td class="px-4 py-3 text-left">
                                     {{ $stack->description ?? '-' }}
+                                </td>
+                                <td class="px-4 py-3 text-right">
+                                    <pre>
+{{ json_encode($stack->build) ?? '-' }}</pre
+                                    >
                                 </td>
                                 <td class="px-4 py-3 text-left">
                                     {{ $stack->public ?? '-' }}
@@ -156,7 +164,7 @@
                             </tr>
                             @empty
                             <tr>
-                                <td colspan="7">
+                                <td colspan="8">
                                     @lang('crud.common.no_items_found')
                                 </td>
                             </tr>
@@ -164,7 +172,7 @@
                         </tbody>
                         <tfoot>
                             <tr>
-                                <td colspan="7">
+                                <td colspan="8">
                                     <div class="mt-10 px-4">
                                         {!! $stacks->render() !!}
                                     </div>

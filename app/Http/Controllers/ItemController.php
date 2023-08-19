@@ -3,8 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\Item;
-use App\Models\Type;
 use App\Models\Vendor;
+use App\Models\ItemType;
 use Illuminate\View\View;
 use App\Models\GithubRepo;
 use App\Models\NpmPackage;
@@ -41,7 +41,7 @@ class ItemController extends Controller
         $this->authorize('create', Item::class);
 
         $vendors = Vendor::pluck('title', 'id');
-        $types = Type::pluck('title', 'id');
+        $itemTypes = ItemType::pluck('title', 'id');
         $githubRepos = GithubRepo::pluck('title', 'id');
         $npmPackages = NpmPackage::pluck('title', 'id');
         $packagistPackages = PackagistPackage::pluck('title', 'id');
@@ -50,7 +50,7 @@ class ItemController extends Controller
             'app.items.create',
             compact(
                 'vendors',
-                'types',
+                'itemTypes',
                 'githubRepos',
                 'npmPackages',
                 'packagistPackages'
@@ -66,6 +66,7 @@ class ItemController extends Controller
         $this->authorize('create', Item::class);
 
         $validated = $request->validated();
+        $validated['versions'] = json_decode($validated['versions'], true);
 
         $item = Item::create($validated);
 
@@ -92,7 +93,7 @@ class ItemController extends Controller
         $this->authorize('update', $item);
 
         $vendors = Vendor::pluck('title', 'id');
-        $types = Type::pluck('title', 'id');
+        $itemTypes = ItemType::pluck('title', 'id');
         $githubRepos = GithubRepo::pluck('title', 'id');
         $npmPackages = NpmPackage::pluck('title', 'id');
         $packagistPackages = PackagistPackage::pluck('title', 'id');
@@ -102,7 +103,7 @@ class ItemController extends Controller
             compact(
                 'item',
                 'vendors',
-                'types',
+                'itemTypes',
                 'githubRepos',
                 'npmPackages',
                 'packagistPackages'
@@ -120,6 +121,7 @@ class ItemController extends Controller
         $this->authorize('update', $item);
 
         $validated = $request->validated();
+        $validated['versions'] = json_decode($validated['versions'], true);
 
         $item->update($validated);
 

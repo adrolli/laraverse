@@ -27,6 +27,7 @@ class ItemFactory extends Factory
             'slug' => $this->faker->slug(),
             'description' => $this->faker->sentence(15),
             'latest_version' => $this->faker->text(255),
+            'versions' => [],
             'website' => $this->faker->text(255),
             'rating' => $this->faker->text(255),
             'health' => $this->faker->text(255),
@@ -40,10 +41,10 @@ class ItemFactory extends Factory
             'npm_url' => $this->faker->text(255),
             'github_maintainers' => $this->faker->randomNumber(0),
             'vendor_id' => \App\Models\Vendor::factory(),
-            'type_id' => \App\Models\Type::factory(),
             'github_repo_id' => \App\Models\GithubRepo::factory(),
             'npm_package_id' => \App\Models\NpmPackage::factory(),
             'packagist_package_id' => \App\Models\PackagistPackage::factory(),
+            'itemType_id' => \App\Models\ItemType::factory(),
         ];
     }
 }

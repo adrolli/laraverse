@@ -9,6 +9,7 @@ use Filament\Forms\Components\Grid;
 use Filament\Forms\Components\Card;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\Toggle;
+use Filament\Forms\Components\KeyValue;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\RichEditor;
 use Filament\Tables\Filters\SelectFilter;
@@ -58,6 +59,15 @@ class StackResource extends Resource
                             'lg' => 12,
                         ]),
 
+                    KeyValue::make('build')
+                        ->required()
+                        ->required()
+                        ->columnSpan([
+                            'default' => 12,
+                            'md' => 12,
+                            'lg' => 12,
+                        ]),
+
                     Toggle::make('public')
                         ->rules(['boolean'])
                         ->required()
@@ -76,12 +86,12 @@ class StackResource extends Resource
                             'lg' => 12,
                         ]),
 
-                    Select::make('user_id')
+                    Select::make('created_by')
                         ->rules(['exists:users,id'])
                         ->required()
                         ->relationship('user', 'name')
                         ->searchable()
-                        ->placeholder('Created By')
+                        ->placeholder('User')
                         ->columnSpan([
                             'default' => 12,
                             'md' => 12,
@@ -122,7 +132,7 @@ class StackResource extends Resource
             ->filters([
                 DateRangeFilter::make('created_at'),
 
-                SelectFilter::make('user_id')
+                SelectFilter::make('created_by')
                     ->relationship('user', 'name')
                     ->indicator('User')
                     ->multiple()
@@ -132,7 +142,11 @@ class StackResource extends Resource
 
     public static function getRelations(): array
     {
-        return [StackResource\RelationManagers\ItemsRelationManager::class];
+        return [
+            StackResource\RelationManagers\CommentsRelationManager::class,
+            StackResource\RelationManagers\ItemsRelationManager::class,
+            StackResource\RelationManagers\UsersRelationManager::class,
+        ];
     }
 
     public static function getPages(): array
