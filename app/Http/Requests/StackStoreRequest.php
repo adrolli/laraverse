@@ -23,9 +23,9 @@ class StackStoreRequest extends FormRequest
             'title' => ['required', 'max:255', 'string'],
             'slug' => ['required', 'max:255', 'string'],
             'description' => ['required', 'max:255', 'string'],
-            'build' => ['required', 'max:255', 'json'],
+            'build' => ['nullable', 'max:255', 'json'],
             'public' => ['required', 'boolean'],
-            'major' => ['required', 'boolean'],
+            'major' => ['nullable', 'boolean'],
             'created_by' => ['required', 'exists:users,id'],
         ];
     }

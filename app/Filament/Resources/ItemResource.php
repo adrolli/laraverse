@@ -60,7 +60,7 @@ class ItemResource extends Resource
 
                     TextInput::make('latest_version')
                         ->rules(['max:255', 'string'])
-                        ->required()
+                        ->nullable()
                         ->placeholder('Latest Version')
                         ->columnSpan([
                             'default' => 12,
@@ -110,9 +110,21 @@ class ItemResource extends Resource
                             'lg' => 12,
                         ]),
 
+                    TextInput::make('popularity')
+                        ->rules(['numeric'])
+                        ->required()
+                        ->numeric()
+                        ->placeholder('Popularity')
+                        ->columnSpan([
+                            'default' => 12,
+                            'md' => 12,
+                            'lg' => 12,
+                        ]),
+
                     TextInput::make('rating')
-                        ->rules(['max:255', 'string'])
+                        ->rules(['numeric'])
                         ->nullable()
+                        ->numeric()
                         ->placeholder('Rating')
                         ->columnSpan([
                             'default' => 12,
@@ -120,10 +132,27 @@ class ItemResource extends Resource
                             'lg' => 12,
                         ]),
 
-                    TextInput::make('health')
-                        ->rules(['max:255', 'string'])
+                    KeyValue::make('rating_data')
                         ->nullable()
+                        ->columnSpan([
+                            'default' => 12,
+                            'md' => 12,
+                            'lg' => 12,
+                        ]),
+
+                    TextInput::make('health')
+                        ->rules(['numeric'])
+                        ->nullable()
+                        ->numeric()
                         ->placeholder('Health')
+                        ->columnSpan([
+                            'default' => 12,
+                            'md' => 12,
+                            'lg' => 12,
+                        ]),
+
+                    KeyValue::make('health_data')
+                        ->nullable()
                         ->columnSpan([
                             'default' => 12,
                             'md' => 12,
@@ -295,14 +324,15 @@ class ItemResource extends Resource
                     ->toggleable()
                     ->searchable(true, null, true)
                     ->limit(50),
+                Tables\Columns\TextColumn::make('popularity')
+                    ->toggleable()
+                    ->searchable(true, null, true),
                 Tables\Columns\TextColumn::make('rating')
                     ->toggleable()
-                    ->searchable(true, null, true)
-                    ->limit(50),
+                    ->searchable(true, null, true),
                 Tables\Columns\TextColumn::make('health')
                     ->toggleable()
-                    ->searchable(true, null, true)
-                    ->limit(50),
+                    ->searchable(true, null, true),
                 Tables\Columns\TextColumn::make('github_url')
                     ->toggleable()
                     ->searchable(true, null, true)
@@ -383,7 +413,7 @@ class ItemResource extends Resource
     public static function getRelations(): array
     {
         return [
-            ItemResource\RelationManagers\CommentsRelationManager::class,
+            ItemResource\RelationManagers\PostsRelationManager::class,
             ItemResource\RelationManagers\PlatformsRelationManager::class,
             ItemResource\RelationManagers\TagsRelationManager::class,
             ItemResource\RelationManagers\CategoriesRelationManager::class,

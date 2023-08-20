@@ -20,8 +20,11 @@ class Item extends Model
         'vendor_id',
         'itemType_id',
         'website',
+        'popularity',
         'rating',
+        'rating_data',
         'health',
+        'health_data',
         'github_url',
         'github_stars',
         'packagist_url',
@@ -40,6 +43,8 @@ class Item extends Model
 
     protected $casts = [
         'versions' => 'array',
+        'rating_data' => 'array',
+        'health_data' => 'array',
     ];
 
     public function vendor()
@@ -67,9 +72,9 @@ class Item extends Model
         return $this->belongsTo(ItemType::class, 'itemType_id');
     }
 
-    public function comments()
+    public function posts()
     {
-        return $this->hasMany(Comment::class);
+        return $this->hasMany(Post::class);
     }
 
     public function platforms()

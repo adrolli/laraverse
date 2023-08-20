@@ -73,11 +73,20 @@
                                 <th class="px-4 py-3 text-left">
                                     @lang('crud.items.inputs.website')
                                 </th>
-                                <th class="px-4 py-3 text-left">
+                                <th class="px-4 py-3 text-right">
+                                    @lang('crud.items.inputs.popularity')
+                                </th>
+                                <th class="px-4 py-3 text-right">
                                     @lang('crud.items.inputs.rating')
                                 </th>
                                 <th class="px-4 py-3 text-left">
+                                    @lang('crud.items.inputs.rating_data')
+                                </th>
+                                <th class="px-4 py-3 text-right">
                                     @lang('crud.items.inputs.health')
+                                </th>
+                                <th class="px-4 py-3 text-left">
+                                    @lang('crud.items.inputs.health_data')
                                 </th>
                                 <th class="px-4 py-3 text-left">
                                     @lang('crud.items.inputs.github_url')
@@ -148,11 +157,24 @@
                                 <td class="px-4 py-3 text-left">
                                     {{ $item->website ?? '-' }}
                                 </td>
-                                <td class="px-4 py-3 text-left">
+                                <td class="px-4 py-3 text-right">
+                                    {{ $item->popularity ?? '-' }}
+                                </td>
+                                <td class="px-4 py-3 text-right">
                                     {{ $item->rating ?? '-' }}
                                 </td>
-                                <td class="px-4 py-3 text-left">
+                                <td class="px-4 py-3 text-right">
+                                    <pre>
+{{ json_encode($item->rating_data) ?? '-' }}</pre
+                                    >
+                                </td>
+                                <td class="px-4 py-3 text-right">
                                     {{ $item->health ?? '-' }}
+                                </td>
+                                <td class="px-4 py-3 text-right">
+                                    <pre>
+{{ json_encode($item->health_data) ?? '-' }}</pre
+                                    >
                                 </td>
                                 <td class="px-4 py-3 text-left">
                                     {{ $item->github_url ?? '-' }}
@@ -258,7 +280,7 @@
                             </tr>
                             @empty
                             <tr>
-                                <td colspan="23">
+                                <td colspan="26">
                                     @lang('crud.common.no_items_found')
                                 </td>
                             </tr>
@@ -266,7 +288,7 @@
                         </tbody>
                         <tfoot>
                             <tr>
-                                <td colspan="23">
+                                <td colspan="26">
                                     <div class="mt-10 px-4">
                                         {!! $items->render() !!}
                                     </div>

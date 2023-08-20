@@ -37,7 +37,7 @@ class User extends Authenticatable implements FilamentUser
 
     public function comments()
     {
-        return $this->hasMany(Comment::class);
+        return $this->hasMany(Post::class, 'user_id');
     }
 
     public function stacksCreated()

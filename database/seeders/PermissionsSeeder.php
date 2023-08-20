@@ -21,12 +21,6 @@ class PermissionsSeeder extends Seeder
         Permission::create(['name' => 'update categories']);
         Permission::create(['name' => 'delete categories']);
 
-        Permission::create(['name' => 'list comments']);
-        Permission::create(['name' => 'view comments']);
-        Permission::create(['name' => 'create comments']);
-        Permission::create(['name' => 'update comments']);
-        Permission::create(['name' => 'delete comments']);
-
         Permission::create(['name' => 'list githuborganizations']);
         Permission::create(['name' => 'view githuborganizations']);
         Permission::create(['name' => 'create githuborganizations']);
@@ -80,6 +74,18 @@ class PermissionsSeeder extends Seeder
         Permission::create(['name' => 'create platforms']);
         Permission::create(['name' => 'update platforms']);
         Permission::create(['name' => 'delete platforms']);
+
+        Permission::create(['name' => 'list posts']);
+        Permission::create(['name' => 'view posts']);
+        Permission::create(['name' => 'create posts']);
+        Permission::create(['name' => 'update posts']);
+        Permission::create(['name' => 'delete posts']);
+
+        Permission::create(['name' => 'list posttypes']);
+        Permission::create(['name' => 'view posttypes']);
+        Permission::create(['name' => 'create posttypes']);
+        Permission::create(['name' => 'update posttypes']);
+        Permission::create(['name' => 'delete posttypes']);
 
         Permission::create(['name' => 'list stacks']);
         Permission::create(['name' => 'view stacks']);

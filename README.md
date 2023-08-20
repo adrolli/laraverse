@@ -62,21 +62,29 @@ Im ersten Schritt müsste eine Masse (zwischen 15k und 500k) packages aus Github
 
 ### Todo
 
--   Github API - try https://github.com/GrahamCampbell/Laravel-GitHub - or do it as GPT
--   Packagist API - https://packagist.org/search.json?q=laravel, see https://packagist.org/apidoc oder am besten alles: https://packagist.org/packages/list.json
--   Packalyst RSS - https://packalyst.com/resources (new and requested)
 -   NPM - https://api-docs.npms.io/ or directly https://stackoverflow.com/questions/34071621/query-npmjs-registry-via-api ... step by step https://www.edoardoscibona.com/exploring-the-npm-registry-api
--   Laracasts, Codecourse, Laravel-Daily, Laravel-News, YT, VS Code Marketplace and many more waiting ...
+-   More APIs and maybe some tweaks ... Laracasts, Codecourse, Laravel-Daily, Laravel-News, YT, VS Code Marketplace and many more waiting ...
 
-## Devlog
+### Reading from Packagist
 
--   [x] Vemto and Filament 2 platform ready
--   [ ] https://laraverse.test/github-search/laravel - basic api call done - create and write to github-cache-table
--   [ ] https://laraverse.test/packagist-search/tallui - basic api call done - create and write to packagist-cache-table
--   [ ] do same for npm
--   [ ] create a merge-data-controller that reads from all three tables and merges to item-table, keep track on changes then
--   [ ] curated means - there are changes locally, that should not be overwritten by the merge - https://laraverse.test/admin/platforms should be set as first attempt
--   [ ] prepare your first output
+-   Packagist API - https://packagist.org/search.json?q=laravel, see https://packagist.org/apidoc oder am besten alles: https://packagist.org/packages/list.json
+
+https://laraverse.test/packagist-search
+
+- [ ] populate the Packagist table, update then
+- [ ] create item and all related objects if not exists (packagist url and ID in packagist table), compare and update a bunch of fields then
+
+### Reading from NPM
+
+- [ ] populate the NPM table, update then
+- [ ] create item and all related objects if not exists (npm url and ID in npm table), compare and update a bunch of fields then
+
+### Reading from GitHub
+
+https://laraverse.test/github-search/laravel
+
+- [ ] populate the Github table and all related, update then
+- [ ] create item and all related objects if not exists (github url and ID in github table), compare and update a bunch of fields then
 
 ## Github Data
 
@@ -185,3 +193,5 @@ As a relation or within the main table?
 -   Receipes and compatibility checks (people can check a stack compat)
 -   Stack the big picture ... see the stack as a fancy image
 -   Safe stack ... how safe (active dev, bottlenecks) is your stack?
+-   Books, Video Courses, Learning platforms as new types
+-   Packalyst RSS - https://packalyst.com/resources (new and requested)

@@ -60,8 +60,7 @@ class StackResource extends Resource
                         ]),
 
                     KeyValue::make('build')
-                        ->required()
-                        ->required()
+                        ->nullable()
                         ->columnSpan([
                             'default' => 12,
                             'md' => 12,
@@ -79,7 +78,7 @@ class StackResource extends Resource
 
                     Toggle::make('major')
                         ->rules(['boolean'])
-                        ->required()
+                        ->nullable()
                         ->columnSpan([
                             'default' => 12,
                             'md' => 12,
@@ -143,7 +142,7 @@ class StackResource extends Resource
     public static function getRelations(): array
     {
         return [
-            StackResource\RelationManagers\CommentsRelationManager::class,
+            StackResource\RelationManagers\PostsRelationManager::class,
             StackResource\RelationManagers\ItemsRelationManager::class,
             StackResource\RelationManagers\UsersRelationManager::class,
         ];

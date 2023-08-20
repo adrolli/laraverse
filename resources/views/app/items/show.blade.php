@@ -67,15 +67,33 @@
                     </div>
                     <div class="mb-4">
                         <h5 class="font-medium text-gray-700">
+                            @lang('crud.items.inputs.popularity')
+                        </h5>
+                        <span>{{ $item->popularity ?? '-' }}</span>
+                    </div>
+                    <div class="mb-4">
+                        <h5 class="font-medium text-gray-700">
                             @lang('crud.items.inputs.rating')
                         </h5>
                         <span>{{ $item->rating ?? '-' }}</span>
                     </div>
                     <div class="mb-4">
                         <h5 class="font-medium text-gray-700">
+                            @lang('crud.items.inputs.rating_data')
+                        </h5>
+                        <pre>{{ json_encode($item->rating_data) ?? '-' }}</pre>
+                    </div>
+                    <div class="mb-4">
+                        <h5 class="font-medium text-gray-700">
                             @lang('crud.items.inputs.health')
                         </h5>
                         <span>{{ $item->health ?? '-' }}</span>
+                    </div>
+                    <div class="mb-4">
+                        <h5 class="font-medium text-gray-700">
+                            @lang('crud.items.inputs.health_data')
+                        </h5>
+                        <pre>{{ json_encode($item->health_data) ?? '-' }}</pre>
                     </div>
                     <div class="mb-4">
                         <h5 class="font-medium text-gray-700">

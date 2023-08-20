@@ -41,7 +41,6 @@
             :value="old('latest_version', ($editing ? $item->latest_version : ''))"
             maxlength="255"
             placeholder="Latest Version"
-            required
         ></x-inputs.text>
     </x-inputs.group>
 
@@ -83,23 +82,54 @@
     </x-inputs.group>
 
     <x-inputs.group class="w-full">
-        <x-inputs.text
-            name="rating"
-            label="Rating"
-            :value="old('rating', ($editing ? $item->rating : ''))"
-            maxlength="255"
-            placeholder="Rating"
-        ></x-inputs.text>
+        <x-inputs.number
+            name="popularity"
+            label="Popularity"
+            :value="old('popularity', ($editing ? $item->popularity : ''))"
+            max="255"
+            placeholder="Popularity"
+            required
+        ></x-inputs.number>
     </x-inputs.group>
 
     <x-inputs.group class="w-full">
-        <x-inputs.text
+        <x-inputs.number
+            name="rating"
+            label="Rating"
+            :value="old('rating', ($editing ? $item->rating : ''))"
+            max="255"
+            placeholder="Rating"
+        ></x-inputs.number>
+    </x-inputs.group>
+
+    <x-inputs.group class="w-full">
+        <x-inputs.textarea
+            name="rating_data"
+            label="Rating Data"
+            maxlength="255"
+            >{{ old('rating_data', ($editing ? json_encode($item->rating_data) :
+            '')) }}</x-inputs.textarea
+        >
+    </x-inputs.group>
+
+    <x-inputs.group class="w-full">
+        <x-inputs.number
             name="health"
             label="Health"
             :value="old('health', ($editing ? $item->health : ''))"
-            maxlength="255"
+            max="255"
             placeholder="Health"
-        ></x-inputs.text>
+        ></x-inputs.number>
+    </x-inputs.group>
+
+    <x-inputs.group class="w-full">
+        <x-inputs.textarea
+            name="health_data"
+            label="Health Data"
+            maxlength="255"
+            >{{ old('health_data', ($editing ? json_encode($item->health_data) :
+            '')) }}</x-inputs.textarea
+        >
     </x-inputs.group>
 
     <x-inputs.group class="w-full">

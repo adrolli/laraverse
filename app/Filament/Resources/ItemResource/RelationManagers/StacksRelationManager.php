@@ -53,13 +53,11 @@ class StacksRelationManager extends RelationManager
                         'lg' => 12,
                     ]),
 
-                KeyValue::make('build')
-                    ->required()
-                    ->columnSpan([
-                        'default' => 12,
-                        'md' => 12,
-                        'lg' => 12,
-                    ]),
+                KeyValue::make('build')->columnSpan([
+                    'default' => 12,
+                    'md' => 12,
+                    'lg' => 12,
+                ]),
 
                 Toggle::make('public')
                     ->rules(['boolean'])

@@ -3,36 +3,38 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\TagController;
-use App\Http\Controllers\Api\ItemController;
 use App\Http\Controllers\Api\UserController;
+use App\Http\Controllers\Api\ItemController;
+use App\Http\Controllers\Api\PostController;
 use App\Http\Controllers\Api\AuthController;
 use App\Http\Controllers\Api\RoleController;
 use App\Http\Controllers\Api\StackController;
 use App\Http\Controllers\Api\VendorController;
-use App\Http\Controllers\Api\CommentController;
 use App\Http\Controllers\Api\CategoryController;
-use App\Http\Controllers\Api\ItemTagsController;
 use App\Http\Controllers\Api\ItemTypeController;
-use App\Http\Controllers\Api\TagItemsController;
 use App\Http\Controllers\Api\PlatformController;
+use App\Http\Controllers\Api\TagItemsController;
+use App\Http\Controllers\Api\ItemTagsController;
+use App\Http\Controllers\Api\PostTypeController;
 use App\Http\Controllers\Api\GithubTagController;
+use App\Http\Controllers\Api\UserPostsController;
+use App\Http\Controllers\Api\ItemPostsController;
 use App\Http\Controllers\Api\ItemItemsController;
 use App\Http\Controllers\Api\GithubRepoController;
-use App\Http\Controllers\Api\ItemStacksController;
 use App\Http\Controllers\Api\NpmPackageController;
-use App\Http\Controllers\Api\UserStacksController;
+use App\Http\Controllers\Api\StackPostsController;
 use App\Http\Controllers\Api\StackItemsController;
 use App\Http\Controllers\Api\StackUsersController;
+use App\Http\Controllers\Api\UserStacksController;
+use App\Http\Controllers\Api\ItemStacksController;
 use App\Http\Controllers\Api\PermissionController;
 use App\Http\Controllers\Api\GithubOwnerController;
 use App\Http\Controllers\Api\VendorItemsController;
-use App\Http\Controllers\Api\ItemCommentsController;
-use App\Http\Controllers\Api\UserCommentsController;
 use App\Http\Controllers\Api\CategoryItemsController;
-use App\Http\Controllers\Api\ItemPlatformsController;
 use App\Http\Controllers\Api\ItemTypeItemsController;
 use App\Http\Controllers\Api\PlatformItemsController;
-use App\Http\Controllers\Api\StackCommentsController;
+use App\Http\Controllers\Api\ItemPlatformsController;
+use App\Http\Controllers\Api\PostTypePostsController;
 use App\Http\Controllers\Api\ItemCategoriesController;
 use App\Http\Controllers\Api\GithubRepoItemsController;
 use App\Http\Controllers\Api\NpmPackageItemsController;
@@ -84,8 +86,6 @@ Route::name('api.')
             CategoryItemsController::class,
             'destroy',
         ])->name('categories.items.destroy');
-
-        Route::apiResource('comments', CommentController::class);
 
         Route::apiResource(
             'github-organizations',
@@ -156,17 +156,176 @@ Route::name('api.')
             'destroy',
         ])->name('github-tags.github-repos.destroy');
 
+        Route::apiResource('item-types', ItemTypeController::class);
+
+        // ItemType Items
+        Route::get('/item-types/{itemType}/items', [
+            ItemTypeItemsController::class,
+            'index',
+        ])->name('item-types.items.index');
+        Route::post('/item-types/{itemType}/items', [
+            ItemTypeItemsController::class,
+            'store',
+        ])->name('item-types.items.store');
+
+        Route::apiResource('npm-packages', NpmPackageController::class);
+
+        // NpmPackage Items
+        Route::get('/npm-packages/{npmPackage}/items', [
+            NpmPackageItemsController::class,
+            'index',
+        ])->name('npm-packages.items.index');
+        Route::post('/npm-packages/{npmPackage}/items', [
+            NpmPackageItemsController::class,
+            'store',
+        ])->name('npm-packages.items.store');
+
+        Route::apiResource(
+            'packagist-packages',
+            PackagistPackageController::class
+        );
+
+        // PackagistPackage Items
+        Route::get('/packagist-packages/{packagistPackage}/items', [
+            PackagistPackageItemsController::class,
+            'index',
+        ])->name('packagist-packages.items.index');
+        Route::post('/packagist-packages/{packagistPackage}/items', [
+            PackagistPackageItemsController::class,
+            'store',
+        ])->name('packagist-packages.items.store');
+
+        Route::apiResource('platforms', PlatformController::class);
+
+        // Platform Items
+        Route::get('/platforms/{platform}/items', [
+            PlatformItemsController::class,
+            'index',
+        ])->name('platforms.items.index');
+        Route::post('/platforms/{platform}/items/{item}', [
+            PlatformItemsController::class,
+            'store',
+        ])->name('platforms.items.store');
+        Route::delete('/platforms/{platform}/items/{item}', [
+            PlatformItemsController::class,
+            'destroy',
+        ])->name('platforms.items.destroy');
+
+        Route::apiResource('stacks', StackController::class);
+
+        // Stack Comments
+        Route::get('/stacks/{stack}/posts', [
+            StackPostsController::class,
+            'index',
+        ])->name('stacks.posts.index');
+        Route::post('/stacks/{stack}/posts', [
+            StackPostsController::class,
+            'store',
+        ])->name('stacks.posts.store');
+
+        // Stack Items
+        Route::get('/stacks/{stack}/items', [
+            StackItemsController::class,
+            'index',
+        ])->name('stacks.items.index');
+        Route::post('/stacks/{stack}/items/{item}', [
+            StackItemsController::class,
+            'store',
+        ])->name('stacks.items.store');
+        Route::delete('/stacks/{stack}/items/{item}', [
+            StackItemsController::class,
+            'destroy',
+        ])->name('stacks.items.destroy');
+
+        // Stack Users
+        Route::get('/stacks/{stack}/users', [
+            StackUsersController::class,
+            'index',
+        ])->name('stacks.users.index');
+        Route::post('/stacks/{stack}/users/{user}', [
+            StackUsersController::class,
+            'store',
+        ])->name('stacks.users.store');
+        Route::delete('/stacks/{stack}/users/{user}', [
+            StackUsersController::class,
+            'destroy',
+        ])->name('stacks.users.destroy');
+
+        Route::apiResource('tags', TagController::class);
+
+        // Tag Items
+        Route::get('/tags/{tag}/items', [
+            TagItemsController::class,
+            'index',
+        ])->name('tags.items.index');
+        Route::post('/tags/{tag}/items/{item}', [
+            TagItemsController::class,
+            'store',
+        ])->name('tags.items.store');
+        Route::delete('/tags/{tag}/items/{item}', [
+            TagItemsController::class,
+            'destroy',
+        ])->name('tags.items.destroy');
+
+        Route::apiResource('users', UserController::class);
+
+        // User Comments
+        Route::get('/users/{user}/posts', [
+            UserPostsController::class,
+            'index',
+        ])->name('users.posts.index');
+        Route::post('/users/{user}/posts', [
+            UserPostsController::class,
+            'store',
+        ])->name('users.posts.store');
+
+        // User Stacks Created
+        Route::get('/users/{user}/stacks', [
+            UserStacksController::class,
+            'index',
+        ])->name('users.stacks.index');
+        Route::post('/users/{user}/stacks', [
+            UserStacksController::class,
+            'store',
+        ])->name('users.stacks.store');
+
+        // User Stacks Used
+        Route::get('/users/{user}/stacks', [
+            UserStacksController::class,
+            'index',
+        ])->name('users.stacks.index');
+        Route::post('/users/{user}/stacks/{stack}', [
+            UserStacksController::class,
+            'store',
+        ])->name('users.stacks.store');
+        Route::delete('/users/{user}/stacks/{stack}', [
+            UserStacksController::class,
+            'destroy',
+        ])->name('users.stacks.destroy');
+
+        Route::apiResource('vendors', VendorController::class);
+
+        // Vendor Items
+        Route::get('/vendors/{vendor}/items', [
+            VendorItemsController::class,
+            'index',
+        ])->name('vendors.items.index');
+        Route::post('/vendors/{vendor}/items', [
+            VendorItemsController::class,
+            'store',
+        ])->name('vendors.items.store');
+
         Route::apiResource('items', ItemController::class);
 
-        // Item Comments
-        Route::get('/items/{item}/comments', [
-            ItemCommentsController::class,
+        // Item Posts
+        Route::get('/items/{item}/posts', [
+            ItemPostsController::class,
             'index',
-        ])->name('items.comments.index');
-        Route::post('/items/{item}/comments', [
-            ItemCommentsController::class,
+        ])->name('items.posts.index');
+        Route::post('/items/{item}/posts', [
+            ItemPostsController::class,
             'store',
-        ])->name('items.comments.store');
+        ])->name('items.posts.store');
 
         // Item Platforms
         Route::get('/items/{item}/platforms', [
@@ -252,162 +411,17 @@ Route::name('api.')
             'destroy',
         ])->name('items.items.destroy');
 
-        Route::apiResource('item-types', ItemTypeController::class);
+        Route::apiResource('posts', PostController::class);
 
-        // ItemType Items
-        Route::get('/item-types/{itemType}/items', [
-            ItemTypeItemsController::class,
+        Route::apiResource('post-types', PostTypeController::class);
+
+        // PostType Comments
+        Route::get('/post-types/{postType}/posts', [
+            PostTypePostsController::class,
             'index',
-        ])->name('item-types.items.index');
-        Route::post('/item-types/{itemType}/items', [
-            ItemTypeItemsController::class,
+        ])->name('post-types.posts.index');
+        Route::post('/post-types/{postType}/posts', [
+            PostTypePostsController::class,
             'store',
-        ])->name('item-types.items.store');
-
-        Route::apiResource('vendors', VendorController::class);
-
-        // Vendor Items
-        Route::get('/vendors/{vendor}/items', [
-            VendorItemsController::class,
-            'index',
-        ])->name('vendors.items.index');
-        Route::post('/vendors/{vendor}/items', [
-            VendorItemsController::class,
-            'store',
-        ])->name('vendors.items.store');
-
-        Route::apiResource('tags', TagController::class);
-
-        // Tag Items
-        Route::get('/tags/{tag}/items', [
-            TagItemsController::class,
-            'index',
-        ])->name('tags.items.index');
-        Route::post('/tags/{tag}/items/{item}', [
-            TagItemsController::class,
-            'store',
-        ])->name('tags.items.store');
-        Route::delete('/tags/{tag}/items/{item}', [
-            TagItemsController::class,
-            'destroy',
-        ])->name('tags.items.destroy');
-
-        Route::apiResource('npm-packages', NpmPackageController::class);
-
-        // NpmPackage Items
-        Route::get('/npm-packages/{npmPackage}/items', [
-            NpmPackageItemsController::class,
-            'index',
-        ])->name('npm-packages.items.index');
-        Route::post('/npm-packages/{npmPackage}/items', [
-            NpmPackageItemsController::class,
-            'store',
-        ])->name('npm-packages.items.store');
-
-        Route::apiResource(
-            'packagist-packages',
-            PackagistPackageController::class
-        );
-
-        // PackagistPackage Items
-        Route::get('/packagist-packages/{packagistPackage}/items', [
-            PackagistPackageItemsController::class,
-            'index',
-        ])->name('packagist-packages.items.index');
-        Route::post('/packagist-packages/{packagistPackage}/items', [
-            PackagistPackageItemsController::class,
-            'store',
-        ])->name('packagist-packages.items.store');
-
-        Route::apiResource('platforms', PlatformController::class);
-
-        // Platform Items
-        Route::get('/platforms/{platform}/items', [
-            PlatformItemsController::class,
-            'index',
-        ])->name('platforms.items.index');
-        Route::post('/platforms/{platform}/items/{item}', [
-            PlatformItemsController::class,
-            'store',
-        ])->name('platforms.items.store');
-        Route::delete('/platforms/{platform}/items/{item}', [
-            PlatformItemsController::class,
-            'destroy',
-        ])->name('platforms.items.destroy');
-
-        Route::apiResource('users', UserController::class);
-
-        // User Comments
-        Route::get('/users/{user}/comments', [
-            UserCommentsController::class,
-            'index',
-        ])->name('users.comments.index');
-        Route::post('/users/{user}/comments', [
-            UserCommentsController::class,
-            'store',
-        ])->name('users.comments.store');
-
-        // User Stacks Created
-        Route::get('/users/{user}/stacks', [
-            UserStacksController::class,
-            'index',
-        ])->name('users.stacks.index');
-        Route::post('/users/{user}/stacks', [
-            UserStacksController::class,
-            'store',
-        ])->name('users.stacks.store');
-
-        // User Stacks Used
-        Route::get('/users/{user}/stacks', [
-            UserStacksController::class,
-            'index',
-        ])->name('users.stacks.index');
-        Route::post('/users/{user}/stacks/{stack}', [
-            UserStacksController::class,
-            'store',
-        ])->name('users.stacks.store');
-        Route::delete('/users/{user}/stacks/{stack}', [
-            UserStacksController::class,
-            'destroy',
-        ])->name('users.stacks.destroy');
-
-        Route::apiResource('stacks', StackController::class);
-
-        // Stack Comments
-        Route::get('/stacks/{stack}/comments', [
-            StackCommentsController::class,
-            'index',
-        ])->name('stacks.comments.index');
-        Route::post('/stacks/{stack}/comments', [
-            StackCommentsController::class,
-            'store',
-        ])->name('stacks.comments.store');
-
-        // Stack Items
-        Route::get('/stacks/{stack}/items', [
-            StackItemsController::class,
-            'index',
-        ])->name('stacks.items.index');
-        Route::post('/stacks/{stack}/items/{item}', [
-            StackItemsController::class,
-            'store',
-        ])->name('stacks.items.store');
-        Route::delete('/stacks/{stack}/items/{item}', [
-            StackItemsController::class,
-            'destroy',
-        ])->name('stacks.items.destroy');
-
-        // Stack Users
-        Route::get('/stacks/{stack}/users', [
-            StackUsersController::class,
-            'index',
-        ])->name('stacks.users.index');
-        Route::post('/stacks/{stack}/users/{user}', [
-            StackUsersController::class,
-            'store',
-        ])->name('stacks.users.store');
-        Route::delete('/stacks/{stack}/users/{user}', [
-            StackUsersController::class,
-            'destroy',
-        ])->name('stacks.users.destroy');
+        ])->name('post-types.posts.store');
     });

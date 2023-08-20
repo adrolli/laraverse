@@ -15,9 +15,9 @@ return new class extends Migration {
             $table->string('title');
             $table->string('slug');
             $table->text('description');
-            $table->json('build');
+            $table->json('build')->nullable();
             $table->boolean('public');
-            $table->boolean('major');
+            $table->boolean('major')->nullable();
             $table->unsignedBigInteger('created_by');
 
             $table->timestamps();

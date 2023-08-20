@@ -82,10 +82,14 @@ class ItemControllerTest extends TestCase
             ->toArray();
 
         $data['versions'] = json_encode($data['versions']);
+        $data['rating_data'] = json_encode($data['rating_data']);
+        $data['health_data'] = json_encode($data['health_data']);
 
         $response = $this->post(route('items.store'), $data);
 
         $data['versions'] = $this->castToJson($data['versions']);
+        $data['rating_data'] = $this->castToJson($data['rating_data']);
+        $data['health_data'] = $this->castToJson($data['health_data']);
 
         $this->assertDatabaseHas('items', $data);
 
@@ -144,8 +148,11 @@ class ItemControllerTest extends TestCase
             'latest_version' => $this->faker->text(255),
             'versions' => [],
             'website' => $this->faker->text(255),
-            'rating' => $this->faker->text(255),
-            'health' => $this->faker->text(255),
+            'popularity' => $this->faker->randomNumber(0),
+            'rating' => $this->faker->randomNumber(0),
+            'rating_data' => [],
+            'health' => $this->faker->randomNumber(0),
+            'health_data' => [],
             'github_url' => $this->faker->text(255),
             'github_stars' => $this->faker->randomNumber(0),
             'packagist_url' => $this->faker->text(255),
@@ -163,12 +170,16 @@ class ItemControllerTest extends TestCase
         ];
 
         $data['versions'] = json_encode($data['versions']);
+        $data['rating_data'] = json_encode($data['rating_data']);
+        $data['health_data'] = json_encode($data['health_data']);
 
         $response = $this->put(route('items.update', $item), $data);
 
         $data['id'] = $item->id;
 
         $data['versions'] = $this->castToJson($data['versions']);
+        $data['rating_data'] = $this->castToJson($data['rating_data']);
+        $data['health_data'] = $this->castToJson($data['health_data']);
 
         $this->assertDatabaseHas('items', $data);
 

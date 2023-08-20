@@ -35,7 +35,7 @@
     </x-inputs.group>
 
     <x-inputs.group class="w-full">
-        <x-inputs.textarea name="build" label="Build" maxlength="255" required
+        <x-inputs.textarea name="build" label="Build" maxlength="255"
             >{{ old('build', ($editing ? json_encode($stack->build) : ''))
             }}</x-inputs.textarea
         >

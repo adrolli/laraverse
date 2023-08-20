@@ -23,11 +23,6 @@
                         Categories
                         </x-dropdown-link>
                         @endcan
-                        @can('view-any', App\Models\Comment::class)
-                        <x-dropdown-link href="{{ route('comments.index') }}">
-                        Comments
-                        </x-dropdown-link>
-                        @endcan
                         @can('view-any', App\Models\GithubOrganization::class)
                         <x-dropdown-link href="{{ route('github-organizations.index') }}">
                         Github Organizations
@@ -48,24 +43,9 @@
                         Github Tags
                         </x-dropdown-link>
                         @endcan
-                        @can('view-any', App\Models\Item::class)
-                        <x-dropdown-link href="{{ route('items.index') }}">
-                        Items
-                        </x-dropdown-link>
-                        @endcan
                         @can('view-any', App\Models\ItemType::class)
                         <x-dropdown-link href="{{ route('item-types.index') }}">
                         Item Types
-                        </x-dropdown-link>
-                        @endcan
-                        @can('view-any', App\Models\Vendor::class)
-                        <x-dropdown-link href="{{ route('vendors.index') }}">
-                        Vendors
-                        </x-dropdown-link>
-                        @endcan
-                        @can('view-any', App\Models\Tag::class)
-                        <x-dropdown-link href="{{ route('tags.index') }}">
-                        Tags
                         </x-dropdown-link>
                         @endcan
                         @can('view-any', App\Models\NpmPackage::class)
@@ -83,14 +63,39 @@
                         Platforms
                         </x-dropdown-link>
                         @endcan
+                        @can('view-any', App\Models\Stack::class)
+                        <x-dropdown-link href="{{ route('stacks.index') }}">
+                        Stacks
+                        </x-dropdown-link>
+                        @endcan
+                        @can('view-any', App\Models\Tag::class)
+                        <x-dropdown-link href="{{ route('tags.index') }}">
+                        Tags
+                        </x-dropdown-link>
+                        @endcan
                         @can('view-any', App\Models\User::class)
                         <x-dropdown-link href="{{ route('users.index') }}">
                         Users
                         </x-dropdown-link>
                         @endcan
-                        @can('view-any', App\Models\Stack::class)
-                        <x-dropdown-link href="{{ route('stacks.index') }}">
-                        Stacks
+                        @can('view-any', App\Models\Vendor::class)
+                        <x-dropdown-link href="{{ route('vendors.index') }}">
+                        Vendors
+                        </x-dropdown-link>
+                        @endcan
+                        @can('view-any', App\Models\Item::class)
+                        <x-dropdown-link href="{{ route('items.index') }}">
+                        Items
+                        </x-dropdown-link>
+                        @endcan
+                        @can('view-any', App\Models\Post::class)
+                        <x-dropdown-link href="{{ route('posts.index') }}">
+                        Posts
+                        </x-dropdown-link>
+                        @endcan
+                        @can('view-any', App\Models\PostType::class)
+                        <x-dropdown-link href="{{ route('post-types.index') }}">
+                        Post Types
                         </x-dropdown-link>
                         @endcan
                 </x-nav-dropdown>
@@ -240,11 +245,6 @@
                 Categories
                 </x-responsive-nav-link>
                 @endcan
-                @can('view-any', App\Models\Comment::class)
-                <x-responsive-nav-link href="{{ route('comments.index') }}">
-                Comments
-                </x-responsive-nav-link>
-                @endcan
                 @can('view-any', App\Models\GithubOrganization::class)
                 <x-responsive-nav-link href="{{ route('github-organizations.index') }}">
                 Github Organizations
@@ -265,24 +265,9 @@
                 Github Tags
                 </x-responsive-nav-link>
                 @endcan
-                @can('view-any', App\Models\Item::class)
-                <x-responsive-nav-link href="{{ route('items.index') }}">
-                Items
-                </x-responsive-nav-link>
-                @endcan
                 @can('view-any', App\Models\ItemType::class)
                 <x-responsive-nav-link href="{{ route('item-types.index') }}">
                 Item Types
-                </x-responsive-nav-link>
-                @endcan
-                @can('view-any', App\Models\Vendor::class)
-                <x-responsive-nav-link href="{{ route('vendors.index') }}">
-                Vendors
-                </x-responsive-nav-link>
-                @endcan
-                @can('view-any', App\Models\Tag::class)
-                <x-responsive-nav-link href="{{ route('tags.index') }}">
-                Tags
                 </x-responsive-nav-link>
                 @endcan
                 @can('view-any', App\Models\NpmPackage::class)
@@ -300,14 +285,39 @@
                 Platforms
                 </x-responsive-nav-link>
                 @endcan
+                @can('view-any', App\Models\Stack::class)
+                <x-responsive-nav-link href="{{ route('stacks.index') }}">
+                Stacks
+                </x-responsive-nav-link>
+                @endcan
+                @can('view-any', App\Models\Tag::class)
+                <x-responsive-nav-link href="{{ route('tags.index') }}">
+                Tags
+                </x-responsive-nav-link>
+                @endcan
                 @can('view-any', App\Models\User::class)
                 <x-responsive-nav-link href="{{ route('users.index') }}">
                 Users
                 </x-responsive-nav-link>
                 @endcan
-                @can('view-any', App\Models\Stack::class)
-                <x-responsive-nav-link href="{{ route('stacks.index') }}">
-                Stacks
+                @can('view-any', App\Models\Vendor::class)
+                <x-responsive-nav-link href="{{ route('vendors.index') }}">
+                Vendors
+                </x-responsive-nav-link>
+                @endcan
+                @can('view-any', App\Models\Item::class)
+                <x-responsive-nav-link href="{{ route('items.index') }}">
+                Items
+                </x-responsive-nav-link>
+                @endcan
+                @can('view-any', App\Models\Post::class)
+                <x-responsive-nav-link href="{{ route('posts.index') }}">
+                Posts
+                </x-responsive-nav-link>
+                @endcan
+                @can('view-any', App\Models\PostType::class)
+                <x-responsive-nav-link href="{{ route('post-types.index') }}">
+                Post Types
                 </x-responsive-nav-link>
                 @endcan
 

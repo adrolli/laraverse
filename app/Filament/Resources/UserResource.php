@@ -91,7 +91,7 @@ class UserResource extends Resource
     public static function getRelations(): array
     {
         return [
-            UserResource\RelationManagers\CommentsRelationManager::class,
+            UserResource\RelationManagers\PostsRelationManager::class,
             UserResource\RelationManagers\StacksRelationManager::class,
             UserResource\RelationManagers\StacksRelationManager::class,
         ];

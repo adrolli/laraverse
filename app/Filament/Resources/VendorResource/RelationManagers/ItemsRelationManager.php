@@ -87,8 +87,19 @@ class ItemsRelationManager extends RelationManager
                         'lg' => 12,
                     ]),
 
+                TextInput::make('popularity')
+                    ->rules(['numeric'])
+                    ->numeric()
+                    ->placeholder('Popularity')
+                    ->columnSpan([
+                        'default' => 12,
+                        'md' => 12,
+                        'lg' => 12,
+                    ]),
+
                 TextInput::make('rating')
-                    ->rules(['max:255', 'string'])
+                    ->rules(['numeric'])
+                    ->numeric()
                     ->placeholder('Rating')
                     ->columnSpan([
                         'default' => 12,
@@ -96,14 +107,27 @@ class ItemsRelationManager extends RelationManager
                         'lg' => 12,
                     ]),
 
+                KeyValue::make('rating_data')->columnSpan([
+                    'default' => 12,
+                    'md' => 12,
+                    'lg' => 12,
+                ]),
+
                 TextInput::make('health')
-                    ->rules(['max:255', 'string'])
+                    ->rules(['numeric'])
+                    ->numeric()
                     ->placeholder('Health')
                     ->columnSpan([
                         'default' => 12,
                         'md' => 12,
                         'lg' => 12,
                     ]),
+
+                KeyValue::make('health_data')->columnSpan([
+                    'default' => 12,
+                    'md' => 12,
+                    'lg' => 12,
+                ]),
 
                 TextInput::make('github_url')
                     ->rules(['max:255', 'string'])
@@ -237,8 +261,9 @@ class ItemsRelationManager extends RelationManager
                 Tables\Columns\TextColumn::make('vendor.title')->limit(50),
                 Tables\Columns\TextColumn::make('itemType.title')->limit(50),
                 Tables\Columns\TextColumn::make('website')->limit(50),
-                Tables\Columns\TextColumn::make('rating')->limit(50),
-                Tables\Columns\TextColumn::make('health')->limit(50),
+                Tables\Columns\TextColumn::make('popularity'),
+                Tables\Columns\TextColumn::make('rating'),
+                Tables\Columns\TextColumn::make('health'),
                 Tables\Columns\TextColumn::make('github_url')->limit(50),
                 Tables\Columns\TextColumn::make('github_stars'),
                 Tables\Columns\TextColumn::make('packagist_url')->limit(50),

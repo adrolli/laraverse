@@ -68,6 +68,16 @@ class ItemController extends Controller
         $validated = $request->validated();
         $validated['versions'] = json_decode($validated['versions'], true);
 
+        $validated['rating_data'] = json_decode(
+            $validated['rating_data'],
+            true
+        );
+
+        $validated['health_data'] = json_decode(
+            $validated['health_data'],
+            true
+        );
+
         $item = Item::create($validated);
 
         return redirect()
@@ -122,6 +132,16 @@ class ItemController extends Controller
 
         $validated = $request->validated();
         $validated['versions'] = json_decode($validated['versions'], true);
+
+        $validated['rating_data'] = json_decode(
+            $validated['rating_data'],
+            true
+        );
+
+        $validated['health_data'] = json_decode(
+            $validated['health_data'],
+            true
+        );
 
         $item->update($validated);
 
