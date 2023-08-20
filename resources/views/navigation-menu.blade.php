@@ -18,11 +18,6 @@
                 </div>
 
                 <x-nav-dropdown title="Apps" align="right" width="48">
-                        @can('view-any', App\Models\Category::class)
-                        <x-dropdown-link href="{{ route('categories.index') }}">
-                        Categories
-                        </x-dropdown-link>
-                        @endcan
                         @can('view-any', App\Models\GithubOrganization::class)
                         <x-dropdown-link href="{{ route('github-organizations.index') }}">
                         Github Organizations
@@ -73,19 +68,14 @@
                         Tags
                         </x-dropdown-link>
                         @endcan
-                        @can('view-any', App\Models\User::class)
-                        <x-dropdown-link href="{{ route('users.index') }}">
-                        Users
-                        </x-dropdown-link>
-                        @endcan
                         @can('view-any', App\Models\Vendor::class)
                         <x-dropdown-link href="{{ route('vendors.index') }}">
                         Vendors
                         </x-dropdown-link>
                         @endcan
-                        @can('view-any', App\Models\Item::class)
-                        <x-dropdown-link href="{{ route('items.index') }}">
-                        Items
+                        @can('view-any', App\Models\Category::class)
+                        <x-dropdown-link href="{{ route('categories.index') }}">
+                        Categories
                         </x-dropdown-link>
                         @endcan
                         @can('view-any', App\Models\Post::class)
@@ -93,9 +83,19 @@
                         Posts
                         </x-dropdown-link>
                         @endcan
+                        @can('view-any', App\Models\User::class)
+                        <x-dropdown-link href="{{ route('users.index') }}">
+                        Users
+                        </x-dropdown-link>
+                        @endcan
                         @can('view-any', App\Models\PostType::class)
                         <x-dropdown-link href="{{ route('post-types.index') }}">
                         Post Types
+                        </x-dropdown-link>
+                        @endcan
+                        @can('view-any', App\Models\Item::class)
+                        <x-dropdown-link href="{{ route('items.index') }}">
+                        Items
                         </x-dropdown-link>
                         @endcan
                 </x-nav-dropdown>
@@ -240,11 +240,6 @@
                 {{ __('Dashboard') }}
             </x-responsive-nav-link>
             
-                @can('view-any', App\Models\Category::class)
-                <x-responsive-nav-link href="{{ route('categories.index') }}">
-                Categories
-                </x-responsive-nav-link>
-                @endcan
                 @can('view-any', App\Models\GithubOrganization::class)
                 <x-responsive-nav-link href="{{ route('github-organizations.index') }}">
                 Github Organizations
@@ -295,19 +290,14 @@
                 Tags
                 </x-responsive-nav-link>
                 @endcan
-                @can('view-any', App\Models\User::class)
-                <x-responsive-nav-link href="{{ route('users.index') }}">
-                Users
-                </x-responsive-nav-link>
-                @endcan
                 @can('view-any', App\Models\Vendor::class)
                 <x-responsive-nav-link href="{{ route('vendors.index') }}">
                 Vendors
                 </x-responsive-nav-link>
                 @endcan
-                @can('view-any', App\Models\Item::class)
-                <x-responsive-nav-link href="{{ route('items.index') }}">
-                Items
+                @can('view-any', App\Models\Category::class)
+                <x-responsive-nav-link href="{{ route('categories.index') }}">
+                Categories
                 </x-responsive-nav-link>
                 @endcan
                 @can('view-any', App\Models\Post::class)
@@ -315,9 +305,19 @@
                 Posts
                 </x-responsive-nav-link>
                 @endcan
+                @can('view-any', App\Models\User::class)
+                <x-responsive-nav-link href="{{ route('users.index') }}">
+                Users
+                </x-responsive-nav-link>
+                @endcan
                 @can('view-any', App\Models\PostType::class)
                 <x-responsive-nav-link href="{{ route('post-types.index') }}">
                 Post Types
+                </x-responsive-nav-link>
+                @endcan
+                @can('view-any', App\Models\Item::class)
+                <x-responsive-nav-link href="{{ route('items.index') }}">
+                Items
                 </x-responsive-nav-link>
                 @endcan
 

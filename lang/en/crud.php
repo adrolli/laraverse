@@ -22,20 +22,6 @@ return [
         'removed' => 'Successfully removed',
     ],
 
-    'categories' => [
-        'name' => 'Categories',
-        'index_title' => 'Categories List',
-        'new_title' => 'New Category',
-        'create_title' => 'Create Category',
-        'edit_title' => 'Edit Category',
-        'show_title' => 'Show Category',
-        'inputs' => [
-            'title' => 'Title',
-            'slug' => 'Slug',
-            'description' => 'Description',
-        ],
-    ],
-
     'github_organizations' => [
         'name' => 'Github Organizations',
         'index_title' => 'GithubOrganizations List',
@@ -181,20 +167,6 @@ return [
         ],
     ],
 
-    'users' => [
-        'name' => 'Users',
-        'index_title' => 'Users List',
-        'new_title' => 'New User',
-        'create_title' => 'Create User',
-        'edit_title' => 'Edit User',
-        'show_title' => 'Show User',
-        'inputs' => [
-            'name' => 'Name',
-            'email' => 'Email',
-            'password' => 'Password',
-        ],
-    ],
-
     'vendors' => [
         'name' => 'Vendors',
         'index_title' => 'Vendors List',
@@ -209,6 +181,67 @@ return [
             'packagist' => 'Packagist',
             'npm' => 'Npm',
             'website' => 'Website',
+            'description' => 'Description',
+        ],
+    ],
+
+    'categories' => [
+        'name' => 'Categories',
+        'index_title' => 'Categories List',
+        'new_title' => 'New Category',
+        'create_title' => 'Create Category',
+        'edit_title' => 'Edit Category',
+        'show_title' => 'Show Category',
+        'inputs' => [
+            'title' => 'Title',
+            'slug' => 'Slug',
+            'description' => 'Description',
+        ],
+    ],
+
+    'posts' => [
+        'name' => 'Posts',
+        'index_title' => 'Posts List',
+        'new_title' => 'New Post',
+        'create_title' => 'Create Post',
+        'edit_title' => 'Edit Post',
+        'show_title' => 'Show Post',
+        'inputs' => [
+            'title' => 'Title',
+            'slug' => 'Slug',
+            'content' => 'Content',
+            'data' => 'Data',
+            'user_id' => 'User',
+            'item_id' => 'Item',
+            'stack_id' => 'Stack',
+            'post_type_id' => 'Post Type',
+        ],
+    ],
+
+    'users' => [
+        'name' => 'Users',
+        'index_title' => 'Users List',
+        'new_title' => 'New User',
+        'create_title' => 'Create User',
+        'edit_title' => 'Edit User',
+        'show_title' => 'Show User',
+        'inputs' => [
+            'name' => 'Name',
+            'email' => 'Email',
+            'password' => 'Password',
+        ],
+    ],
+
+    'post_types' => [
+        'name' => 'Post Types',
+        'index_title' => 'PostTypes List',
+        'new_title' => 'New Post type',
+        'create_title' => 'Create PostType',
+        'edit_title' => 'Edit PostType',
+        'show_title' => 'Show PostType',
+        'inputs' => [
+            'title' => 'Title',
+            'slug' => 'Slug',
             'description' => 'Description',
         ],
     ],
@@ -246,39 +279,6 @@ return [
             'github_repo_id' => 'Github Repo',
             'npm_package_id' => 'Npm Package',
             'packagist_package_id' => 'Packagist Package',
-        ],
-    ],
-
-    'posts' => [
-        'name' => 'Posts',
-        'index_title' => 'Posts List',
-        'new_title' => 'New Post',
-        'create_title' => 'Create Post',
-        'edit_title' => 'Edit Post',
-        'show_title' => 'Show Post',
-        'inputs' => [
-            'title' => 'Title',
-            'slug' => 'Slug',
-            'content' => 'Content',
-            'data' => 'Data',
-            'user_id' => 'User',
-            'item_id' => 'Item',
-            'stack_id' => 'Stack',
-            'post_type_id' => 'Post Type',
-        ],
-    ],
-
-    'post_types' => [
-        'name' => 'Post Types',
-        'index_title' => 'PostTypes List',
-        'new_title' => 'New Post type',
-        'create_title' => 'Create PostType',
-        'edit_title' => 'Edit PostType',
-        'show_title' => 'Show PostType',
-        'inputs' => [
-            'title' => 'Title',
-            'slug' => 'Slug',
-            'description' => 'Description',
         ],
     ],
 

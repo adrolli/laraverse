@@ -1,66 +1,14 @@
-# Laravel Packages
+# Laraverse
 
--   Laravel Packages - es gibt keine gute Suche
--   Es muss zuerst mal alle Pakete finden und eine Möglichkeit diese zu kuratieren (Kategorie etc.)
--   Es müssen Updates automatisch erfolgen
--   Es muss User-driven Content geben (Rating, Comments, Discussions)
--   Es sollten nicht nur Packages sein, sondern auch Apps, Tooling etc.
--   News, von überall, auch neue Videos, Training, etc.
+Laraverse ist mein Favorit, wenn das Projekt nur um Laravel geht, Larapedia, Laravault, Explore Laravel, Laraworld, Discover Laravel und Larastack wären die Alternativen. Weiter gedacht könnte auch StackSearch, StackBuilder, Stackalizer, TechStax infrage kommen. Alternativ etwas was PHP und JS verbindet, Ableger für WP und dergleichen.
 
--   Viral ...
-    -   Show your techstack feature
-    -   Share your techstack feature
-    -   Vote for your techstack
-    -   Donate to your techstacks devs
+Jedenfalls gibt es keine gute Suche für Laravel Packages. Wenn, dann sind es nur Packages, Tools wie Vemto findet man nicht.
 
 ## Model
 
 ![Vemto Model](laraverse_exported_image.png)
 
-## Brand Idee
-
-Nur für Laravel:
-
--   Larapedia
--   Laraverse
--   Laravault
--   Larafind
--   Explore Laravel
--   Laraworld
--   Discover Laravel
--   Larastack
-
-oder allgemeiner:
-
--   StackSearch
--   StackBuilder
--   Stackalizer
-
-### Woher Daten?
-
-Im ersten Schritt müsste eine Masse (zwischen 15k und 500k) packages aus Github kommen, dann das Ökosystem und anderes Zeug, damit auch den großen (weitestgehend nutzlosen) Datenbestand qualifizieren.‚
-
--   Github API (beachte auch alle PHP-Packages, Dependencies)
--   Wettbewerber (initial)
--   Request (Form, sofortige Veröffentlichung aber ungeprüft)
--   eigene Recherche (z. B. von Filament und anderen größeren Laravel-Plattformen)
--   Aus der Codebase (v. a. composer.json und package.json)
--   User-driven, v. a. Rating für Sortierung
--   Blogs (Scraping mit Guzzle und )
-
-### Wettbewerb
-
--   https://packalyst.com/
-
-### USPs
-
--   Usability, da fallen alle durch
--   Nicht nur Packages, sondern das ganze Ökosystem
--   Free / Freemium / Paid
--   Suchen für den vorgegebenen Tech-Stack
--   Anbindung an Laravel-News, Laravel Daily, Laravel.io, X, Stackoverflow, Github Issues und Discussions, etc. um für jedes Tool und Package das meiste an aktuellen Infos anzuzeigen
-
-### Todo
+## Todo
 
 -   NPM - https://api-docs.npms.io/ or directly https://stackoverflow.com/questions/34071621/query-npmjs-registry-via-api ... step by step https://www.edoardoscibona.com/exploring-the-npm-registry-api
 -   More APIs and maybe some tweaks ... Laracasts, Codecourse, Laravel-Daily, Laravel-News, YT, VS Code Marketplace and many more waiting ...
@@ -176,16 +124,7 @@ https://laraverse.test/github-search/laravel
     -   User registration
     -   ...
 
-## Handling versions
 
-As a relation or within the main table?
-
--   Versions are problematic
--   The can change things like license, pricing.
--   The can add features or even change type
--   The can even change name, slug (namespace) ...
--   They change dependencies and everything
--   But they should be clearly just a version ...
 
 ## Other ideas
 
@@ -195,3 +134,10 @@ As a relation or within the main table?
 -   Safe stack ... how safe (active dev, bottlenecks) is your stack?
 -   Books, Video Courses, Learning platforms as new types
 -   Packalyst RSS - https://packalyst.com/resources (new and requested)
+-   eigene Einträge (wie Vemto, Skipper)
+-   Packalyst RSS, RSS von Blogs, minimales Scraping
+-   User-driven Content.
+-   Request (Form, sofortige Veröffentlichung, wenn repo lesbar)
+-   Aus der Codebase (v. a. composer.json und package.json)
+-   User-driven, v. a. Rating für Sortierung, Posts (Request, Recipe, ...)
+-   Anbindung an Laravel-News, Laravel Daily, Laravel.io, X, Stackoverflow, Github Issues und Discussions, etc. um für jedes Tool und Package das meiste an aktuellen Infos anzuzeigen

@@ -17,7 +17,7 @@ class UserPostsController extends Controller
         $search = $request->get('search', '');
 
         $posts = $user
-            ->comments()
+            ->posts()
             ->search($search)
             ->latest()
             ->paginate();
@@ -39,7 +39,7 @@ class UserPostsController extends Controller
             'post_type_id' => ['required', 'exists:post_types,id'],
         ]);
 
-        $post = $user->comments()->create($validated);
+        $post = $user->posts()->create($validated);
 
         return new PostResource($post);
     }

@@ -3,19 +3,19 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\TagController;
+use App\Http\Controllers\Api\PostController;
 use App\Http\Controllers\Api\UserController;
 use App\Http\Controllers\Api\ItemController;
-use App\Http\Controllers\Api\PostController;
 use App\Http\Controllers\Api\AuthController;
 use App\Http\Controllers\Api\RoleController;
 use App\Http\Controllers\Api\StackController;
 use App\Http\Controllers\Api\VendorController;
-use App\Http\Controllers\Api\CategoryController;
 use App\Http\Controllers\Api\ItemTypeController;
 use App\Http\Controllers\Api\PlatformController;
 use App\Http\Controllers\Api\TagItemsController;
-use App\Http\Controllers\Api\ItemTagsController;
+use App\Http\Controllers\Api\CategoryController;
 use App\Http\Controllers\Api\PostTypeController;
+use App\Http\Controllers\Api\ItemTagsController;
 use App\Http\Controllers\Api\GithubTagController;
 use App\Http\Controllers\Api\UserPostsController;
 use App\Http\Controllers\Api\ItemPostsController;
@@ -30,11 +30,11 @@ use App\Http\Controllers\Api\ItemStacksController;
 use App\Http\Controllers\Api\PermissionController;
 use App\Http\Controllers\Api\GithubOwnerController;
 use App\Http\Controllers\Api\VendorItemsController;
-use App\Http\Controllers\Api\CategoryItemsController;
 use App\Http\Controllers\Api\ItemTypeItemsController;
 use App\Http\Controllers\Api\PlatformItemsController;
-use App\Http\Controllers\Api\ItemPlatformsController;
+use App\Http\Controllers\Api\CategoryItemsController;
 use App\Http\Controllers\Api\PostTypePostsController;
+use App\Http\Controllers\Api\ItemPlatformsController;
 use App\Http\Controllers\Api\ItemCategoriesController;
 use App\Http\Controllers\Api\GithubRepoItemsController;
 use App\Http\Controllers\Api\NpmPackageItemsController;
@@ -70,22 +70,6 @@ Route::name('api.')
     ->group(function () {
         Route::apiResource('roles', RoleController::class);
         Route::apiResource('permissions', PermissionController::class);
-
-        Route::apiResource('categories', CategoryController::class);
-
-        // Category Items
-        Route::get('/categories/{category}/items', [
-            CategoryItemsController::class,
-            'index',
-        ])->name('categories.items.index');
-        Route::post('/categories/{category}/items/{item}', [
-            CategoryItemsController::class,
-            'store',
-        ])->name('categories.items.store');
-        Route::delete('/categories/{category}/items/{item}', [
-            CategoryItemsController::class,
-            'destroy',
-        ])->name('categories.items.destroy');
 
         Route::apiResource(
             'github-organizations',
@@ -267,17 +251,37 @@ Route::name('api.')
             'destroy',
         ])->name('tags.items.destroy');
 
-        Route::apiResource('users', UserController::class);
+        Route::apiResource('vendors', VendorController::class);
 
-        // User Comments
-        Route::get('/users/{user}/posts', [
-            UserPostsController::class,
+        // Vendor Items
+        Route::get('/vendors/{vendor}/items', [
+            VendorItemsController::class,
             'index',
-        ])->name('users.posts.index');
-        Route::post('/users/{user}/posts', [
-            UserPostsController::class,
+        ])->name('vendors.items.index');
+        Route::post('/vendors/{vendor}/items', [
+            VendorItemsController::class,
             'store',
-        ])->name('users.posts.store');
+        ])->name('vendors.items.store');
+
+        Route::apiResource('categories', CategoryController::class);
+
+        // Category Items
+        Route::get('/categories/{category}/items', [
+            CategoryItemsController::class,
+            'index',
+        ])->name('categories.items.index');
+        Route::post('/categories/{category}/items/{item}', [
+            CategoryItemsController::class,
+            'store',
+        ])->name('categories.items.store');
+        Route::delete('/categories/{category}/items/{item}', [
+            CategoryItemsController::class,
+            'destroy',
+        ])->name('categories.items.destroy');
+
+        Route::apiResource('posts', PostController::class);
+
+        Route::apiResource('users', UserController::class);
 
         // User Stacks Created
         Route::get('/users/{user}/stacks', [
@@ -288,6 +292,16 @@ Route::name('api.')
             UserStacksController::class,
             'store',
         ])->name('users.stacks.store');
+
+        // User Posts
+        Route::get('/users/{user}/posts', [
+            UserPostsController::class,
+            'index',
+        ])->name('users.posts.index');
+        Route::post('/users/{user}/posts', [
+            UserPostsController::class,
+            'store',
+        ])->name('users.posts.store');
 
         // User Stacks Used
         Route::get('/users/{user}/stacks', [
@@ -303,17 +317,17 @@ Route::name('api.')
             'destroy',
         ])->name('users.stacks.destroy');
 
-        Route::apiResource('vendors', VendorController::class);
+        Route::apiResource('post-types', PostTypeController::class);
 
-        // Vendor Items
-        Route::get('/vendors/{vendor}/items', [
-            VendorItemsController::class,
+        // PostType Comments
+        Route::get('/post-types/{postType}/posts', [
+            PostTypePostsController::class,
             'index',
-        ])->name('vendors.items.index');
-        Route::post('/vendors/{vendor}/items', [
-            VendorItemsController::class,
+        ])->name('post-types.posts.index');
+        Route::post('/post-types/{postType}/posts', [
+            PostTypePostsController::class,
             'store',
-        ])->name('vendors.items.store');
+        ])->name('post-types.posts.store');
 
         Route::apiResource('items', ItemController::class);
 
@@ -410,18 +424,4 @@ Route::name('api.')
             ItemItemsController::class,
             'destroy',
         ])->name('items.items.destroy');
-
-        Route::apiResource('posts', PostController::class);
-
-        Route::apiResource('post-types', PostTypeController::class);
-
-        // PostType Comments
-        Route::get('/post-types/{postType}/posts', [
-            PostTypePostsController::class,
-            'index',
-        ])->name('post-types.posts.index');
-        Route::post('/post-types/{postType}/posts', [
-            PostTypePostsController::class,
-            'store',
-        ])->name('post-types.posts.store');
     });

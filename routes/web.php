@@ -50,7 +50,6 @@ Route::prefix('/')
         Route::resource('roles', RoleController::class);
         Route::resource('permissions', PermissionController::class);
 
-        Route::resource('categories', CategoryController::class);
         Route::resource(
             'github-organizations',
             GithubOrganizationController::class
@@ -67,9 +66,10 @@ Route::prefix('/')
         Route::resource('platforms', PlatformController::class);
         Route::resource('stacks', StackController::class);
         Route::resource('tags', TagController::class);
-        Route::resource('users', UserController::class);
         Route::resource('vendors', VendorController::class);
-        Route::resource('items', ItemController::class);
+        Route::resource('categories', CategoryController::class);
         Route::resource('posts', PostController::class);
+        Route::resource('users', UserController::class);
         Route::resource('post-types', PostTypeController::class);
+        Route::resource('items', ItemController::class);
     });
