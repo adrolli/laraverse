@@ -35,7 +35,7 @@ class UserStacksTest extends TestCase
         $user = User::factory()->create();
         $stack = Stack::factory()->create();
 
-        $user->stacksUsed()->attach($stack);
+        $user->stacks()->attach($stack);
 
         $response = $this->getJson(route('api.users.stacks.index', $user));
 
@@ -58,7 +58,7 @@ class UserStacksTest extends TestCase
 
         $this->assertTrue(
             $user
-                ->stacksUsed()
+                ->stacks()
                 ->where('stacks.id', $stack->id)
                 ->exists()
         );
@@ -80,7 +80,7 @@ class UserStacksTest extends TestCase
 
         $this->assertFalse(
             $user
-                ->stacksUsed()
+                ->stacks()
                 ->where('stacks.id', $stack->id)
                 ->exists()
         );

@@ -6,6 +6,8 @@ use App\Http\Controllers\GithubOwnerController;
 use App\Http\Controllers\GithubRepoController;
 use App\Http\Controllers\GithubTagController;
 use App\Http\Controllers\ItemController;
+use App\Http\Controllers\ItemRelationController;
+use App\Http\Controllers\ItemRelationTypeController;
 use App\Http\Controllers\ItemTypeController;
 use App\Http\Controllers\NpmPackageController;
 use App\Http\Controllers\PackagistPackageController;
@@ -33,6 +35,7 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/github-search/{query}', 'App\Http\Controllers\ConsumeGitHubController@searchRepositories');
 Route::get('/packagist-search', 'App\Http\Controllers\ConsumePackagistController@searchRepositories');
+Route::get('/packagist', 'App\Http\Controllers\Consumer\AllPackagistController@updatePackages');
 
 Route::get('/', function () {
     return view('welcome');
@@ -50,6 +53,7 @@ Route::prefix('/')
         Route::resource('roles', RoleController::class);
         Route::resource('permissions', PermissionController::class);
 
+        Route::resource('categories', CategoryController::class);
         Route::resource(
             'github-organizations',
             GithubOrganizationController::class
@@ -57,6 +61,12 @@ Route::prefix('/')
         Route::resource('github-owners', GithubOwnerController::class);
         Route::resource('github-repos', GithubRepoController::class);
         Route::resource('github-tags', GithubTagController::class);
+        Route::resource('items', ItemController::class);
+        Route::resource('item-relations', ItemRelationController::class);
+        Route::resource(
+            'item-relation-types',
+            ItemRelationTypeController::class
+        );
         Route::resource('item-types', ItemTypeController::class);
         Route::resource('npm-packages', NpmPackageController::class);
         Route::resource(
@@ -64,12 +74,10 @@ Route::prefix('/')
             PackagistPackageController::class
         );
         Route::resource('platforms', PlatformController::class);
+        Route::resource('posts', PostController::class);
+        Route::resource('post-types', PostTypeController::class);
         Route::resource('stacks', StackController::class);
         Route::resource('tags', TagController::class);
-        Route::resource('vendors', VendorController::class);
-        Route::resource('categories', CategoryController::class);
-        Route::resource('posts', PostController::class);
         Route::resource('users', UserController::class);
-        Route::resource('post-types', PostTypeController::class);
-        Route::resource('items', ItemController::class);
+        Route::resource('vendors', VendorController::class);
     });

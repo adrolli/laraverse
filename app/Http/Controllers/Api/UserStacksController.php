@@ -17,7 +17,7 @@ class UserStacksController extends Controller
         $search = $request->get('search', '');
 
         $stacks = $user
-            ->stacksUsed()
+            ->stacks()
             ->search($search)
             ->latest()
             ->paginate();
@@ -29,7 +29,7 @@ class UserStacksController extends Controller
     {
         $this->authorize('update', $user);
 
-        $user->stacksUsed()->syncWithoutDetaching([$stack->id]);
+        $user->stacks()->syncWithoutDetaching([$stack->id]);
 
         return response()->noContent();
     }
@@ -41,7 +41,7 @@ class UserStacksController extends Controller
     ): Response {
         $this->authorize('update', $user);
 
-        $user->stacksUsed()->detach($stack);
+        $user->stacks()->detach($stack);
 
         return response()->noContent();
     }

@@ -68,7 +68,7 @@
                                     @lang('crud.stacks.inputs.major')
                                 </th>
                                 <th class="px-4 py-3 text-left">
-                                    @lang('crud.stacks.inputs.created_by')
+                                    @lang('crud.stacks.inputs.user_id')
                                 </th>
                                 <th></th>
                             </tr>
@@ -97,7 +97,7 @@
                                     {{ $stack->major ?? '-' }}
                                 </td>
                                 <td class="px-4 py-3 text-left">
-                                    {{ optional($stack->user)->name ?? '-' }}
+                                    {{ optional($stack->creator)->name ?? '-' }}
                                 </td>
                                 <td
                                     class="px-4 py-3 text-center"

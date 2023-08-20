@@ -75,11 +75,11 @@ class StacksRelationManager extends RelationManager
                         'lg' => 12,
                     ]),
 
-                Select::make('created_by')
+                Select::make('user_id')
                     ->rules(['exists:users,id'])
-                    ->relationship('user', 'name')
+                    ->relationship('creator', 'name')
                     ->searchable()
-                    ->placeholder('User')
+                    ->placeholder('Creator')
                     ->columnSpan([
                         'default' => 12,
                         'md' => 12,
@@ -98,7 +98,7 @@ class StacksRelationManager extends RelationManager
                 Tables\Columns\TextColumn::make('description')->limit(50),
                 Tables\Columns\IconColumn::make('public'),
                 Tables\Columns\IconColumn::make('major'),
-                Tables\Columns\TextColumn::make('user.name')->limit(50),
+                Tables\Columns\TextColumn::make('creator.name')->limit(50),
             ])
             ->filters([
                 Tables\Filters\Filter::make('created_at')
@@ -132,8 +132,8 @@ class StacksRelationManager extends RelationManager
                             );
                     }),
 
-                MultiSelectFilter::make('created_by')->relationship(
-                    'user',
+                MultiSelectFilter::make('user_id')->relationship(
+                    'creator',
                     'name'
                 ),
             ])

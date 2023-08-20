@@ -53,9 +53,11 @@
                     </div>
                     <div class="mb-4">
                         <h5 class="font-medium text-gray-700">
-                            @lang('crud.stacks.inputs.created_by')
+                            @lang('crud.stacks.inputs.user_id')
                         </h5>
-                        <span>{{ optional($stack->user)->name ?? '-' }}</span>
+                        <span
+                            >{{ optional($stack->creator)->name ?? '-' }}</span
+                        >
                     </div>
                 </div>
 

@@ -29,7 +29,7 @@ class StackFactory extends Factory
             'build' => [],
             'public' => $this->faker->boolean(),
             'major' => $this->faker->boolean(),
-            'created_by' => \App\Models\User::factory(),
+            'user_id' => \App\Models\User::factory(),
         ];
     }
 }

@@ -73,7 +73,7 @@ class StackTest extends TestCase
             'build' => [],
             'public' => $this->faker->boolean(),
             'major' => $this->faker->boolean(),
-            'created_by' => $user->id,
+            'user_id' => $user->id,
         ];
 
         $response = $this->putJson(route('api.stacks.update', $stack), $data);

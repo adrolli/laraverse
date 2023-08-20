@@ -26,7 +26,7 @@ class StackUpdateRequest extends FormRequest
             'build' => ['nullable', 'max:255', 'json'],
             'public' => ['required', 'boolean'],
             'major' => ['nullable', 'boolean'],
-            'created_by' => ['required', 'exists:users,id'],
+            'user_id' => ['required', 'exists:users,id'],
         ];
     }
 }

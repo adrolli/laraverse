@@ -77,6 +77,16 @@ class Item extends Model
         return $this->hasMany(Post::class);
     }
 
+    public function itemRelationsFrom()
+    {
+        return $this->hasMany(ItemRelation::class, 'item_id');
+    }
+
+    public function itemRelationsTo()
+    {
+        return $this->hasMany(ItemRelation::class, 'item_id');
+    }
+
     public function platforms()
     {
         return $this->belongsToMany(Platform::class);
@@ -95,20 +105,5 @@ class Item extends Model
     public function stacks()
     {
         return $this->belongsToMany(Stack::class);
-    }
-
-    public function dependencies()
-    {
-        return $this->belongsToMany(
-            Item::class,
-            'item_item',
-            'item_id',
-            'dep_item_id'
-        );
-    }
-
-    public function items()
-    {
-        return $this->belongsToMany(Item::class, 'item_item', 'dep_item_id');
     }
 }

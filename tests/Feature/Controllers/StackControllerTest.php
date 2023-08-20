@@ -134,7 +134,7 @@ class StackControllerTest extends TestCase
             'build' => [],
             'public' => $this->faker->boolean(),
             'major' => $this->faker->boolean(),
-            'created_by' => $user->id,
+            'user_id' => $user->id,
         ];
 
         $data['build'] = json_encode($data['build']);

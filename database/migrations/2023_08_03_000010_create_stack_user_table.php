@@ -13,7 +13,6 @@ return new class extends Migration {
         Schema::create('stack_user', function (Blueprint $table) {
             $table->unsignedBigInteger('user_id');
             $table->unsignedBigInteger('stack_id');
-            $table->smallInteger('vote');
         });
     }
 

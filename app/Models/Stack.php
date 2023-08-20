@@ -18,7 +18,7 @@ class Stack extends Model
         'build',
         'public',
         'major',
-        'created_by',
+        'user_id',
     ];
 
     protected $searchableFields = ['*'];
@@ -34,9 +34,9 @@ class Stack extends Model
         return $this->hasMany(Post::class, 'stack_id');
     }
 
-    public function user()
+    public function creator()
     {
-        return $this->belongsTo(User::class, 'created_by');
+        return $this->belongsTo(User::class, 'user_id');
     }
 
     public function items()

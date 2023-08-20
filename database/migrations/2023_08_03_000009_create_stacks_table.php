@@ -18,7 +18,7 @@ return new class extends Migration {
             $table->json('build')->nullable();
             $table->boolean('public');
             $table->boolean('major')->nullable();
-            $table->unsignedBigInteger('created_by');
+            $table->unsignedBigInteger('user_id');
 
             $table->timestamps();
         });

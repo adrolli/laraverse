@@ -35,17 +35,17 @@ class User extends Authenticatable implements FilamentUser
         'email_verified_at' => 'datetime',
     ];
 
-    public function stacksCreated()
-    {
-        return $this->hasMany(Stack::class, 'created_by');
-    }
-
     public function posts()
     {
         return $this->hasMany(Post::class);
     }
 
-    public function stacksUsed()
+    public function stacksCreated()
+    {
+        return $this->hasMany(Stack::class, 'user_id');
+    }
+
+    public function stacks()
     {
         return $this->belongsToMany(Stack::class);
     }

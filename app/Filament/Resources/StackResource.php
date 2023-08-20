@@ -85,12 +85,12 @@ class StackResource extends Resource
                             'lg' => 12,
                         ]),
 
-                    Select::make('created_by')
+                    Select::make('user_id')
                         ->rules(['exists:users,id'])
                         ->required()
-                        ->relationship('user', 'name')
+                        ->relationship('creator', 'name')
                         ->searchable()
-                        ->placeholder('User')
+                        ->placeholder('Creator')
                         ->columnSpan([
                             'default' => 12,
                             'md' => 12,
@@ -124,15 +124,15 @@ class StackResource extends Resource
                 Tables\Columns\IconColumn::make('major')
                     ->toggleable()
                     ->boolean(),
-                Tables\Columns\TextColumn::make('user.name')
+                Tables\Columns\TextColumn::make('creator.name')
                     ->toggleable()
                     ->limit(50),
             ])
             ->filters([
                 DateRangeFilter::make('created_at'),
 
-                SelectFilter::make('created_by')
-                    ->relationship('user', 'name')
+                SelectFilter::make('user_id')
+                    ->relationship('creator', 'name')
                     ->indicator('User')
                     ->multiple()
                     ->label('User'),

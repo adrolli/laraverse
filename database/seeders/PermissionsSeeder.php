@@ -51,6 +51,18 @@ class PermissionsSeeder extends Seeder
         Permission::create(['name' => 'update items']);
         Permission::create(['name' => 'delete items']);
 
+        Permission::create(['name' => 'list itemrelations']);
+        Permission::create(['name' => 'view itemrelations']);
+        Permission::create(['name' => 'create itemrelations']);
+        Permission::create(['name' => 'update itemrelations']);
+        Permission::create(['name' => 'delete itemrelations']);
+
+        Permission::create(['name' => 'list itemrelationtypes']);
+        Permission::create(['name' => 'view itemrelationtypes']);
+        Permission::create(['name' => 'create itemrelationtypes']);
+        Permission::create(['name' => 'update itemrelationtypes']);
+        Permission::create(['name' => 'delete itemrelationtypes']);
+
         Permission::create(['name' => 'list itemtypes']);
         Permission::create(['name' => 'view itemtypes']);
         Permission::create(['name' => 'create itemtypes']);

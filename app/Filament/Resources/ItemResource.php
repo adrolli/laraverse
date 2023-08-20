@@ -414,12 +414,12 @@ class ItemResource extends Resource
     {
         return [
             ItemResource\RelationManagers\PostsRelationManager::class,
+            ItemResource\RelationManagers\ItemRelationsRelationManager::class,
+            ItemResource\RelationManagers\ItemRelationsRelationManager::class,
             ItemResource\RelationManagers\PlatformsRelationManager::class,
             ItemResource\RelationManagers\TagsRelationManager::class,
             ItemResource\RelationManagers\CategoriesRelationManager::class,
             ItemResource\RelationManagers\StacksRelationManager::class,
-            ItemResource\RelationManagers\ItemsRelationManager::class,
-            ItemResource\RelationManagers\ItemsRelationManager::class,
         ];
     }
 

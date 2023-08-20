@@ -2,15 +2,17 @@
 
 namespace App\Filament\Resources;
 
-use App\Models\ItemType;
-use Filament\{Tables, Forms};
-use Filament\Resources\{Form, Table, Resource};
-use Filament\Forms\Components\Grid;
-use Filament\Forms\Components\Card;
-use Filament\Forms\Components\TextInput;
-use Filament\Forms\Components\RichEditor;
 use App\Filament\Filters\DateRangeFilter;
 use App\Filament\Resources\ItemTypeResource\Pages;
+use App\Models\ItemType;
+use Filament\Forms\Components\Card;
+use Filament\Forms\Components\Grid;
+use Filament\Forms\Components\RichEditor;
+use Filament\Forms\Components\TextInput;
+use Filament\Resources\Form;
+use Filament\Resources\Resource;
+use Filament\Resources\Table;
+use Filament\Tables;
 
 class ItemTypeResource extends Resource
 {
@@ -66,16 +68,16 @@ class ItemTypeResource extends Resource
             ->columns([
                 Tables\Columns\TextColumn::make('title')
                     ->toggleable()
-                    ->searchable(true, null, true)
+                    ->searchable()
                     ->limit(50),
                 Tables\Columns\TextColumn::make('slug')
                     ->toggleable()
-                    ->searchable(true, null, true)
+                    ->searchable()
                     ->limit(50),
                 Tables\Columns\TextColumn::make('description')
                     ->toggleable()
                     ->searchable()
-                    ->limit(50),
+                    ->html(),
             ])
             ->filters([DateRangeFilter::make('created_at')]);
     }

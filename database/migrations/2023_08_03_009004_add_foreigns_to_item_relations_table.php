@@ -10,18 +10,18 @@ return new class extends Migration {
      */
     public function up(): void
     {
-        Schema::table('item_item', function (Blueprint $table) {
+        Schema::table('item_relations', function (Blueprint $table) {
             $table
-                ->foreign('dep_item_id')
+                ->foreign('item_id')
                 ->references('id')
                 ->on('items')
                 ->onUpdate('CASCADE')
                 ->onDelete('CASCADE');
 
             $table
-                ->foreign('item_id')
+                ->foreign('item_relation_type_id')
                 ->references('id')
-                ->on('items')
+                ->on('item_relation_types')
                 ->onUpdate('CASCADE')
                 ->onDelete('CASCADE');
         });
@@ -32,9 +32,9 @@ return new class extends Migration {
      */
     public function down(): void
     {
-        Schema::table('item_item', function (Blueprint $table) {
-            $table->dropForeign(['dep_item_id']);
+        Schema::table('item_relations', function (Blueprint $table) {
             $table->dropForeign(['item_id']);
+            $table->dropForeign(['item_relation_type_id']);
         });
     }
 };
