@@ -148,3 +148,23 @@ https://laraverse.test/github-search/laravel
 -   Aus der Codebase (v. a. composer.json und package.json)
 -   User-driven, v. a. Rating für Sortierung, Posts (Request, Recipe, ...)
 -   Anbindung an Laravel-News, Laravel Daily, Laravel.io, X, Stackoverflow, Github Issues und Discussions, etc. um für jedes Tool und Package das meiste an aktuellen Infos anzuzeige
+
+
+
+## MySQL Probleme
+
+- Ditch DBngin? 
+- SQLSTATE[HY001]: Memory allocation error: 1038 Out of sort memory, consider increasing server sort buffer size 
+- Bei Nutzung von JSON Fields, https://bugs.mysql.com/bug.php?id=103318, but should be fixed, see https://stackoverflow.com/questions/71213456/unexpected-behaviour-of-sort-buffer-size-in-mysql-8-0-27-commercial-version
+- https://www.educba.com/mysql-sort-buffer-size/ but increasing buffer size is less than a workaround
+- Use mysql --socket /tmp/mysql_3306.sock -uroot to connect with DBngin, see https://github.com/TablePlus/DBngin/issues/38
+- Probably try Postgre, is it on Forge?
+- Probably do a custom query in Filament, excluding the json
+- Probably google for other solutions like stored procedures
+- Currently brewed MySQL 8.1, use with `mysql -u root - same shit
+- But finally working on 8.1: `SET GLOBAL sort_buffer_size = 256000000 // It'll reset after server restart`, see https://stackoverflow.com/questions/29575835/error-1038-out-of-sort-memory-consider-increasing-sort-buffer-size
+
+Trotzdem 
+
+- https://filamentphp.com/docs/2.x/admin/resources/getting-started#customizing-the-eloquent-query
+- 
