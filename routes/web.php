@@ -33,10 +33,6 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/github-search/{query}', 'App\Http\Controllers\ConsumeGitHubController@searchRepositories');
-Route::get('/packagist-search', 'App\Http\Controllers\ConsumePackagistController@searchRepositories');
-Route::get('/packagist', 'App\Http\Controllers\Consumer\PackagistController@initializeAllPackages');
-
 Route::get('/', function () {
     return view('welcome');
 });
