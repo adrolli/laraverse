@@ -173,6 +173,7 @@ Trotzdem
 
 ## Backlog
 
+- Filament V3 will haben, dazu nochmal alle Filament Plugins checken und evtl. Fork-Updaten
 - Jobs und Failed Jobs sind zwei Plugins ... mach eines draus und besser konfigurierbar.
   - https://gitlab.com/amvisor/filament-failed-jobs
   - https://github.com/croustibat/filament-jobs-monitor
