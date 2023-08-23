@@ -3,22 +3,12 @@
 namespace App\Http\Controllers\Consumer;
 
 use App\Http\Controllers\Controller;
-use App\Jobs\UpdatePackagesJob;
 use App\Models\PackagistPackage;
 use GuzzleHttp\Client;
 use GuzzleHttp\Exception\RequestException;
 
 class PackagistController extends Controller
 {
-    public function initializeAllPackages()
-    {
-        // Deprecated, as well as UpdatePackagesJob and PackageistInitialize Command
-        $jobName = 'Packagist Initialization';
-        $controller = new PackagistController();
-        $packageNames = $this->getAllPackages();
-        dispatch(new UpdatePackagesJob($jobName, $controller, $packageNames));
-    }
-
     public function updatePackage($packageDetails)
     {
         try {
