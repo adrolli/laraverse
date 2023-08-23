@@ -173,12 +173,31 @@ Trotzdem
 
 ## Backlog
 
+- https://filamentphp.com/plugins/leandrocfe-apex-charts
+
+- https://filamentphp.com/plugins/pxlrbt-spotlight
+
+- Export / Import / User (with Impersonate) / 
+
+- https://filamentphp.com/plugins/awcodes-overlook
+
+- https://filamentphp.com/plugins/bezhansalleh-exception-viewer
+
+  ****
+
 - Filament V3 will haben, dazu nochmal alle Filament Plugins checken und evtl. Fork-Updaten
+
 - Jobs und Failed Jobs sind zwei Plugins ... mach eines draus und besser konfigurierbar.
+
   - https://gitlab.com/amvisor/filament-failed-jobs
   - https://github.com/croustibat/filament-jobs-monitor
   - Man sieht die abgearbeiteten Jobs, nicht die current jobs als zähler
   - Man sieht nicht, wie viele Jobs anstehen
+
 - Supervisor or cron (much easier) for Managing and self-healing the Job Queue: https://gist.github.com/deepak-cotocus/6b9865784dee18966e15c74ec6e487c4
+
 - Better display JSON in Filament: https://github.com/invaders-xx/filament-jsoneditor
+
 - Fiddle with OpenAI: https://github.com/openai-php/laravel
+
+- Make something for health ... add monitors ... https://filamentphp.com/plugins/shuvroroy-spatie-laravel-health
