@@ -11,66 +11,141 @@ class GithubTagPolicy
     use HandlesAuthorization;
 
     /**
-     * Determine whether the githubTag can view any models.
+     * Determine whether the user can view any models.
+     *
+     * @param  \App\Models\User  $user
+     * @return \Illuminate\Auth\Access\Response|bool
      */
     public function viewAny(User $user): bool
     {
-        return $user->hasPermissionTo('list githubtags');
+        return $user->can('view_any_github::tag');
     }
 
     /**
-     * Determine whether the githubTag can view the model.
+     * Determine whether the user can view the model.
+     *
+     * @param  \App\Models\User  $user
+     * @param  \App\Models\GithubTag  $githubTag
+     * @return \Illuminate\Auth\Access\Response|bool
      */
-    public function view(User $user, GithubTag $model): bool
+    public function view(User $user, GithubTag $githubTag): bool
     {
-        return $user->hasPermissionTo('view githubtags');
+        return $user->can('view_github::tag');
     }
 
     /**
-     * Determine whether the githubTag can create models.
+     * Determine whether the user can create models.
+     *
+     * @param  \App\Models\User  $user
+     * @return \Illuminate\Auth\Access\Response|bool
      */
     public function create(User $user): bool
     {
-        return $user->hasPermissionTo('create githubtags');
+        return $user->can('create_github::tag');
     }
 
     /**
-     * Determine whether the githubTag can update the model.
+     * Determine whether the user can update the model.
+     *
+     * @param  \App\Models\User  $user
+     * @param  \App\Models\GithubTag  $githubTag
+     * @return \Illuminate\Auth\Access\Response|bool
      */
-    public function update(User $user, GithubTag $model): bool
+    public function update(User $user, GithubTag $githubTag): bool
     {
-        return $user->hasPermissionTo('update githubtags');
+        return $user->can('update_github::tag');
     }
 
     /**
-     * Determine whether the githubTag can delete the model.
+     * Determine whether the user can delete the model.
+     *
+     * @param  \App\Models\User  $user
+     * @param  \App\Models\GithubTag  $githubTag
+     * @return \Illuminate\Auth\Access\Response|bool
      */
-    public function delete(User $user, GithubTag $model): bool
+    public function delete(User $user, GithubTag $githubTag): bool
     {
-        return $user->hasPermissionTo('delete githubtags');
+        return $user->can('delete_github::tag');
     }
 
     /**
-     * Determine whether the user can delete multiple instances of the model.
+     * Determine whether the user can bulk delete.
+     *
+     * @param  \App\Models\User  $user
+     * @return \Illuminate\Auth\Access\Response|bool
      */
     public function deleteAny(User $user): bool
     {
-        return $user->hasPermissionTo('delete githubtags');
+        return $user->can('delete_any_github::tag');
     }
 
     /**
-     * Determine whether the githubTag can restore the model.
+     * Determine whether the user can permanently delete.
+     *
+     * @param  \App\Models\User  $user
+     * @param  \App\Models\GithubTag  $githubTag
+     * @return \Illuminate\Auth\Access\Response|bool
      */
-    public function restore(User $user, GithubTag $model): bool
+    public function forceDelete(User $user, GithubTag $githubTag): bool
     {
-        return false;
+        return $user->can('force_delete_github::tag');
     }
 
     /**
-     * Determine whether the githubTag can permanently delete the model.
+     * Determine whether the user can permanently bulk delete.
+     *
+     * @param  \App\Models\User  $user
+     * @return \Illuminate\Auth\Access\Response|bool
      */
-    public function forceDelete(User $user, GithubTag $model): bool
+    public function forceDeleteAny(User $user): bool
     {
-        return false;
+        return $user->can('force_delete_any_github::tag');
     }
+
+    /**
+     * Determine whether the user can restore.
+     *
+     * @param  \App\Models\User  $user
+     * @param  \App\Models\GithubTag  $githubTag
+     * @return \Illuminate\Auth\Access\Response|bool
+     */
+    public function restore(User $user, GithubTag $githubTag): bool
+    {
+        return $user->can('restore_github::tag');
+    }
+
+    /**
+     * Determine whether the user can bulk restore.
+     *
+     * @param  \App\Models\User  $user
+     * @return \Illuminate\Auth\Access\Response|bool
+     */
+    public function restoreAny(User $user): bool
+    {
+        return $user->can('restore_any_github::tag');
+    }
+
+    /**
+     * Determine whether the user can replicate.
+     *
+     * @param  \App\Models\User  $user
+     * @param  \App\Models\GithubTag  $githubTag
+     * @return \Illuminate\Auth\Access\Response|bool
+     */
+    public function replicate(User $user, GithubTag $githubTag): bool
+    {
+        return $user->can('replicate_github::tag');
+    }
+
+    /**
+     * Determine whether the user can reorder.
+     *
+     * @param  \App\Models\User  $user
+     * @return \Illuminate\Auth\Access\Response|bool
+     */
+    public function reorder(User $user): bool
+    {
+        return $user->can('reorder_github::tag');
+    }
+
 }

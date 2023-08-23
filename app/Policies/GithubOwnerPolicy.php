@@ -11,66 +11,141 @@ class GithubOwnerPolicy
     use HandlesAuthorization;
 
     /**
-     * Determine whether the githubOwner can view any models.
+     * Determine whether the user can view any models.
+     *
+     * @param  \App\Models\User  $user
+     * @return \Illuminate\Auth\Access\Response|bool
      */
     public function viewAny(User $user): bool
     {
-        return $user->hasPermissionTo('list githubowners');
+        return $user->can('view_any_github::owner');
     }
 
     /**
-     * Determine whether the githubOwner can view the model.
+     * Determine whether the user can view the model.
+     *
+     * @param  \App\Models\User  $user
+     * @param  \App\Models\GithubOwner  $githubOwner
+     * @return \Illuminate\Auth\Access\Response|bool
      */
-    public function view(User $user, GithubOwner $model): bool
+    public function view(User $user, GithubOwner $githubOwner): bool
     {
-        return $user->hasPermissionTo('view githubowners');
+        return $user->can('view_github::owner');
     }
 
     /**
-     * Determine whether the githubOwner can create models.
+     * Determine whether the user can create models.
+     *
+     * @param  \App\Models\User  $user
+     * @return \Illuminate\Auth\Access\Response|bool
      */
     public function create(User $user): bool
     {
-        return $user->hasPermissionTo('create githubowners');
+        return $user->can('create_github::owner');
     }
 
     /**
-     * Determine whether the githubOwner can update the model.
+     * Determine whether the user can update the model.
+     *
+     * @param  \App\Models\User  $user
+     * @param  \App\Models\GithubOwner  $githubOwner
+     * @return \Illuminate\Auth\Access\Response|bool
      */
-    public function update(User $user, GithubOwner $model): bool
+    public function update(User $user, GithubOwner $githubOwner): bool
     {
-        return $user->hasPermissionTo('update githubowners');
+        return $user->can('update_github::owner');
     }
 
     /**
-     * Determine whether the githubOwner can delete the model.
+     * Determine whether the user can delete the model.
+     *
+     * @param  \App\Models\User  $user
+     * @param  \App\Models\GithubOwner  $githubOwner
+     * @return \Illuminate\Auth\Access\Response|bool
      */
-    public function delete(User $user, GithubOwner $model): bool
+    public function delete(User $user, GithubOwner $githubOwner): bool
     {
-        return $user->hasPermissionTo('delete githubowners');
+        return $user->can('delete_github::owner');
     }
 
     /**
-     * Determine whether the user can delete multiple instances of the model.
+     * Determine whether the user can bulk delete.
+     *
+     * @param  \App\Models\User  $user
+     * @return \Illuminate\Auth\Access\Response|bool
      */
     public function deleteAny(User $user): bool
     {
-        return $user->hasPermissionTo('delete githubowners');
+        return $user->can('delete_any_github::owner');
     }
 
     /**
-     * Determine whether the githubOwner can restore the model.
+     * Determine whether the user can permanently delete.
+     *
+     * @param  \App\Models\User  $user
+     * @param  \App\Models\GithubOwner  $githubOwner
+     * @return \Illuminate\Auth\Access\Response|bool
      */
-    public function restore(User $user, GithubOwner $model): bool
+    public function forceDelete(User $user, GithubOwner $githubOwner): bool
     {
-        return false;
+        return $user->can('force_delete_github::owner');
     }
 
     /**
-     * Determine whether the githubOwner can permanently delete the model.
+     * Determine whether the user can permanently bulk delete.
+     *
+     * @param  \App\Models\User  $user
+     * @return \Illuminate\Auth\Access\Response|bool
      */
-    public function forceDelete(User $user, GithubOwner $model): bool
+    public function forceDeleteAny(User $user): bool
     {
-        return false;
+        return $user->can('force_delete_any_github::owner');
     }
+
+    /**
+     * Determine whether the user can restore.
+     *
+     * @param  \App\Models\User  $user
+     * @param  \App\Models\GithubOwner  $githubOwner
+     * @return \Illuminate\Auth\Access\Response|bool
+     */
+    public function restore(User $user, GithubOwner $githubOwner): bool
+    {
+        return $user->can('restore_github::owner');
+    }
+
+    /**
+     * Determine whether the user can bulk restore.
+     *
+     * @param  \App\Models\User  $user
+     * @return \Illuminate\Auth\Access\Response|bool
+     */
+    public function restoreAny(User $user): bool
+    {
+        return $user->can('restore_any_github::owner');
+    }
+
+    /**
+     * Determine whether the user can replicate.
+     *
+     * @param  \App\Models\User  $user
+     * @param  \App\Models\GithubOwner  $githubOwner
+     * @return \Illuminate\Auth\Access\Response|bool
+     */
+    public function replicate(User $user, GithubOwner $githubOwner): bool
+    {
+        return $user->can('replicate_github::owner');
+    }
+
+    /**
+     * Determine whether the user can reorder.
+     *
+     * @param  \App\Models\User  $user
+     * @return \Illuminate\Auth\Access\Response|bool
+     */
+    public function reorder(User $user): bool
+    {
+        return $user->can('reorder_github::owner');
+    }
+
 }

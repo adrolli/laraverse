@@ -19,7 +19,7 @@ class UserResource extends Resource
 {
     protected static function getNavigationGroup(): string
     {
-        return 'Administration';
+        return 'Settings';
     }
 
     protected static function getNavigationSort(): int

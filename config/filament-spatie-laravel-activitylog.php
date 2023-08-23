@@ -4,7 +4,7 @@ return [
 
     'resource' => [
         'filament-resource' => AlexJustesen\FilamentSpatieLaravelActivitylog\Resources\ActivityResource::class,
-        'group' => 'Administration',
+        'group' => 'Settings',
         'sort' => 1,
     ],
 

@@ -4,7 +4,7 @@
 return [
     'navigation' => [
         'enabled' => true,
-        'group_label' => 'Administration',
+        'group_label' => 'Settings',
         'group_sort' => '0',
         'icon' => 'heroicon-o-chip',
     ],
