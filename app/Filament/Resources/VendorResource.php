@@ -2,18 +2,30 @@
 
 namespace App\Filament\Resources;
 
-use App\Models\Vendor;
-use Filament\{Tables, Forms};
-use Filament\Resources\{Form, Table, Resource};
-use Filament\Forms\Components\Grid;
-use Filament\Forms\Components\Card;
-use Filament\Forms\Components\TextInput;
-use Filament\Forms\Components\RichEditor;
 use App\Filament\Filters\DateRangeFilter;
 use App\Filament\Resources\VendorResource\Pages;
+use App\Models\Vendor;
+use Filament\Forms\Components\Card;
+use Filament\Forms\Components\Grid;
+use Filament\Forms\Components\RichEditor;
+use Filament\Forms\Components\TextInput;
+use Filament\Resources\Form;
+use Filament\Resources\Resource;
+use Filament\Resources\Table;
+use Filament\Tables;
 
 class VendorResource extends Resource
 {
+    protected static function getNavigationSort(): int
+    {
+        return 4;
+    }
+
+    protected static function getNavigationLabel(): string
+    {
+        return 'Vendors';
+    }
+
     protected static ?string $model = Vendor::class;
 
     protected static ?string $navigationIcon = 'heroicon-o-collection';

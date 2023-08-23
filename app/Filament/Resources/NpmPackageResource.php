@@ -2,19 +2,35 @@
 
 namespace App\Filament\Resources;
 
-use App\Models\NpmPackage;
-use Filament\{Tables, Forms};
-use Filament\Resources\{Form, Table, Resource};
-use Filament\Forms\Components\Grid;
-use Filament\Forms\Components\Card;
-use Filament\Forms\Components\KeyValue;
-use Filament\Forms\Components\TextInput;
-use Filament\Forms\Components\RichEditor;
 use App\Filament\Filters\DateRangeFilter;
 use App\Filament\Resources\NpmPackageResource\Pages;
+use App\Models\NpmPackage;
+use Filament\Forms\Components\Card;
+use Filament\Forms\Components\Grid;
+use Filament\Forms\Components\KeyValue;
+use Filament\Forms\Components\TextInput;
+use Filament\Resources\Form;
+use Filament\Resources\Resource;
+use Filament\Resources\Table;
+use Filament\Tables;
 
 class NpmPackageResource extends Resource
 {
+    protected static function getNavigationGroup(): string
+    {
+        return 'API data';
+    }
+
+    protected static function getNavigationSort(): int
+    {
+        return 6;
+    }
+
+    protected static function getNavigationLabel(): string
+    {
+        return 'NPM packages';
+    }
+
     protected static ?string $model = NpmPackage::class;
 
     protected static ?string $navigationIcon = 'heroicon-o-collection';

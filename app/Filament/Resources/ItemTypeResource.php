@@ -16,6 +16,21 @@ use Filament\Tables;
 
 class ItemTypeResource extends Resource
 {
+    protected static function getNavigationGroup(): string
+    {
+        return 'Taxonomies';
+    }
+
+    protected static function getNavigationSort(): int
+    {
+        return 4;
+    }
+
+    protected static function getNavigationLabel(): string
+    {
+        return 'Item types';
+    }
+
     protected static ?string $model = ItemType::class;
 
     protected static ?string $navigationIcon = 'heroicon-o-collection';

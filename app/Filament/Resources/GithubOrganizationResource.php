@@ -2,19 +2,35 @@
 
 namespace App\Filament\Resources;
 
-use App\Models\GithubOrganization;
-use Filament\{Tables, Forms};
-use Filament\Resources\{Form, Table, Resource};
-use Filament\Forms\Components\Grid;
-use Filament\Forms\Components\Card;
-use Filament\Forms\Components\KeyValue;
-use Filament\Forms\Components\TextInput;
-use Filament\Forms\Components\RichEditor;
 use App\Filament\Filters\DateRangeFilter;
 use App\Filament\Resources\GithubOrganizationResource\Pages;
+use App\Models\GithubOrganization;
+use Filament\Forms\Components\Card;
+use Filament\Forms\Components\Grid;
+use Filament\Forms\Components\KeyValue;
+use Filament\Forms\Components\TextInput;
+use Filament\Resources\Form;
+use Filament\Resources\Resource;
+use Filament\Resources\Table;
+use Filament\Tables;
 
 class GithubOrganizationResource extends Resource
 {
+    protected static function getNavigationGroup(): string
+    {
+        return 'API data';
+    }
+
+    protected static function getNavigationSort(): int
+    {
+        return 2;
+    }
+
+    protected static function getNavigationLabel(): string
+    {
+        return 'GitHub Organizations';
+    }
+
     protected static ?string $model = GithubOrganization::class;
 
     protected static ?string $navigationIcon = 'heroicon-o-collection';

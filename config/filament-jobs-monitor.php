@@ -4,8 +4,8 @@
 return [
     'navigation' => [
         'enabled' => true,
-        'group_label' => 'Operations',
-        'group_sort' => '1',
+        'group_label' => 'Administration',
+        'group_sort' => '0',
         'icon' => 'heroicon-o-chip',
     ],
     'pruning' => [

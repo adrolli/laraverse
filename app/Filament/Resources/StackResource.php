@@ -2,22 +2,34 @@
 
 namespace App\Filament\Resources;
 
-use App\Models\Stack;
-use Filament\{Tables, Forms};
-use Filament\Resources\{Form, Table, Resource};
-use Filament\Forms\Components\Grid;
-use Filament\Forms\Components\Card;
-use Filament\Forms\Components\Select;
-use Filament\Forms\Components\Toggle;
-use Filament\Forms\Components\KeyValue;
-use Filament\Forms\Components\TextInput;
-use Filament\Forms\Components\RichEditor;
-use Filament\Tables\Filters\SelectFilter;
 use App\Filament\Filters\DateRangeFilter;
 use App\Filament\Resources\StackResource\Pages;
+use App\Models\Stack;
+use Filament\Forms\Components\Card;
+use Filament\Forms\Components\Grid;
+use Filament\Forms\Components\KeyValue;
+use Filament\Forms\Components\RichEditor;
+use Filament\Forms\Components\Select;
+use Filament\Forms\Components\TextInput;
+use Filament\Forms\Components\Toggle;
+use Filament\Resources\Form;
+use Filament\Resources\Resource;
+use Filament\Resources\Table;
+use Filament\Tables;
+use Filament\Tables\Filters\SelectFilter;
 
 class StackResource extends Resource
 {
+    protected static function getNavigationSort(): int
+    {
+        return 3;
+    }
+
+    protected static function getNavigationLabel(): string
+    {
+        return 'Stacks';
+    }
+
     protected static ?string $model = Stack::class;
 
     protected static ?string $navigationIcon = 'heroicon-o-collection';

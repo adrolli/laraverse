@@ -16,6 +16,21 @@ use Filament\Tables;
 
 class PackagistPackageResource extends Resource
 {
+    protected static function getNavigationGroup(): string
+    {
+        return 'API data';
+    }
+
+    protected static function getNavigationSort(): int
+    {
+        return 5;
+    }
+
+    protected static function getNavigationLabel(): string
+    {
+        return 'Packagist';
+    }
+
     protected static ?string $model = PackagistPackage::class;
 
     protected static ?string $navigationIcon = 'heroicon-o-collection';

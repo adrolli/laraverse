@@ -2,21 +2,37 @@
 
 namespace App\Filament\Resources;
 
-use App\Models\GithubRepo;
-use Filament\{Tables, Forms};
-use Filament\Resources\{Form, Table, Resource};
-use Filament\Forms\Components\Grid;
-use Filament\Forms\Components\Card;
-use Filament\Forms\Components\Select;
-use Filament\Forms\Components\KeyValue;
-use Filament\Forms\Components\TextInput;
-use Filament\Forms\Components\RichEditor;
-use Filament\Tables\Filters\SelectFilter;
 use App\Filament\Filters\DateRangeFilter;
 use App\Filament\Resources\GithubRepoResource\Pages;
+use App\Models\GithubRepo;
+use Filament\Forms\Components\Card;
+use Filament\Forms\Components\Grid;
+use Filament\Forms\Components\KeyValue;
+use Filament\Forms\Components\Select;
+use Filament\Forms\Components\TextInput;
+use Filament\Resources\Form;
+use Filament\Resources\Resource;
+use Filament\Resources\Table;
+use Filament\Tables;
+use Filament\Tables\Filters\SelectFilter;
 
 class GithubRepoResource extends Resource
 {
+    protected static function getNavigationGroup(): string
+    {
+        return 'API data';
+    }
+
+    protected static function getNavigationSort(): int
+    {
+        return 1;
+    }
+
+    protected static function getNavigationLabel(): string
+    {
+        return 'GitHub Repos';
+    }
+
     protected static ?string $model = GithubRepo::class;
 
     protected static ?string $navigationIcon = 'heroicon-o-collection';

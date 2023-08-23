@@ -176,6 +176,8 @@ Trotzdem
 - Jobs und Failed Jobs sind zwei Plugins ... mach eines draus und besser konfigurierbar.
   - https://gitlab.com/amvisor/filament-failed-jobs
   - https://github.com/croustibat/filament-jobs-monitor
+  - Man sieht die abgearbeiteten Jobs, nicht die current jobs als zähler
+  - Man sieht nicht, wie viele Jobs anstehen
 - Supervisor or cron (much easier) for Managing and self-healing the Job Queue: https://gist.github.com/deepak-cotocus/6b9865784dee18966e15c74ec6e487c4
 - Better display JSON in Filament: https://github.com/invaders-xx/filament-jsoneditor
 - Fiddle with OpenAI: https://github.com/openai-php/laravel

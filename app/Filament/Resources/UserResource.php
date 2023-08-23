@@ -2,19 +2,36 @@
 
 namespace App\Filament\Resources;
 
-use App\Models\User;
-use Filament\{Tables, Forms};
-use Filament\Resources\{Form, Table, Resource};
-use Livewire\Component;
-use Filament\Forms\Components\Grid;
-use Filament\Forms\Components\Card;
-use Illuminate\Database\Eloquent\Model;
-use Filament\Forms\Components\TextInput;
 use App\Filament\Filters\DateRangeFilter;
 use App\Filament\Resources\UserResource\Pages;
+use App\Models\User;
+use Filament\Forms\Components\Card;
+use Filament\Forms\Components\Grid;
+use Filament\Forms\Components\TextInput;
+use Filament\Resources\Form;
+use Filament\Resources\Resource;
+use Filament\Resources\Table;
+use Filament\Tables;
+use Illuminate\Database\Eloquent\Model;
+use Livewire\Component;
 
 class UserResource extends Resource
 {
+    protected static function getNavigationGroup(): string
+    {
+        return 'Administration';
+    }
+
+    protected static function getNavigationSort(): int
+    {
+        return 1;
+    }
+
+    protected static function getNavigationLabel(): string
+    {
+        return 'User management';
+    }
+
     protected static ?string $model = User::class;
 
     protected static ?string $navigationIcon = 'heroicon-o-collection';
@@ -42,7 +59,7 @@ class UserResource extends Resource
                         ->unique(
                             'users',
                             'email',
-                            fn(?Model $record) => $record
+                            fn (?Model $record) => $record
                         )
                         ->email()
                         ->placeholder('Email')
@@ -55,10 +72,9 @@ class UserResource extends Resource
                     TextInput::make('password')
                         ->required()
                         ->password()
-                        ->dehydrateStateUsing(fn($state) => \Hash::make($state))
+                        ->dehydrateStateUsing(fn ($state) => \Hash::make($state))
                         ->required(
-                            fn(Component $livewire) => $livewire instanceof
-                                Pages\CreateUser
+                            fn (Component $livewire) => $livewire instanceof Pages\CreateUser
                         )
                         ->placeholder('Password')
                         ->columnSpan([

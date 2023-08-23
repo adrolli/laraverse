@@ -16,6 +16,21 @@ use Filament\Tables;
 
 class PlatformResource extends Resource
 {
+    protected static function getNavigationGroup(): string
+    {
+        return 'Taxonomies';
+    }
+
+    protected static function getNavigationSort(): int
+    {
+        return 3;
+    }
+
+    protected static function getNavigationLabel(): string
+    {
+        return 'Platforms';
+    }
+
     protected static ?string $model = Platform::class;
 
     protected static ?string $navigationIcon = 'heroicon-o-collection';

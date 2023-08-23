@@ -2,21 +2,33 @@
 
 namespace App\Filament\Resources;
 
-use App\Models\Item;
-use Filament\{Tables, Forms};
-use Filament\Resources\{Form, Table, Resource};
-use Filament\Forms\Components\Grid;
-use Filament\Forms\Components\Card;
-use Filament\Forms\Components\Select;
-use Filament\Forms\Components\KeyValue;
-use Filament\Forms\Components\TextInput;
-use Filament\Forms\Components\RichEditor;
-use Filament\Tables\Filters\SelectFilter;
 use App\Filament\Filters\DateRangeFilter;
 use App\Filament\Resources\ItemResource\Pages;
+use App\Models\Item;
+use Filament\Forms\Components\Card;
+use Filament\Forms\Components\Grid;
+use Filament\Forms\Components\KeyValue;
+use Filament\Forms\Components\RichEditor;
+use Filament\Forms\Components\Select;
+use Filament\Forms\Components\TextInput;
+use Filament\Resources\Form;
+use Filament\Resources\Resource;
+use Filament\Resources\Table;
+use Filament\Tables;
+use Filament\Tables\Filters\SelectFilter;
 
 class ItemResource extends Resource
 {
+    protected static function getNavigationSort(): int
+    {
+        return 1;
+    }
+
+    protected static function getNavigationLabel(): string
+    {
+        return 'Items';
+    }
+
     protected static ?string $model = Item::class;
 
     protected static ?string $navigationIcon = 'heroicon-o-collection';

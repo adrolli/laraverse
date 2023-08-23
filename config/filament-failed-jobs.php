@@ -1,5 +1,5 @@
 <?php
 
 return [
-    'navigation-group' => 'Operations',
+    'navigation-group' => 'Administration',
 ];
