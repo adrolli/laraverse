@@ -10,6 +10,8 @@
     "require": {
         "php": "^8.1",
         "alexjustesen/filament-spatie-laravel-activitylog": "^0.6.3",
+        "amvisor/filament-failed-jobs": "^0.6.3",
+        "croustibat/filament-jobs-monitor": "^1.4",
         "filament/filament": "^2.0",
         "guzzlehttp/guzzle": "^7.2",
         "laravel/framework": "^10.10",
