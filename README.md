@@ -1,87 +1,107 @@
-# Laraverse
+# Laraverse W-I-P
 
-Laraverse ist mein Favorit, wenn das Projekt nur um Laravel geht, Larapedia, Laravault, Explore Laravel, Laraworld, Discover Laravel und Larastack wären die Alternativen. Weiter gedacht könnte auch StackSearch, StackBuilder, Stackalizer, TechStax infrage kommen. Alternativ etwas was PHP und JS verbindet, Ableger für WP und dergleichen.
+Laraverse is a project that combines data from Packagist, NPM, GitHub, Gitlab and others to provide a useful search accross the Laravel ecosystem. It is of course made with Laravel, the TALL-Stack including Livewire and Tailwind, and last but not least Filament.
 
+## Install
 
-Jedenfalls gibt es keine gute Suche für Laravel Packages. Wenn, dann sind es nur Packages, Tools wie Vemto findet man nicht.
+```shell
+gh repo clone adrolli/laraverse
+cp .env-example .env
+composer install
+php artisan migrate:fresh --seed
+php artisan queue:work
+```
 
 ## Model
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+Not only this shiny model is created with Vemto. The whole app is bootstrapped using [Vemto.app](https.//vemto.app)
 
 ![Vemto Model](laraverse_exported_image.png)
 
-## High level
+## Jobs
 
-- Job: PackagistInit // Command: InitPackagist
-  - Get packagist all
-  - Get full data to all latest packages
-  - Update or create Packagist models
-  - Create an array for all GitHub Repositories and run GithubRepoUpdate for each
-  - do same for GitHub, Gitlab, Bitbucket, Gitea and other repositories
-    
+Fetching data, calculating and writing even more data to these powerful models is done by jobs:
 
-- Job: PackagistUpdate // Command: UpdatePackagist
-  - Get packagist latest by timestamp
-  - Get full data to all latest packages
-  - Update or create Packagist models
-  - Create an array for all GitHub Repositories and run GithubRepoUpdate for each
-  - do same for Gitlab, Bitbucket, Gitea and other repositories
-    
-- Job: GithubSearch
-  - Get data from GitHub API by tag or other search
-  - Create a GithubRepoUpdate Job each result
-    
+### PackagistInit
 
-- Job: GithubRepoUpdate
+- Get packagist all
+- Batch and wait between creating
+- PackagistPackage jobs each batch
+- Run GithubRepoUpdate for each entry on Github
+- do same for GitHub, Gitlab, Bitbucket, Gitea and other repositories
 
-  - Get full repo data from GitHub API
+### PackagistPackage
 
-  - Inspect files
+- Check if package exists and timestamp > config-value
+- Get full data for package
+- Update or create Packagist model
 
-    - Readme
-    - ServiceProvider
-    - Artisan command
-    - Composer.json
-    - Package.json
-    - license
-    - Env example
+### PackagistUpdater  (runs periodically)
 
-  - Update or Create Repository
+- Get packagist latest by timestamp
+- Run PackagistPackage each
+- Run GithubRepoUpdate for each entry on Github
+- do same for Gitlab, Bitbucket, Gitea and other repositories
 
-    - Compatibility
+### GithubSearch
 
-    - Package type
+- Get data from GitHub API by tag or other search
+- Create a GithubRepo Job each result
 
-      
+### GithubRepo
 
-- Job: RepositoryUpdate ... should run periodically and update all repos
+- Check if repo exists and timestamp > config-value
+- Get full repo data from GitHub API
+- Inspect files
+  - Readme
+  - ServiceProvider
+  - Artisan command
+  - Composer.json
+  - Package.json
+  - license
+  - Env example
+- Update or Create Repository
+  - Compatibility
+  - Package type
 
-  - depends on last update timestamp
-    - High Popularity ( > 75 ) -> daily
-    - Medium Popularity ( > 50 ) -> weekly
-    - Low Popularity ( <= 50 ) -> monthly
-    - Runs GithubRepoUpdate
+### NpmInit
 
-  
+- Scan all Repositories for package.json dependencies
+- Run a NpmPackage each
 
-- Job: NpmRepoDetector ... should monitor the Repository table for updates on the package-json field
+### NpmPackage
 
-  - Gets information from package.json
-  - Runs a NpmRepoUpdate each
+- Gets a package 
+- Updates a package
 
-- Job: NpmRepoUpdate
-  - updates a single repo
+### Item
 
-- Job NpmUpdate
-  - Is there an api like with composer updates?
-  - then call NpmRepoUpdate for each result
+- Does complex things like compatibility checks, building versions, preparing relations
+- Updates a single Item and all related models
 
-- Job: ItemUpdate 
-  - Watcher for changes in Packagist, Npm, Repository databases and
-  - Creates or updates the Item and all related models
+### Watcher (runs periodically)
 
-## DB
+- Watch for changes in Npm, Repository databases 
+- or picks entries based on last update timestamp
+  - High Popularity ( > 75 ) -> daily
+  - Medium Popularity ( > 50 ) -> weekly
+  - Low Popularity ( <= 50 ) -> monthly
+- Runs the update jobs NpmPackage, GithubRepo and others accordingly
+- Possible also for packagist, but using their API seems much more efficient
+
+## Commands
+
+These commands can be used to run jobs manually:
+
+- InitNpm
+- InitPackagist
+- UpdatePackagist
+- GithubSearch - has parameters like tag or search 
+- Watcher
+
+
+
+## DB Updates
 
 - Vendor 
   - Type: Organization, Developer
@@ -102,8 +122,8 @@ Laravel is a web application framework with expressive, elegant syntax. We belie
 
 - Laravel compatibility: "9, 10"
 - PHP compatibility: "8.1, 8.2"
-
-
+- Known Packages list
+- Array of update interval to popularity for different apis
 
 
 
