@@ -11,9 +11,103 @@ Laravel is a web application framework with expressive, elegant syntax. We belie
 
 ![Vemto Model](laraverse_exported_image.png)
 
-## Todo
+## High level
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+- Job: PackagistInit // Command: InitPackagist
+  - Get packagist all
+  - Get full data to all latest packages
+  - Update or create Packagist models
+  - Create an array for all GitHub Repositories and run GithubRepoUpdate for each
+  - do same for GitHub, Gitlab, Bitbucket, Gitea and other repositories
+    
+
+- Job: PackagistUpdate // Command: UpdatePackagist
+  - Get packagist latest by timestamp
+  - Get full data to all latest packages
+  - Update or create Packagist models
+  - Create an array for all GitHub Repositories and run GithubRepoUpdate for each
+  - do same for Gitlab, Bitbucket, Gitea and other repositories
+    
+- Job: GithubSearch
+  - Get data from GitHub API by tag or other search
+  - Create a GithubRepoUpdate Job each result
+    
+
+- Job: GithubRepoUpdate
+
+  - Get full repo data from GitHub API
+
+  - Inspect files
+
+    - Readme
+    - ServiceProvider
+    - Artisan command
+    - Composer.json
+    - Package.json
+    - license
+    - Env example
+
+  - Update or Create Repository
+
+    - Compatibility
+
+    - Package type
+
+      
+
+- Job: RepositoryUpdate ... should run periodically and update all repos
+
+  - depends on last update timestamp
+    - High Popularity ( > 75 ) -> daily
+    - Medium Popularity ( > 50 ) -> weekly
+    - Low Popularity ( <= 50 ) -> monthly
+    - Runs GithubRepoUpdate
+
+  
+
+- Job: NpmRepoDetector ... should monitor the Repository table for updates on the package-json field
+
+  - Gets information from package.json
+  - Runs a NpmRepoUpdate each
+
+- Job: NpmRepoUpdate
+  - updates a single repo
+
+- Job NpmUpdate
+  - Is there an api like with composer updates?
+  - then call NpmRepoUpdate for each result
+
+- Job: ItemUpdate 
+  - Watcher for changes in Packagist, Npm, Repository databases and
+  - Creates or updates the Item and all related models
+
+## DB
+
+- Vendor 
+  - Type: Organization, Developer
+- Item
+- Github -> Repositories
+  - RepositoryType TEXT (Github, Gitlab, Gitea, Bitbucket, other)
+  - Compatibility TEXT (PHP Compatible, Laravel Compatible, Compatibility unknown, Not compatible)
+  - Package type TEXT (Laravel app, Laravel skeleton, PHP package, NPM package, Other package)
+  - Readme (md - how to store and display)
+  - Code analyzer JSON
+  - License TEXT - detected
+  - Composer JSON
+  - Package JSON
+
+
+
+## Config
+
+- Laravel compatibility: "9, 10"
+- PHP compatibility: "8.1, 8.2"
+
+
+
+
+
+## Todo
 
 -   NPM - https://api-docs.npms.io/ or directly https://stackoverflow.com/questions/34071621/query-npmjs-registry-via-api ... step by step https://www.edoardoscibona.com/exploring-the-npm-registry-api
 -   More APIs and maybe some tweaks ... Laracasts, Codecourse, Laravel-Daily, Laravel-News, YT, VS Code Marketplace and many more waiting ...
@@ -21,7 +115,7 @@ Laravel is accessible, powerful, and provides tools required for large, robust a
 ### Reading from Packagist
 
 -   Packagist API - https://packagist.org/search.json?q=laravel, see https://packagist.org/apidoc oder am besten alles: https://packagist.org/packages/list.json
-    Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+-   
 
 https://laraverse.test/packagist-search
 
@@ -32,7 +126,6 @@ https://laraverse.test/packagist-search
 
 -   [ ] populate the NPM table, update then
 -   [ ] create item and all related objects if not exists (npm url and ID in npm table), compare and update a bunch of fields then
-        You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you will be guided through building a modern Laravel application from scratch.
 
 ### Reading from GitHub
 
@@ -50,6 +143,66 @@ https://laraverse.test/github-search/laravel
 -   License
 -   Tags, Category ...
 -   Dependencies PHP / JS - from file
+
+## Create Items
+
+Creating Items should be done by merging all datasets into the items model including all relations. Following rules apply:
+
+- From Packagist
+
+  - Fill title
+
+  - Fill slug
+
+  - Fill description
+
+  - Fill latest version
+
+  - Form versions json
+
+  - Create vendor
+
+    - ... data
+
+  - Fill website
+
+  - Calc and set popularity to ...
+
+    - Rating
+    - Form rating data (json)
+    - Health
+    - Form health data (json)
+
+  - Fill Packagist url
+
+    Fill Packagist name
+
+    Fill Packagist description
+
+    Fill Packagist downloads
+
+    Fill Packagist favers
+
+  - Fill Github repo - this is the sign for the Github Consumer to fetch this package, as all (or some special) other GitHub fields are empty
+
+  - Item type = composer-package
+
+  - Platform = php-package (is there sth to differentiate, because there are composer texts...?)
+
+  - Categories = let's see
+
+  - Tags = let's see
+
+  - Item Relation ... that will be harder work
+
+    - composer_suggest
+    - composer_provide
+    - composer_replace
+    - composer_conflict
+    - composer_require_dev
+    - composer_require
+
+  - Create Packagist Relation
 
 ## More Data (to find and calc)
 

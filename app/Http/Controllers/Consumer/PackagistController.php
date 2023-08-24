@@ -21,7 +21,7 @@ class PackagistController extends Controller
                 'slug' => str_replace('/', '_', $packageName),
             ];
 
-            $package = PackagistPackage::updateOrCreate(
+            PackagistPackage::updateOrCreate(
                 ['slug' => $dataToFill['slug']],
                 $dataToFill
             );
