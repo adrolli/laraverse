@@ -99,8 +99,6 @@ These commands can be used to run jobs manually:
 - GithubSearch - has parameters like tag or search 
 - Watcher
 
-
-
 ## DB Updates
 
 - Vendor 
@@ -116,16 +114,12 @@ These commands can be used to run jobs manually:
   - Composer JSON
   - Package JSON
 
-
-
 ## Config
 
 - Laravel compatibility: "9, 10"
 - PHP compatibility: "8.1, 8.2"
 - Known Packages list
 - Array of update interval to popularity for different apis
-
-
 
 ## Todo
 
@@ -155,14 +149,6 @@ https://laraverse.test/github-search/laravel
 
 -   [ ] populate the Github table and all related, update then
 -   [ ] create item and all related objects if not exists (github url and ID in github table), compare and update a bunch of fields then
-
-## Github Data
-
--   Issues / open / Bugs
--   Discussions?
--   License
--   Tags, Category ...
--   Dependencies PHP / JS - from file
 
 ## Create Items
 
@@ -223,25 +209,6 @@ Creating Items should be done by merging all datasets into the items model inclu
     - composer_require
 
   - Create Packagist Relation
-
-## More Data (to find and calc)
-
--   Actively Maintained
--   Number of regul. devs
--   Finance
-    -   Finance good / OK / poor / unknown
-    -   Should be a textual information, too ... company behind or backed by ...
--   Age (first released)
--   Future ... Versions, Roadmap, other?
--   Books ...
--   Videos, Courses (YT, Laracasts, Codecourse, others)
--   Docs (link, per version)
--   Discussions (GH, Stackoverflow, Laravel.io ..., per Version?) and probably an own Forum
-
-## Own Data
-
--   Likes, Comments, Ratings, Discussions ...
--   Stacks (public)
 
 ## Taxonomies
 
@@ -306,71 +273,49 @@ Creating Items should be done by merging all datasets into the items model inclu
     -   User registration
     -   ...
 
-## Other ideas
+## MySQL Problem
 
--   Stack-Installer ... is it possible to combine all install commands automagically to an "installer"? Like laravel.build
--   Receipes and compatibility checks (people can check a stack compat)
--   Stack the big picture ... see the stack as a fancy image
--   Safe stack ... how safe (active dev, bottlenecks) is your stack?
--   Books, Video Courses, Learning platforms as new types
--   Packalyst RSS - https://packalyst.com/resources (new and requested)
--   eigene Einträge (wie Vemto, Skipper)
--   Packalyst RSS, RSS von Blogs, minimales Scraping
--   User-driven Content.
--   Request (Form, sofortige Veröffentlichung, wenn repo lesbar)
--   Aus der Codebase (v. a. composer.json und package.json)
--   User-driven, v. a. Rating für Sortierung, Posts (Request, Recipe, ...)
--   Anbindung an Laravel-News, Laravel Daily, Laravel.io, X, Stackoverflow, Github Issues und Discussions, etc. um für jedes Tool und Package das meiste an aktuellen Infos anzuzeige
+The app has pretty large models including fat json data. If you encounter the error: ```SQLSTATE[HY001]: Memory allocation error: 1038 Out of sort memory, consider increasing server sort buffer size``` it is probably related to this MySQL bug: https://bugs.mysql.com/bug.php?id=103318 and can be fixed by `SET GLOBAL sort_buffer_size = 256000000 // It'll reset after server restart`, see https://stackoverflow.com/questions/29575835/error-1038-out-of-sort-memory-consider-increasing-sort-buffer-size or https://www.educba.com/mysql-sort-buffer-size/ for persistence or remove the JSON fields from the table views like so:
 
+```php
+namespace App\Filament\Resources\PackagistPackageResource\Pages;
 
+use ...
 
-## MySQL Probleme
+class ListPackagistPackages extends ListRecords
+{
+		...
+    
+    protected function getTableQuery(): Builder
+    {
+        return static::getResource()::getEloquentQuery()->select('id', 'title', 'slug');
+    }
+}
 
-- Ditch DBngin? 
-- SQLSTATE[HY001]: Memory allocation error: 1038 Out of sort memory, consider increasing server sort buffer size 
-- Bei Nutzung von JSON Fields, https://bugs.mysql.com/bug.php?id=103318, but should be fixed, see https://stackoverflow.com/questions/71213456/unexpected-behaviour-of-sort-buffer-size-in-mysql-8-0-27-commercial-version
-- https://www.educba.com/mysql-sort-buffer-size/ but increasing buffer size is less than a workaround
-- Use mysql --socket /tmp/mysql_3306.sock -uroot to connect with DBngin, see https://github.com/TablePlus/DBngin/issues/38
-- Probably try Postgre, is it on Forge?
-- Probably do a custom query in Filament, excluding the json
-- Probably google for other solutions like stored procedures
-- Currently brewed MySQL 8.1, use with `mysql -u root - same shit
-- But finally working on 8.1: `SET GLOBAL sort_buffer_size = 256000000 // It'll reset after server restart`, see https://stackoverflow.com/questions/29575835/error-1038-out-of-sort-memory-consider-increasing-sort-buffer-size
-
-Trotzdem 
-
-- https://filamentphp.com/docs/2.x/admin/resources/getting-started#customizing-the-eloquent-query
-- Am Ende funktioniert es, die JSON resourcen aus der list zu bekommen ... und Mysql gepatcht
+```
 
 
 
 ## Backlog
 
-- https://filamentphp.com/plugins/leandrocfe-apex-charts
-
-- https://filamentphp.com/plugins/pxlrbt-spotlight
-
-- Export / Import / User (with Impersonate) / 
-
-- https://filamentphp.com/plugins/awcodes-overlook
-
-- https://filamentphp.com/plugins/bezhansalleh-exception-viewer
-
-  ****
-
-- Filament V3 will haben, dazu nochmal alle Filament Plugins checken und evtl. Fork-Updaten
-
-- Jobs und Failed Jobs sind zwei Plugins ... mach eines draus und besser konfigurierbar.
-
-  - https://gitlab.com/amvisor/filament-failed-jobs
-  - https://github.com/croustibat/filament-jobs-monitor
-  - Man sieht die abgearbeiteten Jobs, nicht die current jobs als zähler
-  - Man sieht nicht, wie viele Jobs anstehen
-
-- Supervisor or cron (much easier) for Managing and self-healing the Job Queue: https://gist.github.com/deepak-cotocus/6b9865784dee18966e15c74ec6e487c4
-
-- Better display JSON in Filament: https://github.com/invaders-xx/filament-jsoneditor
-
-- Fiddle with OpenAI: https://github.com/openai-php/laravel
-
-- Make something for health ... add monitors ... https://filamentphp.com/plugins/shuvroroy-spatie-laravel-health
+-   Stack-Installer ... is it possible to combine all install commands automagically to an "installer"? Like laravel.build
+-   Receipes and compatibility checks (people can check a stack compat)
+-   Stack the big picture ... see the stack as a fancy image or do sth markdownish to go viral ;-)
+-   Safe stack ... how safe (active dev, bottlenecks) is your stack?
+-   Books, Video Courses, Learning platforms as new types
+-   Packalyst RSS - https://packalyst.com/resources (new and requested)
+-   User-driven, v. a. Rating für Sortierung, Posts (Request, Recipe, ...)
+-   Blog, aggregation
+-   Generated newsletter
+-   https://filamentphp.com/plugins/leandrocfe-apex-charts
+-   https://filamentphp.com/plugins/pxlrbt-spotlight
+-   Export / Import / User (with Impersonate)
+-   https://filamentphp.com/plugins/awcodes-overlook
+-   https://filamentphp.com/plugins/bezhansalleh-exception-viewer
+-   Filament V3
+-   https://gitlab.com/amvisor/filament-failed-jobs -> nav pos
+-   https://github.com/croustibat/filament-jobs-monitor -> nav pos, jobs done instead of current, or pending ... missing view
+-   Supervisor or cron (much easier) for Managing and self-healing the Job Queue: https://gist.github.com/deepak-cotocus/6b9865784dee18966e15c74ec6e487c4
+-   Better display JSON in Filament: https://github.com/invaders-xx/filament-jsoneditor
+-   Fiddle with OpenAI: https://github.com/openai-php/laravel
+-   Make something for health ... add monitors ... https://filamentphp.com/plugins/shuvroroy-spatie-laravel-health
