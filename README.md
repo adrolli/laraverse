@@ -319,3 +319,55 @@ class ListPackagistPackages extends ListRecords
 -   Better display JSON in Filament: https://github.com/invaders-xx/filament-jsoneditor
 -   Fiddle with OpenAI: https://github.com/openai-php/laravel
 -   Make something for health ... add monitors ... https://filamentphp.com/plugins/shuvroroy-spatie-laravel-health
+
+## Idea
+
+- What do you want to build today?
+  - A montolithic app with frontend and backend
+  - A headless app with backend and API
+  - I don't know, can we skip that?
+- How do you want to start?
+  - Easy - what about a code generator
+  - Smart - I want to use an AdminPanel
+  - Let me code that from scratch
+- What kind of project do you have in mind
+  - CMS
+  - Online Shop
+  - Blog
+  - Website
+  - Custom App
+  - Else
+- Which of these do you prefer
+  - I use a full-flegded JS framework
+  - I use Laravel Livewire, and code in PHP
+  - I only need static HTML or include another JS library
+- And what about styles
+  - TailwindCSS, the most popular option
+  - Boostrap
+  - I use another CSS framework or start vanilla
+- Do you have some features, you definetly need
+  - Auth
+  - 2-FA
+  - ... type
+- Which testing framework do you prefer
+  - PHP Unit
+  - Pest
+  - Other
+  - I don't write tests, skip that
+- Which IDE do you prefer
+  - VS Code
+  - PHPStorm
+  - Other
+  - What is an IDE?
+- How do you want to deploy your product
+  - Just local on a Mac
+  - Just local on Windows
+  - On my shared host
+  - On a cloud server
+  - Serverless in the cloud
+
+Creating your stack ...
+
+You can now update and finalize your stack, print a stack sheet, get a stack image or build your stack.
+
+Have Fun!
