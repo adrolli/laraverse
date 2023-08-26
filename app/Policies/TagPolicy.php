@@ -2,8 +2,8 @@
 
 namespace App\Policies;
 
-use App\Models\Tag;
 use App\Models\User;
+use App\Models\Tag;
 use Illuminate\Auth\Access\HandlesAuthorization;
 
 class TagPolicy
@@ -11,66 +11,141 @@ class TagPolicy
     use HandlesAuthorization;
 
     /**
-     * Determine whether the tag can view any models.
+     * Determine whether the user can view any models.
+     *
+     * @param  \App\Models\User  $user
+     * @return \Illuminate\Auth\Access\Response|bool
      */
     public function viewAny(User $user): bool
     {
-        return $user->hasPermissionTo('list tags');
+        return $user->can('view_any_tag');
     }
 
     /**
-     * Determine whether the tag can view the model.
+     * Determine whether the user can view the model.
+     *
+     * @param  \App\Models\User  $user
+     * @param  \App\Models\Tag  $tag
+     * @return \Illuminate\Auth\Access\Response|bool
      */
-    public function view(User $user, Tag $model): bool
+    public function view(User $user, Tag $tag): bool
     {
-        return $user->hasPermissionTo('view tags');
+        return $user->can('view_tag');
     }
 
     /**
-     * Determine whether the tag can create models.
+     * Determine whether the user can create models.
+     *
+     * @param  \App\Models\User  $user
+     * @return \Illuminate\Auth\Access\Response|bool
      */
     public function create(User $user): bool
     {
-        return $user->hasPermissionTo('create tags');
+        return $user->can('create_tag');
     }
 
     /**
-     * Determine whether the tag can update the model.
+     * Determine whether the user can update the model.
+     *
+     * @param  \App\Models\User  $user
+     * @param  \App\Models\Tag  $tag
+     * @return \Illuminate\Auth\Access\Response|bool
      */
-    public function update(User $user, Tag $model): bool
+    public function update(User $user, Tag $tag): bool
     {
-        return $user->hasPermissionTo('update tags');
+        return $user->can('update_tag');
     }
 
     /**
-     * Determine whether the tag can delete the model.
+     * Determine whether the user can delete the model.
+     *
+     * @param  \App\Models\User  $user
+     * @param  \App\Models\Tag  $tag
+     * @return \Illuminate\Auth\Access\Response|bool
      */
-    public function delete(User $user, Tag $model): bool
+    public function delete(User $user, Tag $tag): bool
     {
-        return $user->hasPermissionTo('delete tags');
+        return $user->can('delete_tag');
     }
 
     /**
-     * Determine whether the user can delete multiple instances of the model.
+     * Determine whether the user can bulk delete.
+     *
+     * @param  \App\Models\User  $user
+     * @return \Illuminate\Auth\Access\Response|bool
      */
     public function deleteAny(User $user): bool
     {
-        return $user->hasPermissionTo('delete tags');
+        return $user->can('delete_any_tag');
     }
 
     /**
-     * Determine whether the tag can restore the model.
+     * Determine whether the user can permanently delete.
+     *
+     * @param  \App\Models\User  $user
+     * @param  \App\Models\Tag  $tag
+     * @return \Illuminate\Auth\Access\Response|bool
      */
-    public function restore(User $user, Tag $model): bool
+    public function forceDelete(User $user, Tag $tag): bool
     {
-        return false;
+        return $user->can('force_delete_tag');
     }
 
     /**
-     * Determine whether the tag can permanently delete the model.
+     * Determine whether the user can permanently bulk delete.
+     *
+     * @param  \App\Models\User  $user
+     * @return \Illuminate\Auth\Access\Response|bool
      */
-    public function forceDelete(User $user, Tag $model): bool
+    public function forceDeleteAny(User $user): bool
     {
-        return false;
+        return $user->can('force_delete_any_tag');
     }
+
+    /**
+     * Determine whether the user can restore.
+     *
+     * @param  \App\Models\User  $user
+     * @param  \App\Models\Tag  $tag
+     * @return \Illuminate\Auth\Access\Response|bool
+     */
+    public function restore(User $user, Tag $tag): bool
+    {
+        return $user->can('restore_tag');
+    }
+
+    /**
+     * Determine whether the user can bulk restore.
+     *
+     * @param  \App\Models\User  $user
+     * @return \Illuminate\Auth\Access\Response|bool
+     */
+    public function restoreAny(User $user): bool
+    {
+        return $user->can('restore_any_tag');
+    }
+
+    /**
+     * Determine whether the user can replicate.
+     *
+     * @param  \App\Models\User  $user
+     * @param  \App\Models\Tag  $tag
+     * @return \Illuminate\Auth\Access\Response|bool
+     */
+    public function replicate(User $user, Tag $tag): bool
+    {
+        return $user->can('replicate_tag');
+    }
+
+    /**
+     * Determine whether the user can reorder.
+     *
+     * @param  \App\Models\User  $user
+     * @return \Illuminate\Auth\Access\Response|bool
+     */
+    public function reorder(User $user): bool
+    {
+        return $user->can('reorder_tag');
+    }
+
 }

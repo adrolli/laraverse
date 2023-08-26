@@ -3,10 +3,10 @@
 namespace App\Policies;
 
 use App\Models\User;
-use App\Models\PostType;
+use Spatie\Permission\Models\Role;
 use Illuminate\Auth\Access\HandlesAuthorization;
 
-class PostTypePolicy
+class RolePolicy
 {
     use HandlesAuthorization;
 
@@ -18,19 +18,19 @@ class PostTypePolicy
      */
     public function viewAny(User $user): bool
     {
-        return $user->can('view_any_post::type');
+        return $user->can('view_any_role');
     }
 
     /**
      * Determine whether the user can view the model.
      *
      * @param  \App\Models\User  $user
-     * @param  \App\Models\PostType  $postType
+     * @param  \Spatie\Permission\Models\Role  $role
      * @return \Illuminate\Auth\Access\Response|bool
      */
-    public function view(User $user, PostType $postType): bool
+    public function view(User $user, Role $role): bool
     {
-        return $user->can('view_post::type');
+        return $user->can('view_role');
     }
 
     /**
@@ -41,31 +41,31 @@ class PostTypePolicy
      */
     public function create(User $user): bool
     {
-        return $user->can('create_post::type');
+        return $user->can('create_role');
     }
 
     /**
      * Determine whether the user can update the model.
      *
      * @param  \App\Models\User  $user
-     * @param  \App\Models\PostType  $postType
+     * @param  \Spatie\Permission\Models\Role  $role
      * @return \Illuminate\Auth\Access\Response|bool
      */
-    public function update(User $user, PostType $postType): bool
+    public function update(User $user, Role $role): bool
     {
-        return $user->can('update_post::type');
+        return $user->can('update_role');
     }
 
     /**
      * Determine whether the user can delete the model.
      *
      * @param  \App\Models\User  $user
-     * @param  \App\Models\PostType  $postType
+     * @param  \Spatie\Permission\Models\Role  $role
      * @return \Illuminate\Auth\Access\Response|bool
      */
-    public function delete(User $user, PostType $postType): bool
+    public function delete(User $user, Role $role): bool
     {
-        return $user->can('delete_post::type');
+        return $user->can('delete_role');
     }
 
     /**
@@ -76,19 +76,19 @@ class PostTypePolicy
      */
     public function deleteAny(User $user): bool
     {
-        return $user->can('delete_any_post::type');
+        return $user->can('delete_any_role');
     }
 
     /**
      * Determine whether the user can permanently delete.
      *
      * @param  \App\Models\User  $user
-     * @param  \App\Models\PostType  $postType
+     * @param  \Spatie\Permission\Models\Role  $role
      * @return \Illuminate\Auth\Access\Response|bool
      */
-    public function forceDelete(User $user, PostType $postType): bool
+    public function forceDelete(User $user, Role $role): bool
     {
-        return $user->can('force_delete_post::type');
+        return $user->can('{{ ForceDelete }}');
     }
 
     /**
@@ -99,19 +99,19 @@ class PostTypePolicy
      */
     public function forceDeleteAny(User $user): bool
     {
-        return $user->can('force_delete_any_post::type');
+        return $user->can('{{ ForceDeleteAny }}');
     }
 
     /**
      * Determine whether the user can restore.
      *
      * @param  \App\Models\User  $user
-     * @param  \App\Models\PostType  $postType
+     * @param  \Spatie\Permission\Models\Role  $role
      * @return \Illuminate\Auth\Access\Response|bool
      */
-    public function restore(User $user, PostType $postType): bool
+    public function restore(User $user, Role $role): bool
     {
-        return $user->can('restore_post::type');
+        return $user->can('{{ Restore }}');
     }
 
     /**
@@ -122,19 +122,19 @@ class PostTypePolicy
      */
     public function restoreAny(User $user): bool
     {
-        return $user->can('restore_any_post::type');
+        return $user->can('{{ RestoreAny }}');
     }
 
     /**
      * Determine whether the user can replicate.
      *
      * @param  \App\Models\User  $user
-     * @param  \App\Models\PostType  $postType
+     * @param  \Spatie\Permission\Models\Role  $role
      * @return \Illuminate\Auth\Access\Response|bool
      */
-    public function replicate(User $user, PostType $postType): bool
+    public function replicate(User $user, Role $role): bool
     {
-        return $user->can('replicate_post::type');
+        return $user->can('{{ Replicate }}');
     }
 
     /**
@@ -145,7 +145,7 @@ class PostTypePolicy
      */
     public function reorder(User $user): bool
     {
-        return $user->can('reorder_post::type');
+        return $user->can('{{ Reorder }}');
     }
 
 }

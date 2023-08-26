@@ -18,8 +18,6 @@ Not only this shiny model is created with Vemto. The whole app is bootstrapped u
 
 ![Vemto Model](laraverse_exported_image.png)
 
-
-
 ## Jobs
 
 Fetching data, calculating and writing even more data to these powerful models is done by jobs:
