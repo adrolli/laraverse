@@ -12,6 +12,7 @@
         "bezhansalleh/filament-shield": "^3.0@beta",
         "filament/filament": "^3.0-stable",
         "guzzlehttp/guzzle": "^7.2",
+        "jeffgreco13/filament-breezy": "^2.1",
         "laravel/framework": "^10.10",
         "laravel/jetstream": "^3.2",
         "laravel/sanctum": "^3.2",
