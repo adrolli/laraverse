@@ -2,18 +2,19 @@
 
 namespace App\Filament\Resources\UserResource\RelationManagers;
 
-use Filament\Forms;
-use Filament\Tables;
-use Filament\Resources\{Form, Table};
+use Filament\Forms\Components\DatePicker;
 use Filament\Forms\Components\Grid;
-use Filament\Forms\Components\Select;
 use Filament\Forms\Components\KeyValue;
-use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\RichEditor;
-use Illuminate\Database\Eloquent\Builder;
-use Filament\Forms\Components\BelongsToSelect;
-use Filament\Tables\Filters\MultiSelectFilter;
+use Filament\Forms\Components\Select;
+use Filament\Forms\Components\TextInput;
+use Filament\Forms\Form;
 use Filament\Resources\RelationManagers\RelationManager;
+use Filament\Tables;
+use Filament\Tables\Columns\TextColumn;
+use Filament\Tables\Filters\MultiSelectFilter;
+use Filament\Tables\Table;
+use Illuminate\Database\Eloquent\Builder;
 
 class PostsRelationManager extends RelationManager
 {
@@ -21,7 +22,7 @@ class PostsRelationManager extends RelationManager
 
     protected static ?string $recordTitleAttribute = 'title';
 
-    public static function form(Form $form): Form
+    public function form(Form $form): Form
     {
         return $form->schema([
             Grid::make(['default' => 0])->schema([
@@ -94,29 +95,29 @@ class PostsRelationManager extends RelationManager
         ]);
     }
 
-    public static function table(Table $table): Table
+    public function table(Table $table): Table
     {
         return $table
             ->columns([
-                Tables\Columns\TextColumn::make('title')->limit(50),
-                Tables\Columns\TextColumn::make('slug')->limit(50),
-                Tables\Columns\TextColumn::make('content')->limit(50),
-                Tables\Columns\TextColumn::make('user.name')->limit(50),
-                Tables\Columns\TextColumn::make('item.title')->limit(50),
-                Tables\Columns\TextColumn::make('stack.title')->limit(50),
-                Tables\Columns\TextColumn::make('postType.title')->limit(50),
+                TextColumn::make('title')->limit(50),
+                TextColumn::make('slug')->limit(50),
+                TextColumn::make('content')->limit(50),
+                TextColumn::make('user.name')->limit(50),
+                TextColumn::make('item.title')->limit(50),
+                TextColumn::make('stack.title')->limit(50),
+                TextColumn::make('postType.title')->limit(50),
             ])
             ->filters([
                 Tables\Filters\Filter::make('created_at')
                     ->form([
-                        Forms\Components\DatePicker::make('created_from'),
-                        Forms\Components\DatePicker::make('created_until'),
+                        DatePicker::make('created_from'),
+                        DatePicker::make('created_until'),
                     ])
                     ->query(function (Builder $query, array $data): Builder {
                         return $query
                             ->when(
                                 $data['created_from'],
-                                fn(
+                                fn (
                                     Builder $query,
                                     $date
                                 ): Builder => $query->whereDate(
@@ -127,7 +128,7 @@ class PostsRelationManager extends RelationManager
                             )
                             ->when(
                                 $data['created_until'],
-                                fn(
+                                fn (
                                     Builder $query,
                                     $date
                                 ): Builder => $query->whereDate(

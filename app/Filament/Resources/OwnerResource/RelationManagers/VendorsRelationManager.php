@@ -2,18 +2,24 @@
 
 namespace App\Filament\Resources\OwnerResource\RelationManagers;
 
-use Filament\Forms;
-use Filament\Tables;
-use Filament\Resources\{Form, Table};
+use Filament\Forms\Components\DatePicker;
+use Filament\Forms\Components\FileUpload;
 use Filament\Forms\Components\Grid;
+use Filament\Forms\Components\RichEditor;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TextInput;
-use Filament\Forms\Components\FileUpload;
-use Filament\Forms\Components\RichEditor;
-use Illuminate\Database\Eloquent\Builder;
-use Filament\Forms\Components\BelongsToSelect;
-use Filament\Tables\Filters\MultiSelectFilter;
+use Filament\Forms\Form;
 use Filament\Resources\RelationManagers\RelationManager;
+use Filament\Tables;
+use Filament\Tables\Actions\CreateAction;
+use Filament\Tables\Actions\DeleteAction;
+use Filament\Tables\Actions\EditAction;
+use Filament\Tables\Columns\ImageColumn;
+use Filament\Tables\Columns\TextColumn;
+use Filament\Tables\Filters\MultiSelectFilter;
+use Filament\Tables\Filters\SelectFilter;
+use Filament\Tables\Table;
+use Illuminate\Database\Eloquent\Builder;
 
 class VendorsRelationManager extends RelationManager
 {
@@ -21,7 +27,7 @@ class VendorsRelationManager extends RelationManager
 
     protected static ?string $recordTitleAttribute = 'title';
 
-    public static function form(Form $form): Form
+    public function form(Form $form): Form
     {
         return $form->schema([
             Grid::make(['default' => 0])->schema([
@@ -122,35 +128,35 @@ class VendorsRelationManager extends RelationManager
         ]);
     }
 
-    public static function table(Table $table): Table
+    public function table(Table $table): Table
     {
         return $table
             ->columns([
-                Tables\Columns\TextColumn::make('title')->limit(50),
-                Tables\Columns\TextColumn::make('slug')->limit(50),
-                Tables\Columns\ImageColumn::make('avatar')->rounded(),
-                Tables\Columns\TextColumn::make('description')->limit(50),
-                Tables\Columns\TextColumn::make('email')->limit(50),
-                Tables\Columns\TextColumn::make('website')->limit(50),
-                Tables\Columns\TextColumn::make('github')->limit(50),
-                Tables\Columns\TextColumn::make('packagist')->limit(50),
-                Tables\Columns\TextColumn::make('npm')->limit(50),
-                Tables\Columns\TextColumn::make('owner.title')->limit(50),
-                Tables\Columns\TextColumn::make('organization.title')->limit(
+                TextColumn::make('title')->limit(50),
+                TextColumn::make('slug')->limit(50),
+                ImageColumn::make('avatar')->rounded(),
+                TextColumn::make('description')->limit(50),
+                TextColumn::make('email')->limit(50),
+                TextColumn::make('website')->limit(50),
+                TextColumn::make('github')->limit(50),
+                TextColumn::make('packagist')->limit(50),
+                TextColumn::make('npm')->limit(50),
+                TextColumn::make('owner.title')->limit(50),
+                TextColumn::make('organization.title')->limit(
                     50
                 ),
             ])
             ->filters([
                 Tables\Filters\Filter::make('created_at')
                     ->form([
-                        Forms\Components\DatePicker::make('created_from'),
-                        Forms\Components\DatePicker::make('created_until'),
+                        DatePicker::make('created_from'),
+                        DatePicker::make('created_until'),
                     ])
                     ->query(function (Builder $query, array $data): Builder {
                         return $query
                             ->when(
                                 $data['created_from'],
-                                fn(
+                                fn (
                                     Builder $query,
                                     $date
                                 ): Builder => $query->whereDate(
@@ -161,7 +167,7 @@ class VendorsRelationManager extends RelationManager
                             )
                             ->when(
                                 $data['created_until'],
-                                fn(
+                                fn (
                                     Builder $query,
                                     $date
                                 ): Builder => $query->whereDate(
@@ -172,7 +178,7 @@ class VendorsRelationManager extends RelationManager
                             );
                     }),
 
-                MultiSelectFilter::make('owner_id')->relationship(
+                SelectFilter::make('owner_id')->multiple()->relationship(
                     'owner',
                     'title'
                 ),
@@ -182,10 +188,10 @@ class VendorsRelationManager extends RelationManager
                     'title'
                 ),
             ])
-            ->headerActions([Tables\Actions\CreateAction::make()])
+            ->headerActions([CreateAction::make()])
             ->actions([
-                Tables\Actions\EditAction::make(),
-                Tables\Actions\DeleteAction::make(),
+                EditAction::make(),
+                DeleteAction::make(),
             ])
             ->bulkActions([Tables\Actions\DeleteBulkAction::make()]);
     }

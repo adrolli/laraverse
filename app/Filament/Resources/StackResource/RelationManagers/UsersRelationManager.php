@@ -2,16 +2,18 @@
 
 namespace App\Filament\Resources\StackResource\RelationManagers;
 
-use Filament\Forms;
-use Filament\Tables;
-use Filament\Resources\{Form, Table};
-use Livewire\Component;
-use Filament\Forms\Components\Grid;
-use Illuminate\Database\Eloquent\Model;
-use Filament\Forms\Components\TextInput;
-use Illuminate\Database\Eloquent\Builder;
 use App\Filament\Resources\StackResource\Pages;
+use Filament\Forms\Components\DatePicker;
+use Filament\Forms\Components\Grid;
+use Filament\Forms\Components\TextInput;
+use Filament\Forms\Form;
 use Filament\Resources\RelationManagers\RelationManager;
+use Filament\Tables;
+use Filament\Tables\Columns\TextColumn;
+use Filament\Tables\Table;
+use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Model;
+use Livewire\Component;
 
 class UsersRelationManager extends RelationManager
 {
@@ -19,7 +21,7 @@ class UsersRelationManager extends RelationManager
 
     protected static ?string $recordTitleAttribute = 'name';
 
-    public static function form(Form $form): Form
+    public function form(Form $form): Form
     {
         return $form->schema([
             Grid::make(['default' => 0])->schema([
@@ -34,7 +36,7 @@ class UsersRelationManager extends RelationManager
 
                 TextInput::make('email')
                     ->rules(['email'])
-                    ->unique('users', 'email', fn(?Model $record) => $record)
+                    ->unique('users', 'email', fn (?Model $record) => $record)
                     ->email()
                     ->placeholder('Email')
                     ->columnSpan([
@@ -45,10 +47,9 @@ class UsersRelationManager extends RelationManager
 
                 TextInput::make('password')
                     ->password()
-                    ->dehydrateStateUsing(fn($state) => \Hash::make($state))
+                    ->dehydrateStateUsing(fn ($state) => \Hash::make($state))
                     ->required(
-                        fn(Component $livewire) => $livewire instanceof
-                            Pages\CreateUser
+                        fn (Component $livewire) => $livewire instanceof Pages\CreateUser
                     )
                     ->placeholder('Password')
                     ->columnSpan([
@@ -60,24 +61,24 @@ class UsersRelationManager extends RelationManager
         ]);
     }
 
-    public static function table(Table $table): Table
+    public function table(Table $table): Table
     {
         return $table
             ->columns([
-                Tables\Columns\TextColumn::make('name')->limit(50),
-                Tables\Columns\TextColumn::make('email')->limit(50),
+                TextColumn::make('name')->limit(50),
+                TextColumn::make('email')->limit(50),
             ])
             ->filters([
                 Tables\Filters\Filter::make('created_at')
                     ->form([
-                        Forms\Components\DatePicker::make('created_from'),
-                        Forms\Components\DatePicker::make('created_until'),
+                        DatePicker::make('created_from'),
+                        DatePicker::make('created_until'),
                     ])
                     ->query(function (Builder $query, array $data): Builder {
                         return $query
                             ->when(
                                 $data['created_from'],
-                                fn(
+                                fn (
                                     Builder $query,
                                     $date
                                 ): Builder => $query->whereDate(
@@ -88,7 +89,7 @@ class UsersRelationManager extends RelationManager
                             )
                             ->when(
                                 $data['created_until'],
-                                fn(
+                                fn (
                                     Builder $query,
                                     $date
                                 ): Builder => $query->whereDate(

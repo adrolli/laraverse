@@ -2,24 +2,27 @@
 
 namespace App\Filament\Resources;
 
-use App\Models\Vendor;
-use Filament\{Tables, Forms};
-use Filament\Resources\{Form, Table, Resource};
-use Filament\Forms\Components\Grid;
-use Filament\Forms\Components\Card;
-use Filament\Forms\Components\Select;
-use Filament\Forms\Components\TextInput;
-use Filament\Forms\Components\FileUpload;
-use Filament\Forms\Components\RichEditor;
-use Filament\Tables\Filters\SelectFilter;
 use App\Filament\Filters\DateRangeFilter;
 use App\Filament\Resources\VendorResource\Pages;
+use App\Models\Vendor;
+use Filament\Forms\Components\Card;
+use Filament\Forms\Components\FileUpload;
+use Filament\Forms\Components\Grid;
+use Filament\Forms\Components\RichEditor;
+use Filament\Forms\Components\Select;
+use Filament\Forms\Components\TextInput;
+use Filament\Forms\Form;
+use Filament\Resources\Resource;
+use Filament\Tables;
+use Filament\Tables\Columns\TextColumn;
+use Filament\Tables\Filters\SelectFilter;
+use Filament\Tables\Table;
 
 class VendorResource extends Resource
 {
     protected static ?string $model = Vendor::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-collection';
+    protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
 
     protected static ?string $recordTitleAttribute = 'title';
 
@@ -153,45 +156,45 @@ class VendorResource extends Resource
         return $table
             ->poll('60s')
             ->columns([
-                Tables\Columns\TextColumn::make('title')
+                TextColumn::make('title')
                     ->toggleable()
                     ->searchable(true, null, true)
                     ->limit(50),
-                Tables\Columns\TextColumn::make('slug')
+                TextColumn::make('slug')
                     ->toggleable()
                     ->searchable(true, null, true)
                     ->limit(50),
                 Tables\Columns\ImageColumn::make('avatar')
                     ->toggleable()
                     ->circular(),
-                Tables\Columns\TextColumn::make('description')
+                TextColumn::make('description')
                     ->toggleable()
                     ->searchable()
                     ->limit(50),
-                Tables\Columns\TextColumn::make('email')
+                TextColumn::make('email')
                     ->toggleable()
                     ->searchable(true, null, true)
                     ->limit(50),
-                Tables\Columns\TextColumn::make('website')
+                TextColumn::make('website')
                     ->toggleable()
                     ->searchable(true, null, true)
                     ->limit(50),
-                Tables\Columns\TextColumn::make('github')
+                TextColumn::make('github')
                     ->toggleable()
                     ->searchable(true, null, true)
                     ->limit(50),
-                Tables\Columns\TextColumn::make('packagist')
+                TextColumn::make('packagist')
                     ->toggleable()
                     ->searchable(true, null, true)
                     ->limit(50),
-                Tables\Columns\TextColumn::make('npm')
+                TextColumn::make('npm')
                     ->toggleable()
                     ->searchable(true, null, true)
                     ->limit(50),
-                Tables\Columns\TextColumn::make('owner.title')
+                TextColumn::make('owner.title')
                     ->toggleable()
                     ->limit(50),
-                Tables\Columns\TextColumn::make('organization.title')
+                TextColumn::make('organization.title')
                     ->toggleable()
                     ->limit(50),
             ])

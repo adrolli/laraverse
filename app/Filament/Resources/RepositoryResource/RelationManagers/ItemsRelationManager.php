@@ -2,18 +2,19 @@
 
 namespace App\Filament\Resources\RepositoryResource\RelationManagers;
 
-use Filament\Forms;
-use Filament\Tables;
-use Filament\Resources\{Form, Table};
+use Filament\Forms\Components\DatePicker;
 use Filament\Forms\Components\Grid;
-use Filament\Forms\Components\Select;
 use Filament\Forms\Components\KeyValue;
-use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\RichEditor;
-use Illuminate\Database\Eloquent\Builder;
-use Filament\Forms\Components\BelongsToSelect;
-use Filament\Tables\Filters\MultiSelectFilter;
+use Filament\Forms\Components\Select;
+use Filament\Forms\Components\TextInput;
+use Filament\Forms\Form;
 use Filament\Resources\RelationManagers\RelationManager;
+use Filament\Tables;
+use Filament\Tables\Columns\TextColumn;
+use Filament\Tables\Filters\MultiSelectFilter;
+use Filament\Tables\Table;
+use Illuminate\Database\Eloquent\Builder;
 
 class ItemsRelationManager extends RelationManager
 {
@@ -21,7 +22,7 @@ class ItemsRelationManager extends RelationManager
 
     protected static ?string $recordTitleAttribute = 'title';
 
-    public static function form(Form $form): Form
+    public function form(Form $form): Form
     {
         return $form->schema([
             Grid::make(['default' => 0])->schema([
@@ -278,49 +279,49 @@ class ItemsRelationManager extends RelationManager
         ]);
     }
 
-    public static function table(Table $table): Table
+    public function table(Table $table): Table
     {
         return $table
             ->columns([
-                Tables\Columns\TextColumn::make('title')->limit(50),
-                Tables\Columns\TextColumn::make('slug')->limit(50),
-                Tables\Columns\TextColumn::make('description')->limit(50),
-                Tables\Columns\TextColumn::make('latest_version')->limit(50),
-                Tables\Columns\TextColumn::make('vendor.title')->limit(50),
-                Tables\Columns\TextColumn::make('itemType.title')->limit(50),
-                Tables\Columns\TextColumn::make('website')->limit(50),
-                Tables\Columns\TextColumn::make('ranking'),
-                Tables\Columns\TextColumn::make('popularity'),
-                Tables\Columns\TextColumn::make('rating'),
-                Tables\Columns\TextColumn::make('health'),
-                Tables\Columns\TextColumn::make('github_url')->limit(50),
-                Tables\Columns\TextColumn::make('github_stars'),
-                Tables\Columns\TextColumn::make('packagist_url')->limit(50),
-                Tables\Columns\TextColumn::make('packagist_name')->limit(50),
-                Tables\Columns\TextColumn::make('packagist_description')->limit(
+                TextColumn::make('title')->limit(50),
+                TextColumn::make('slug')->limit(50),
+                TextColumn::make('description')->limit(50),
+                TextColumn::make('latest_version')->limit(50),
+                TextColumn::make('vendor.title')->limit(50),
+                TextColumn::make('itemType.title')->limit(50),
+                TextColumn::make('website')->limit(50),
+                TextColumn::make('ranking'),
+                TextColumn::make('popularity'),
+                TextColumn::make('rating'),
+                TextColumn::make('health'),
+                TextColumn::make('github_url')->limit(50),
+                TextColumn::make('github_stars'),
+                TextColumn::make('packagist_url')->limit(50),
+                TextColumn::make('packagist_name')->limit(50),
+                TextColumn::make('packagist_description')->limit(
                     50
                 ),
-                Tables\Columns\TextColumn::make('packagist_downloads'),
-                Tables\Columns\TextColumn::make('packagist_favers'),
-                Tables\Columns\TextColumn::make('npm_url')->limit(50),
-                Tables\Columns\TextColumn::make('github_maintainers'),
-                Tables\Columns\TextColumn::make('repository.title')->limit(50),
-                Tables\Columns\TextColumn::make('npmPackage.title')->limit(50),
-                Tables\Columns\TextColumn::make(
+                TextColumn::make('packagist_downloads'),
+                TextColumn::make('packagist_favers'),
+                TextColumn::make('npm_url')->limit(50),
+                TextColumn::make('github_maintainers'),
+                TextColumn::make('repository.title')->limit(50),
+                TextColumn::make('npmPackage.title')->limit(50),
+                TextColumn::make(
                     'packagistPackage.title'
                 )->limit(50),
             ])
             ->filters([
                 Tables\Filters\Filter::make('created_at')
                     ->form([
-                        Forms\Components\DatePicker::make('created_from'),
-                        Forms\Components\DatePicker::make('created_until'),
+                        DatePicker::make('created_from'),
+                        DatePicker::make('created_until'),
                     ])
                     ->query(function (Builder $query, array $data): Builder {
                         return $query
                             ->when(
                                 $data['created_from'],
-                                fn(
+                                fn (
                                     Builder $query,
                                     $date
                                 ): Builder => $query->whereDate(
@@ -331,7 +332,7 @@ class ItemsRelationManager extends RelationManager
                             )
                             ->when(
                                 $data['created_until'],
-                                fn(
+                                fn (
                                     Builder $query,
                                     $date
                                 ): Builder => $query->whereDate(

@@ -2,24 +2,26 @@
 
 namespace App\Filament\Resources;
 
-use App\Models\Repository;
-use Filament\{Tables, Forms};
-use Filament\Resources\{Form, Table, Resource};
-use Filament\Forms\Components\Grid;
-use Filament\Forms\Components\Card;
-use Filament\Forms\Components\Select;
-use Filament\Forms\Components\KeyValue;
-use Filament\Forms\Components\TextInput;
-use Filament\Forms\Components\RichEditor;
-use Filament\Tables\Filters\SelectFilter;
 use App\Filament\Filters\DateRangeFilter;
 use App\Filament\Resources\RepositoryResource\Pages;
+use App\Models\Repository;
+use Filament\Forms\Components\Card;
+use Filament\Forms\Components\Grid;
+use Filament\Forms\Components\KeyValue;
+use Filament\Forms\Components\RichEditor;
+use Filament\Forms\Components\Select;
+use Filament\Forms\Components\TextInput;
+use Filament\Forms\Form;
+use Filament\Resources\Resource;
+use Filament\Tables\Columns\TextColumn;
+use Filament\Tables\Filters\SelectFilter;
+use Filament\Tables\Table;
 
 class RepositoryResource extends Resource
 {
     protected static ?string $model = Repository::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-collection';
+    protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
 
     protected static ?string $recordTitleAttribute = 'title';
 
@@ -169,37 +171,37 @@ class RepositoryResource extends Resource
         return $table
             ->poll('60s')
             ->columns([
-                Tables\Columns\TextColumn::make('title')
+                TextColumn::make('title')
                     ->toggleable()
                     ->searchable(true, null, true)
                     ->limit(50),
-                Tables\Columns\TextColumn::make('slug')
+                TextColumn::make('slug')
                     ->toggleable()
                     ->searchable(true, null, true)
                     ->limit(50),
-                Tables\Columns\TextColumn::make('description')
+                TextColumn::make('description')
                     ->toggleable()
                     ->searchable()
                     ->limit(50),
-                Tables\Columns\TextColumn::make('license')
+                TextColumn::make('license')
                     ->toggleable()
                     ->searchable(true, null, true)
                     ->limit(50),
-                Tables\Columns\TextColumn::make('readme')
+                TextColumn::make('readme')
                     ->toggleable()
                     ->searchable()
                     ->limit(50),
-                Tables\Columns\TextColumn::make('package_type')
+                TextColumn::make('package_type')
                     ->toggleable()
                     ->searchable(true, null, true)
                     ->limit(50),
-                Tables\Columns\TextColumn::make('repositoryType.title')
+                TextColumn::make('repositoryType.title')
                     ->toggleable()
                     ->limit(50),
-                Tables\Columns\TextColumn::make('organization.title')
+                TextColumn::make('organization.title')
                     ->toggleable()
                     ->limit(50),
-                Tables\Columns\TextColumn::make('owner.title')
+                TextColumn::make('owner.title')
                     ->toggleable()
                     ->limit(50),
             ])
