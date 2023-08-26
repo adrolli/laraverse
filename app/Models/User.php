@@ -2,19 +2,17 @@
 
 namespace App\Models;
 
-use Laravel\Sanctum\HasApiTokens;
 use App\Models\Scopes\Searchable;
 use App\Models\Traits\FilamentTrait;
-use Spatie\Permission\Traits\HasRoles;
-use Laravel\Jetstream\HasProfilePhoto;
-use Illuminate\Notifications\Notifiable;
-use Filament\Models\Contracts\FilamentUser;
-use Laravel\Fortify\TwoFactorAuthenticatable;
-use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use Illuminate\Notifications\Notifiable;
+use Laravel\Fortify\TwoFactorAuthenticatable;
+use Laravel\Jetstream\HasProfilePhoto;
+use Laravel\Sanctum\HasApiTokens;
+use Spatie\Permission\Traits\HasRoles;
 
-class User extends Authenticatable implements FilamentUser
+class User extends Authenticatable
 {
     use HasRoles;
     use Notifiable;

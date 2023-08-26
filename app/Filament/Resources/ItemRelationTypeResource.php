@@ -4,8 +4,8 @@ namespace App\Filament\Resources;
 
 use Filament\Forms;
 use Filament\Tables;
-use Filament\Resources\Form;
-use Filament\Resources\Table;
+use Filament\Forms\Form;
+use Filament\Tables\Table;
 use App\Models\ItemRelationType;
 use Filament\Resources\Resource;
 use Filament\Forms\Components\Grid;
@@ -22,7 +22,7 @@ class ItemRelationTypeResource extends Resource
 {
     protected static ?string $model = ItemRelationType::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-collection';
+    protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
 
     protected static ?string $recordTitleAttribute = 'title';
 
