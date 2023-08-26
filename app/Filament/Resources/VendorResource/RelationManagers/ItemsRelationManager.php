@@ -8,12 +8,16 @@ use Filament\Resources\Form;
 use Filament\Resources\Table;
 use Filament\Forms\Components\Grid;
 use Filament\Forms\Components\Select;
+use Filament\Tables\Actions\EditAction;
 use Filament\Forms\Components\KeyValue;
 use Filament\Forms\Components\TextInput;
+use Filament\Tables\Actions\CreateAction;
+use Filament\Tables\Actions\DeleteAction;
 use Filament\Forms\Components\RichEditor;
+use Filament\Tables\Filters\SelectFilter;
 use Illuminate\Database\Eloquent\Builder;
+use Filament\Tables\Actions\DeleteBulkAction;
 use Filament\Forms\Components\BelongsToSelect;
-use Filament\Tables\Filters\MultiSelectFilter;
 use Filament\Resources\RelationManagers\RelationManager;
 
 class ItemsRelationManager extends RelationManager
@@ -343,36 +347,28 @@ class ItemsRelationManager extends RelationManager
                             );
                     }),
 
-                MultiSelectFilter::make('vendor_id')->relationship(
-                    'vendor',
-                    'title'
-                ),
+                SelectFilter::make('vendor_id')
+                    ->multiple()
+                    ->relationship('vendor', 'title'),
 
-                MultiSelectFilter::make('itemType_id')->relationship(
-                    'itemType',
-                    'title'
-                ),
+                SelectFilter::make('itemType_id')
+                    ->multiple()
+                    ->relationship('itemType', 'title'),
 
-                MultiSelectFilter::make('repository_id')->relationship(
-                    'repository',
-                    'title'
-                ),
+                SelectFilter::make('repository_id')
+                    ->multiple()
+                    ->relationship('repository', 'title'),
 
-                MultiSelectFilter::make('npm_package_id')->relationship(
-                    'npmPackage',
-                    'title'
-                ),
+                SelectFilter::make('npm_package_id')
+                    ->multiple()
+                    ->relationship('npmPackage', 'title'),
 
-                MultiSelectFilter::make('packagist_package_id')->relationship(
-                    'packagistPackage',
-                    'title'
-                ),
+                SelectFilter::make('packagist_package_id')
+                    ->multiple()
+                    ->relationship('packagistPackage', 'title'),
             ])
-            ->headerActions([Tables\Actions\CreateAction::make()])
-            ->actions([
-                Tables\Actions\EditAction::make(),
-                Tables\Actions\DeleteAction::make(),
-            ])
-            ->bulkActions([Tables\Actions\DeleteBulkAction::make()]);
+            ->headerActions([CreateAction::make()])
+            ->actions([EditAction::make(), DeleteAction::make()])
+            ->bulkActions([DeleteBulkAction::make()]);
     }
 }

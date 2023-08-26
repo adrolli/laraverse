@@ -8,12 +8,16 @@ use Filament\Resources\Form;
 use Filament\Resources\Table;
 use Filament\Forms\Components\Grid;
 use Filament\Forms\Components\Select;
+use Filament\Tables\Actions\EditAction;
 use Filament\Forms\Components\TextInput;
+use Filament\Tables\Actions\CreateAction;
+use Filament\Tables\Actions\DeleteAction;
 use Filament\Forms\Components\FileUpload;
 use Filament\Forms\Components\RichEditor;
+use Filament\Tables\Filters\SelectFilter;
 use Illuminate\Database\Eloquent\Builder;
+use Filament\Tables\Actions\DeleteBulkAction;
 use Filament\Forms\Components\BelongsToSelect;
-use Filament\Tables\Filters\MultiSelectFilter;
 use Filament\Resources\RelationManagers\RelationManager;
 
 class VendorsRelationManager extends RelationManager
@@ -173,21 +177,16 @@ class VendorsRelationManager extends RelationManager
                             );
                     }),
 
-                MultiSelectFilter::make('owner_id')->relationship(
-                    'owner',
-                    'title'
-                ),
+                SelectFilter::make('owner_id')
+                    ->multiple()
+                    ->relationship('owner', 'title'),
 
-                MultiSelectFilter::make('organization_id')->relationship(
-                    'organization',
-                    'title'
-                ),
+                SelectFilter::make('organization_id')
+                    ->multiple()
+                    ->relationship('organization', 'title'),
             ])
-            ->headerActions([Tables\Actions\CreateAction::make()])
-            ->actions([
-                Tables\Actions\EditAction::make(),
-                Tables\Actions\DeleteAction::make(),
-            ])
-            ->bulkActions([Tables\Actions\DeleteBulkAction::make()]);
+            ->headerActions([CreateAction::make()])
+            ->actions([EditAction::make(), DeleteAction::make()])
+            ->bulkActions([DeleteBulkAction::make()]);
     }
 }

@@ -10,8 +10,11 @@ use App\Models\RepositoryType;
 use Filament\Resources\Resource;
 use Filament\Forms\Components\Grid;
 use Filament\Forms\Components\Card;
+use Filament\Tables\Actions\ViewAction;
+use Filament\Tables\Actions\EditAction;
 use Filament\Forms\Components\TextInput;
 use App\Filament\Filters\DateRangeFilter;
+use Filament\Tables\Actions\DeleteBulkAction;
 use App\Filament\Resources\RepositoryTypeResource\Pages;
 
 class RepositoryTypeResource extends Resource
@@ -65,7 +68,9 @@ class RepositoryTypeResource extends Resource
                     ->searchable(true, null, true)
                     ->limit(50),
             ])
-            ->filters([DateRangeFilter::make('created_at')]);
+            ->filters([DateRangeFilter::make('created_at')])
+            ->actions([ViewAction::make(), EditAction::make()])
+            ->bulkActions([DeleteBulkAction::make()]);
     }
 
     public static function getRelations(): array

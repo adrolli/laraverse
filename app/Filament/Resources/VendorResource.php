@@ -11,11 +11,14 @@ use Filament\Resources\Resource;
 use Filament\Forms\Components\Grid;
 use Filament\Forms\Components\Card;
 use Filament\Forms\Components\Select;
+use Filament\Tables\Actions\ViewAction;
+use Filament\Tables\Actions\EditAction;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\FileUpload;
 use Filament\Forms\Components\RichEditor;
 use Filament\Tables\Filters\SelectFilter;
 use App\Filament\Filters\DateRangeFilter;
+use Filament\Tables\Actions\DeleteBulkAction;
 use App\Filament\Resources\VendorResource\Pages;
 
 class VendorResource extends Resource
@@ -212,7 +215,9 @@ class VendorResource extends Resource
                     ->indicator('Organization')
                     ->multiple()
                     ->label('Organization'),
-            ]);
+            ])
+            ->actions([ViewAction::make(), EditAction::make()])
+            ->bulkActions([DeleteBulkAction::make()]);
     }
 
     public static function getRelations(): array
