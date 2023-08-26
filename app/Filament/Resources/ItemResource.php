@@ -2,26 +2,27 @@
 
 namespace App\Filament\Resources;
 
+use Filament\Forms;
+use App\Models\Item;
+use Filament\Tables;
+use Filament\Resources\Form;
+use Filament\Resources\Table;
+use Filament\Resources\Resource;
+use Filament\Forms\Components\Grid;
+use Filament\Forms\Components\Card;
+use Filament\Forms\Components\Select;
+use Filament\Forms\Components\KeyValue;
+use Filament\Forms\Components\TextInput;
+use Filament\Forms\Components\RichEditor;
+use Filament\Tables\Filters\SelectFilter;
 use App\Filament\Filters\DateRangeFilter;
 use App\Filament\Resources\ItemResource\Pages;
-use App\Models\Item;
-use Filament\Forms\Components\Card;
-use Filament\Forms\Components\Grid;
-use Filament\Forms\Components\KeyValue;
-use Filament\Forms\Components\RichEditor;
-use Filament\Forms\Components\Select;
-use Filament\Forms\Components\TextInput;
-use Filament\Forms\Form;
-use Filament\Resources\Resource;
-use Filament\Tables\Columns\TextColumn;
-use Filament\Tables\Filters\SelectFilter;
-use Filament\Tables\Table;
 
 class ItemResource extends Resource
 {
     protected static ?string $model = Item::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
+    protected static ?string $navigationIcon = 'heroicon-o-collection';
 
     protected static ?string $recordTitleAttribute = 'title';
 
@@ -335,83 +336,83 @@ class ItemResource extends Resource
         return $table
             ->poll('60s')
             ->columns([
-                TextColumn::make('title')
+                Tables\Columns\TextColumn::make('title')
                     ->toggleable()
                     ->searchable(true, null, true)
                     ->limit(50),
-                TextColumn::make('slug')
+                Tables\Columns\TextColumn::make('slug')
                     ->toggleable()
                     ->searchable(true, null, true)
                     ->limit(50),
-                TextColumn::make('description')
+                Tables\Columns\TextColumn::make('description')
                     ->toggleable()
                     ->searchable()
                     ->limit(50),
-                TextColumn::make('latest_version')
+                Tables\Columns\TextColumn::make('latest_version')
                     ->toggleable()
                     ->searchable(true, null, true)
                     ->limit(50),
-                TextColumn::make('vendor.title')
+                Tables\Columns\TextColumn::make('vendor.title')
                     ->toggleable()
                     ->limit(50),
-                TextColumn::make('itemType.title')
+                Tables\Columns\TextColumn::make('itemType.title')
                     ->toggleable()
                     ->limit(50),
-                TextColumn::make('website')
+                Tables\Columns\TextColumn::make('website')
                     ->toggleable()
                     ->searchable(true, null, true)
                     ->limit(50),
-                TextColumn::make('ranking')
+                Tables\Columns\TextColumn::make('ranking')
                     ->toggleable()
                     ->searchable(true, null, true),
-                TextColumn::make('popularity')
+                Tables\Columns\TextColumn::make('popularity')
                     ->toggleable()
                     ->searchable(true, null, true),
-                TextColumn::make('rating')
+                Tables\Columns\TextColumn::make('rating')
                     ->toggleable()
                     ->searchable(true, null, true),
-                TextColumn::make('health')
+                Tables\Columns\TextColumn::make('health')
                     ->toggleable()
                     ->searchable(true, null, true),
-                TextColumn::make('github_url')
+                Tables\Columns\TextColumn::make('github_url')
                     ->toggleable()
                     ->searchable(true, null, true)
                     ->limit(50),
-                TextColumn::make('github_stars')
+                Tables\Columns\TextColumn::make('github_stars')
                     ->toggleable()
                     ->searchable(true, null, true),
-                TextColumn::make('packagist_url')
+                Tables\Columns\TextColumn::make('packagist_url')
                     ->toggleable()
                     ->searchable(true, null, true)
                     ->limit(50),
-                TextColumn::make('packagist_name')
+                Tables\Columns\TextColumn::make('packagist_name')
                     ->toggleable()
                     ->searchable(true, null, true)
                     ->limit(50),
-                TextColumn::make('packagist_description')
+                Tables\Columns\TextColumn::make('packagist_description')
                     ->toggleable()
                     ->searchable(true, null, true)
                     ->limit(50),
-                TextColumn::make('packagist_downloads')
+                Tables\Columns\TextColumn::make('packagist_downloads')
                     ->toggleable()
                     ->searchable(true, null, true),
-                TextColumn::make('packagist_favers')
+                Tables\Columns\TextColumn::make('packagist_favers')
                     ->toggleable()
                     ->searchable(true, null, true),
-                TextColumn::make('npm_url')
+                Tables\Columns\TextColumn::make('npm_url')
                     ->toggleable()
                     ->searchable(true, null, true)
                     ->limit(50),
-                TextColumn::make('github_maintainers')
+                Tables\Columns\TextColumn::make('github_maintainers')
                     ->toggleable()
                     ->searchable(true, null, true),
-                TextColumn::make('repository.title')
+                Tables\Columns\TextColumn::make('repository.title')
                     ->toggleable()
                     ->limit(50),
-                TextColumn::make('npmPackage.title')
+                Tables\Columns\TextColumn::make('npmPackage.title')
                     ->toggleable()
                     ->limit(50),
-                TextColumn::make('packagistPackage.title')
+                Tables\Columns\TextColumn::make('packagistPackage.title')
                     ->toggleable()
                     ->limit(50),
             ])

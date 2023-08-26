@@ -2,24 +2,25 @@
 
 namespace App\Filament\Resources;
 
+use Filament\Forms;
+use App\Models\User;
+use Filament\Tables;
+use Livewire\Component;
+use Filament\Resources\Form;
+use Filament\Resources\Table;
+use Filament\Resources\Resource;
+use Filament\Forms\Components\Grid;
+use Filament\Forms\Components\Card;
+use Illuminate\Database\Eloquent\Model;
+use Filament\Forms\Components\TextInput;
 use App\Filament\Filters\DateRangeFilter;
 use App\Filament\Resources\UserResource\Pages;
-use App\Models\User;
-use Filament\Forms\Components\Card;
-use Filament\Forms\Components\Grid;
-use Filament\Forms\Components\TextInput;
-use Filament\Forms\Form;
-use Filament\Resources\Resource;
-use Filament\Tables\Columns\TextColumn;
-use Filament\Tables\Table;
-use Illuminate\Database\Eloquent\Model;
-use Livewire\Component;
 
 class UserResource extends Resource
 {
     protected static ?string $model = User::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
+    protected static ?string $navigationIcon = 'heroicon-o-collection';
 
     protected static ?string $recordTitleAttribute = 'name';
 
@@ -44,7 +45,7 @@ class UserResource extends Resource
                         ->unique(
                             'users',
                             'email',
-                            fn (?Model $record) => $record
+                            fn(?Model $record) => $record
                         )
                         ->email()
                         ->placeholder('Email')
@@ -57,9 +58,10 @@ class UserResource extends Resource
                     TextInput::make('password')
                         ->required()
                         ->password()
-                        ->dehydrateStateUsing(fn ($state) => \Hash::make($state))
+                        ->dehydrateStateUsing(fn($state) => \Hash::make($state))
                         ->required(
-                            fn (Component $livewire) => $livewire instanceof Pages\CreateUser
+                            fn(Component $livewire) => $livewire instanceof
+                                Pages\CreateUser
                         )
                         ->placeholder('Password')
                         ->columnSpan([
@@ -77,11 +79,11 @@ class UserResource extends Resource
         return $table
             ->poll('60s')
             ->columns([
-                TextColumn::make('name')
+                Tables\Columns\TextColumn::make('name')
                     ->toggleable()
                     ->searchable(true, null, true)
                     ->limit(50),
-                TextColumn::make('email')
+                Tables\Columns\TextColumn::make('email')
                     ->toggleable()
                     ->searchable(true, null, true)
                     ->limit(50),

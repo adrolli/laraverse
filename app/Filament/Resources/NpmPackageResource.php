@@ -2,25 +2,26 @@
 
 namespace App\Filament\Resources;
 
-use App\Filament\Filters\DateRangeFilter;
-use App\Filament\Resources\NpmPackageResource\Pages;
+use Filament\Forms;
+use Filament\Tables;
 use App\Models\NpmPackage;
-use Filament\Forms\Components\Card;
+use Filament\Resources\Form;
+use Filament\Resources\Table;
+use Filament\Resources\Resource;
 use Filament\Forms\Components\Grid;
+use Filament\Forms\Components\Card;
+use Filament\Forms\Components\Toggle;
 use Filament\Forms\Components\KeyValue;
 use Filament\Forms\Components\TextInput;
-use Filament\Forms\Components\Toggle;
-use Filament\Forms\Form;
-use Filament\Resources\Resource;
-use Filament\Tables;
-use Filament\Tables\Columns\TextColumn;
-use Filament\Tables\Table;
+use Filament\Forms\Components\RichEditor;
+use App\Filament\Filters\DateRangeFilter;
+use App\Filament\Resources\NpmPackageResource\Pages;
 
 class NpmPackageResource extends Resource
 {
     protected static ?string $model = NpmPackage::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
+    protected static ?string $navigationIcon = 'heroicon-o-collection';
 
     protected static ?string $recordTitleAttribute = 'title';
 
@@ -86,15 +87,15 @@ class NpmPackageResource extends Resource
         return $table
             ->poll('60s')
             ->columns([
-                TextColumn::make('title')
+                Tables\Columns\TextColumn::make('title')
                     ->toggleable()
                     ->searchable(true, null, true)
                     ->limit(50),
-                TextColumn::make('slug')
+                Tables\Columns\TextColumn::make('slug')
                     ->toggleable()
                     ->searchable(true, null, true)
                     ->limit(50),
-                TextColumn::make('type')
+                Tables\Columns\TextColumn::make('type')
                     ->toggleable()
                     ->searchable(true, null, true)
                     ->limit(50),

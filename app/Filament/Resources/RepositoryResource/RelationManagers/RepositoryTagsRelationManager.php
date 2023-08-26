@@ -2,14 +2,14 @@
 
 namespace App\Filament\Resources\RepositoryResource\RelationManagers;
 
+use Filament\Forms;
+use Filament\Tables;
+use Filament\Resources\Form;
+use Filament\Resources\Table;
 use Filament\Forms\Components\Grid;
 use Filament\Forms\Components\TextInput;
-use Filament\Forms\Form;
-use Filament\Resources\RelationManagers\RelationManager;
-use Filament\Tables;
-use Filament\Tables\Columns\TextColumn;
-use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
+use Filament\Resources\RelationManagers\RelationManager;
 
 class RepositoryTagsRelationManager extends RelationManager
 {
@@ -17,7 +17,7 @@ class RepositoryTagsRelationManager extends RelationManager
 
     protected static ?string $recordTitleAttribute = 'title';
 
-    public function form(Form $form): Form
+    public static function form(Form $form): Form
     {
         return $form->schema([
             Grid::make(['default' => 0])->schema([
@@ -52,25 +52,25 @@ class RepositoryTagsRelationManager extends RelationManager
         ]);
     }
 
-    public function table(Table $table): Table
+    public static function table(Table $table): Table
     {
         return $table
             ->columns([
-                TextColumn::make('title')->limit(50),
-                TextColumn::make('slug')->limit(50),
-                TextColumn::make('weight'),
+                Tables\Columns\TextColumn::make('title')->limit(50),
+                Tables\Columns\TextColumn::make('slug')->limit(50),
+                Tables\Columns\TextColumn::make('weight'),
             ])
             ->filters([
                 Tables\Filters\Filter::make('created_at')
                     ->form([
-                        DatePicker::make('created_from'),
-                        DatePicker::make('created_until'),
+                        Forms\Components\DatePicker::make('created_from'),
+                        Forms\Components\DatePicker::make('created_until'),
                     ])
                     ->query(function (Builder $query, array $data): Builder {
                         return $query
                             ->when(
                                 $data['created_from'],
-                                fn (
+                                fn(
                                     Builder $query,
                                     $date
                                 ): Builder => $query->whereDate(
@@ -81,7 +81,7 @@ class RepositoryTagsRelationManager extends RelationManager
                             )
                             ->when(
                                 $data['created_until'],
-                                fn (
+                                fn(
                                     Builder $query,
                                     $date
                                 ): Builder => $query->whereDate(

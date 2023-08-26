@@ -2,23 +2,25 @@
 
 namespace App\Filament\Resources;
 
-use App\Filament\Filters\DateRangeFilter;
-use App\Filament\Resources\OwnerResource\Pages;
+use Filament\Forms;
+use Filament\Tables;
 use App\Models\Owner;
-use Filament\Forms\Components\Card;
+use Filament\Resources\Form;
+use Filament\Resources\Table;
+use Filament\Resources\Resource;
 use Filament\Forms\Components\Grid;
+use Filament\Forms\Components\Card;
 use Filament\Forms\Components\KeyValue;
 use Filament\Forms\Components\TextInput;
-use Filament\Forms\Form;
-use Filament\Resources\Resource;
-use Filament\Tables\Columns\TextColumn;
-use Filament\Tables\Table;
+use Filament\Forms\Components\RichEditor;
+use App\Filament\Filters\DateRangeFilter;
+use App\Filament\Resources\OwnerResource\Pages;
 
 class OwnerResource extends Resource
 {
     protected static ?string $model = Owner::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
+    protected static ?string $navigationIcon = 'heroicon-o-collection';
 
     protected static ?string $recordTitleAttribute = 'title';
 
@@ -65,11 +67,11 @@ class OwnerResource extends Resource
         return $table
             ->poll('60s')
             ->columns([
-                TextColumn::make('title')
+                Tables\Columns\TextColumn::make('title')
                     ->toggleable()
                     ->searchable(true, null, true)
                     ->limit(50),
-                TextColumn::make('slug')
+                Tables\Columns\TextColumn::make('slug')
                     ->toggleable()
                     ->searchable(true, null, true)
                     ->limit(50),
