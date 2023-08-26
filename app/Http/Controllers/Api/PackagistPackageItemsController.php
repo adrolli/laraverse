@@ -42,7 +42,9 @@ class PackagistPackageItemsController extends Controller
             'vendor_id' => ['required', 'exists:vendors,id'],
             'itemType_id' => ['required', 'exists:item_types,id'],
             'website' => ['nullable', 'max:255', 'string'],
-            'popularity' => ['required', 'numeric'],
+            'ranking' => ['nullable', 'numeric'],
+            'popularity' => ['nullable', 'numeric'],
+            'popularity_data' => ['nullable', 'max:255', 'json'],
             'rating' => ['nullable', 'numeric'],
             'rating_data' => ['nullable', 'max:255', 'json'],
             'health' => ['nullable', 'numeric'],
@@ -56,7 +58,9 @@ class PackagistPackageItemsController extends Controller
             'packagist_favers' => ['nullable', 'numeric'],
             'npm_url' => ['nullable', 'max:255', 'string'],
             'github_maintainers' => ['nullable', 'numeric'],
-            'github_repo_id' => ['nullable', 'exists:github_repos,id'],
+            'php_compatibility' => ['nullable', 'max:255', 'json'],
+            'laravel_compatibilty' => ['nullable', 'max:255', 'json'],
+            'repository_id' => ['nullable', 'exists:repositories,id'],
             'npm_package_id' => ['nullable', 'exists:npm_packages,id'],
         ]);
 

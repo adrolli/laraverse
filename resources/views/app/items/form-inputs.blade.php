@@ -83,13 +83,32 @@
 
     <x-inputs.group class="w-full">
         <x-inputs.number
+            name="ranking"
+            label="Ranking"
+            :value="old('ranking', ($editing ? $item->ranking : ''))"
+            max="255"
+            placeholder="Ranking"
+        ></x-inputs.number>
+    </x-inputs.group>
+
+    <x-inputs.group class="w-full">
+        <x-inputs.number
             name="popularity"
             label="Popularity"
             :value="old('popularity', ($editing ? $item->popularity : ''))"
             max="255"
             placeholder="Popularity"
-            required
         ></x-inputs.number>
+    </x-inputs.group>
+
+    <x-inputs.group class="w-full">
+        <x-inputs.textarea
+            name="popularity_data"
+            label="Popularity Data"
+            maxlength="255"
+            >{{ old('popularity_data', ($editing ?
+            json_encode($item->popularity_data) : '')) }}</x-inputs.textarea
+        >
     </x-inputs.group>
 
     <x-inputs.group class="w-full">
@@ -223,10 +242,31 @@
     </x-inputs.group>
 
     <x-inputs.group class="w-full">
-        <x-inputs.select name="github_repo_id" label="Github Repo">
-            @php $selected = old('github_repo_id', ($editing ? $item->github_repo_id : '')) @endphp
-            <option disabled {{ empty($selected) ? 'selected' : '' }}>Please select the Github Repo</option>
-            @foreach($githubRepos as $value => $label)
+        <x-inputs.textarea
+            name="php_compatibility"
+            label="Php Compatibility"
+            maxlength="255"
+            >{{ old('php_compatibility', ($editing ?
+            json_encode($item->php_compatibility) : '')) }}</x-inputs.textarea
+        >
+    </x-inputs.group>
+
+    <x-inputs.group class="w-full">
+        <x-inputs.textarea
+            name="laravel_compatibilty"
+            label="Laravel Compatibilty"
+            maxlength="255"
+            >{{ old('laravel_compatibilty', ($editing ?
+            json_encode($item->laravel_compatibilty) : ''))
+            }}</x-inputs.textarea
+        >
+    </x-inputs.group>
+
+    <x-inputs.group class="w-full">
+        <x-inputs.select name="repository_id" label="Repository">
+            @php $selected = old('repository_id', ($editing ? $item->repository_id : '')) @endphp
+            <option disabled {{ empty($selected) ? 'selected' : '' }}>Please select the Repository</option>
+            @foreach($repositories as $value => $label)
             <option value="{{ $value }}" {{ $selected == $value ? 'selected' : '' }} >{{ $label }}</option>
             @endforeach
         </x-inputs.select>

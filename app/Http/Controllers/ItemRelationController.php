@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Item;
+use App\Models\Post;
 use Illuminate\View\View;
 use App\Models\ItemRelation;
 use Illuminate\Http\Request;
@@ -42,10 +43,11 @@ class ItemRelationController extends Controller
 
         $items = Item::pluck('title', 'id');
         $itemRelationTypes = ItemRelationType::pluck('title', 'id');
+        $posts = Post::pluck('title', 'id');
 
         return view(
             'app.item_relations.create',
-            compact('items', 'itemRelationTypes')
+            compact('items', 'itemRelationTypes', 'posts')
         );
     }
 
@@ -85,10 +87,11 @@ class ItemRelationController extends Controller
 
         $items = Item::pluck('title', 'id');
         $itemRelationTypes = ItemRelationType::pluck('title', 'id');
+        $posts = Post::pluck('title', 'id');
 
         return view(
             'app.item_relations.edit',
-            compact('itemRelation', 'items', 'itemRelationTypes')
+            compact('itemRelation', 'items', 'itemRelationTypes', 'posts')
         );
     }
 

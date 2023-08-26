@@ -11,141 +11,66 @@ class StackPolicy
     use HandlesAuthorization;
 
     /**
-     * Determine whether the user can view any models.
-     *
-     * @param  \App\Models\User  $user
-     * @return \Illuminate\Auth\Access\Response|bool
+     * Determine whether the stack can view any models.
      */
     public function viewAny(User $user): bool
     {
-        return $user->can('view_any_stack');
+        return $user->hasPermissionTo('list stacks');
     }
 
     /**
-     * Determine whether the user can view the model.
-     *
-     * @param  \App\Models\User  $user
-     * @param  \App\Models\Stack  $stack
-     * @return \Illuminate\Auth\Access\Response|bool
+     * Determine whether the stack can view the model.
      */
-    public function view(User $user, Stack $stack): bool
+    public function view(User $user, Stack $model): bool
     {
-        return $user->can('view_stack');
+        return $user->hasPermissionTo('view stacks');
     }
 
     /**
-     * Determine whether the user can create models.
-     *
-     * @param  \App\Models\User  $user
-     * @return \Illuminate\Auth\Access\Response|bool
+     * Determine whether the stack can create models.
      */
     public function create(User $user): bool
     {
-        return $user->can('create_stack');
+        return $user->hasPermissionTo('create stacks');
     }
 
     /**
-     * Determine whether the user can update the model.
-     *
-     * @param  \App\Models\User  $user
-     * @param  \App\Models\Stack  $stack
-     * @return \Illuminate\Auth\Access\Response|bool
+     * Determine whether the stack can update the model.
      */
-    public function update(User $user, Stack $stack): bool
+    public function update(User $user, Stack $model): bool
     {
-        return $user->can('update_stack');
+        return $user->hasPermissionTo('update stacks');
     }
 
     /**
-     * Determine whether the user can delete the model.
-     *
-     * @param  \App\Models\User  $user
-     * @param  \App\Models\Stack  $stack
-     * @return \Illuminate\Auth\Access\Response|bool
+     * Determine whether the stack can delete the model.
      */
-    public function delete(User $user, Stack $stack): bool
+    public function delete(User $user, Stack $model): bool
     {
-        return $user->can('delete_stack');
+        return $user->hasPermissionTo('delete stacks');
     }
 
     /**
-     * Determine whether the user can bulk delete.
-     *
-     * @param  \App\Models\User  $user
-     * @return \Illuminate\Auth\Access\Response|bool
+     * Determine whether the user can delete multiple instances of the model.
      */
     public function deleteAny(User $user): bool
     {
-        return $user->can('delete_any_stack');
+        return $user->hasPermissionTo('delete stacks');
     }
 
     /**
-     * Determine whether the user can permanently delete.
-     *
-     * @param  \App\Models\User  $user
-     * @param  \App\Models\Stack  $stack
-     * @return \Illuminate\Auth\Access\Response|bool
+     * Determine whether the stack can restore the model.
      */
-    public function forceDelete(User $user, Stack $stack): bool
+    public function restore(User $user, Stack $model): bool
     {
-        return $user->can('force_delete_stack');
+        return false;
     }
 
     /**
-     * Determine whether the user can permanently bulk delete.
-     *
-     * @param  \App\Models\User  $user
-     * @return \Illuminate\Auth\Access\Response|bool
+     * Determine whether the stack can permanently delete the model.
      */
-    public function forceDeleteAny(User $user): bool
+    public function forceDelete(User $user, Stack $model): bool
     {
-        return $user->can('force_delete_any_stack');
+        return false;
     }
-
-    /**
-     * Determine whether the user can restore.
-     *
-     * @param  \App\Models\User  $user
-     * @param  \App\Models\Stack  $stack
-     * @return \Illuminate\Auth\Access\Response|bool
-     */
-    public function restore(User $user, Stack $stack): bool
-    {
-        return $user->can('restore_stack');
-    }
-
-    /**
-     * Determine whether the user can bulk restore.
-     *
-     * @param  \App\Models\User  $user
-     * @return \Illuminate\Auth\Access\Response|bool
-     */
-    public function restoreAny(User $user): bool
-    {
-        return $user->can('restore_any_stack');
-    }
-
-    /**
-     * Determine whether the user can replicate.
-     *
-     * @param  \App\Models\User  $user
-     * @param  \App\Models\Stack  $stack
-     * @return \Illuminate\Auth\Access\Response|bool
-     */
-    public function replicate(User $user, Stack $stack): bool
-    {
-        return $user->can('replicate_stack');
-    }
-
-    /**
-     * Determine whether the user can reorder.
-     *
-     * @param  \App\Models\User  $user
-     * @return \Illuminate\Auth\Access\Response|bool
-     */
-    public function reorder(User $user): bool
-    {
-        return $user->can('reorder_stack');
-    }
-
 }

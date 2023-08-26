@@ -6,7 +6,7 @@ use App\Models\Item;
 use App\Models\Vendor;
 use App\Models\ItemType;
 use Illuminate\View\View;
-use App\Models\GithubRepo;
+use App\Models\Repository;
 use App\Models\NpmPackage;
 use Illuminate\Http\Request;
 use App\Models\PackagistPackage;
@@ -42,7 +42,7 @@ class ItemController extends Controller
 
         $vendors = Vendor::pluck('title', 'id');
         $itemTypes = ItemType::pluck('title', 'id');
-        $githubRepos = GithubRepo::pluck('title', 'id');
+        $repositories = Repository::pluck('title', 'id');
         $npmPackages = NpmPackage::pluck('title', 'id');
         $packagistPackages = PackagistPackage::pluck('title', 'id');
 
@@ -51,7 +51,7 @@ class ItemController extends Controller
             compact(
                 'vendors',
                 'itemTypes',
-                'githubRepos',
+                'repositories',
                 'npmPackages',
                 'packagistPackages'
             )
@@ -68,6 +68,11 @@ class ItemController extends Controller
         $validated = $request->validated();
         $validated['versions'] = json_decode($validated['versions'], true);
 
+        $validated['popularity_data'] = json_decode(
+            $validated['popularity_data'],
+            true
+        );
+
         $validated['rating_data'] = json_decode(
             $validated['rating_data'],
             true
@@ -75,6 +80,16 @@ class ItemController extends Controller
 
         $validated['health_data'] = json_decode(
             $validated['health_data'],
+            true
+        );
+
+        $validated['php_compatibility'] = json_decode(
+            $validated['php_compatibility'],
+            true
+        );
+
+        $validated['laravel_compatibilty'] = json_decode(
+            $validated['laravel_compatibilty'],
             true
         );
 
@@ -104,7 +119,7 @@ class ItemController extends Controller
 
         $vendors = Vendor::pluck('title', 'id');
         $itemTypes = ItemType::pluck('title', 'id');
-        $githubRepos = GithubRepo::pluck('title', 'id');
+        $repositories = Repository::pluck('title', 'id');
         $npmPackages = NpmPackage::pluck('title', 'id');
         $packagistPackages = PackagistPackage::pluck('title', 'id');
 
@@ -114,7 +129,7 @@ class ItemController extends Controller
                 'item',
                 'vendors',
                 'itemTypes',
-                'githubRepos',
+                'repositories',
                 'npmPackages',
                 'packagistPackages'
             )
@@ -133,6 +148,11 @@ class ItemController extends Controller
         $validated = $request->validated();
         $validated['versions'] = json_decode($validated['versions'], true);
 
+        $validated['popularity_data'] = json_decode(
+            $validated['popularity_data'],
+            true
+        );
+
         $validated['rating_data'] = json_decode(
             $validated['rating_data'],
             true
@@ -140,6 +160,16 @@ class ItemController extends Controller
 
         $validated['health_data'] = json_decode(
             $validated['health_data'],
+            true
+        );
+
+        $validated['php_compatibility'] = json_decode(
+            $validated['php_compatibility'],
+            true
+        );
+
+        $validated['laravel_compatibilty'] = json_decode(
+            $validated['laravel_compatibilty'],
             true
         );
 

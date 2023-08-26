@@ -11,7 +11,13 @@ class PackagistPackage extends Model
     use HasFactory;
     use Searchable;
 
-    protected $fillable = ['title', 'slug', 'data'];
+    protected $fillable = [
+        'title',
+        'slug',
+        'data',
+        'type',
+        'repository_updated',
+    ];
 
     protected $searchableFields = ['*'];
 
@@ -19,6 +25,7 @@ class PackagistPackage extends Model
 
     protected $casts = [
         'data' => 'array',
+        'repository_updated' => 'boolean',
     ];
 
     public function items()

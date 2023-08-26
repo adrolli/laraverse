@@ -15,6 +15,8 @@ return new class extends Migration {
             $table->string('title');
             $table->string('slug');
             $table->json('data');
+            $table->string('type')->nullable();
+            $table->boolean('repository_updated');
 
             $table->timestamps();
         });

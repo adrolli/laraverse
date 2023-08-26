@@ -11,7 +11,7 @@ class Tag extends Model
     use HasFactory;
     use Searchable;
 
-    protected $fillable = ['title', 'slug', 'description'];
+    protected $fillable = ['title', 'slug', 'description', 'weight'];
 
     protected $searchableFields = ['*'];
 

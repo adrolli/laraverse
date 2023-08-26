@@ -2,33 +2,21 @@
 
 namespace App\Filament\Resources;
 
+use App\Models\ItemRelation;
+use Filament\{Tables, Forms};
+use Filament\Resources\{Form, Table, Resource};
+use Filament\Forms\Components\Grid;
+use Filament\Forms\Components\Card;
+use Filament\Forms\Components\Select;
+use Filament\Forms\Components\KeyValue;
+use Filament\Forms\Components\TextInput;
+use Filament\Forms\Components\RichEditor;
+use Filament\Tables\Filters\SelectFilter;
 use App\Filament\Filters\DateRangeFilter;
 use App\Filament\Resources\ItemRelationResource\Pages;
-use App\Models\ItemRelation;
-use Filament\Forms\Components\Card;
-use Filament\Forms\Components\Grid;
-use Filament\Forms\Components\KeyValue;
-use Filament\Forms\Components\RichEditor;
-use Filament\Forms\Components\Select;
-use Filament\Forms\Components\TextInput;
-use Filament\Resources\Form;
-use Filament\Resources\Resource;
-use Filament\Resources\Table;
-use Filament\Tables;
-use Filament\Tables\Filters\SelectFilter;
 
 class ItemRelationResource extends Resource
 {
-    protected static function getNavigationSort(): int
-    {
-        return 2;
-    }
-
-    protected static function getNavigationLabel(): string
-    {
-        return 'Item relations';
-    }
-
     protected static ?string $model = ItemRelation::class;
 
     protected static ?string $navigationIcon = 'heroicon-o-collection';
@@ -82,9 +70,19 @@ class ItemRelationResource extends Resource
                     Select::make('item_id')
                         ->rules(['exists:items,id'])
                         ->required()
-                        ->relationship('itemFrom', 'title')
+                        ->relationship('item', 'title')
                         ->searchable()
-                        ->placeholder('Item From')
+                        ->placeholder('Item')
+                        ->columnSpan([
+                            'default' => 12,
+                            'md' => 12,
+                            'lg' => 12,
+                        ]),
+
+                    TextInput::make('itemto_id')
+                        ->rules(['max:255'])
+                        ->required()
+                        ->placeholder('Itemto Id')
                         ->columnSpan([
                             'default' => 12,
                             'md' => 12,
@@ -97,6 +95,18 @@ class ItemRelationResource extends Resource
                         ->relationship('itemRelationType', 'title')
                         ->searchable()
                         ->placeholder('Item Relation Type')
+                        ->columnSpan([
+                            'default' => 12,
+                            'md' => 12,
+                            'lg' => 12,
+                        ]),
+
+                    Select::make('post_id')
+                        ->rules(['exists:posts,id'])
+                        ->nullable()
+                        ->relationship('post', 'title')
+                        ->searchable()
+                        ->placeholder('Post')
                         ->columnSpan([
                             'default' => 12,
                             'md' => 12,
@@ -124,10 +134,17 @@ class ItemRelationResource extends Resource
                     ->toggleable()
                     ->searchable()
                     ->limit(50),
-                Tables\Columns\TextColumn::make('itemFrom.title')
+                Tables\Columns\TextColumn::make('item.title')
                     ->toggleable()
                     ->limit(50),
+                Tables\Columns\TextColumn::make('itemto_id')
+                    ->toggleable()
+                    ->searchable(true, null, true)
+                    ->limit(50),
                 Tables\Columns\TextColumn::make('itemRelationType.title')
+                    ->toggleable()
+                    ->limit(50),
+                Tables\Columns\TextColumn::make('post.title')
                     ->toggleable()
                     ->limit(50),
             ])
@@ -135,7 +152,7 @@ class ItemRelationResource extends Resource
                 DateRangeFilter::make('created_at'),
 
                 SelectFilter::make('item_id')
-                    ->relationship('itemFrom', 'title')
+                    ->relationship('item', 'title')
                     ->indicator('Item')
                     ->multiple()
                     ->label('Item'),
@@ -145,6 +162,12 @@ class ItemRelationResource extends Resource
                     ->indicator('ItemRelationType')
                     ->multiple()
                     ->label('ItemRelationType'),
+
+                SelectFilter::make('post_id')
+                    ->relationship('post', 'title')
+                    ->indicator('Post')
+                    ->multiple()
+                    ->label('Post'),
             ]);
     }
 

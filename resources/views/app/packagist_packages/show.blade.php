@@ -37,6 +37,21 @@
 {{ json_encode($packagistPackage->data) ?? '-' }}</pre
                         >
                     </div>
+                    <div class="mb-4">
+                        <h5 class="font-medium text-gray-700">
+                            @lang('crud.packagist_packages.inputs.type')
+                        </h5>
+                        <span>{{ $packagistPackage->type ?? '-' }}</span>
+                    </div>
+                    <div class="mb-4">
+                        <h5 class="font-medium text-gray-700">
+                            @lang('crud.packagist_packages.inputs.repository_updated')
+                        </h5>
+                        <span
+                            >{{ $packagistPackage->repository_updated ?? '-'
+                            }}</span
+                        >
+                    </div>
                 </div>
 
                 <div class="mt-10">

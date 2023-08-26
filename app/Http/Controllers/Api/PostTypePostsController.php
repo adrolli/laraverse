@@ -17,7 +17,7 @@ class PostTypePostsController extends Controller
         $search = $request->get('search', '');
 
         $posts = $postType
-            ->comments()
+            ->posts()
             ->search($search)
             ->latest()
             ->paginate();
@@ -39,7 +39,7 @@ class PostTypePostsController extends Controller
             'stack_id' => ['nullable', 'exists:stacks,id'],
         ]);
 
-        $post = $postType->comments()->create($validated);
+        $post = $postType->posts()->create($validated);
 
         return new PostResource($post);
     }

@@ -1,373 +1,66 @@
-# Laraverse W-I-P
+<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
 
-Laraverse is a project that combines data from Packagist, NPM, GitHub, Gitlab and others to provide a useful search accross the Laravel ecosystem. It is of course made with Laravel, the TALL-Stack including Livewire and Tailwind, and last but not least Filament.
+<p align="center">
+<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
+<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
+<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
+<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
+</p>
 
-## Install
+## About Laravel
 
-```shell
-gh repo clone adrolli/laraverse
-cp .env-example .env
-composer install
-php artisan migrate:fresh --seed
-php artisan queue:work
-```
+Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
 
-## Model
+- [Simple, fast routing engine](https://laravel.com/docs/routing).
+- [Powerful dependency injection container](https://laravel.com/docs/container).
+- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
+- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
+- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
+- [Robust background job processing](https://laravel.com/docs/queues).
+- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
 
-Not only this shiny model is created with Vemto. The whole app is bootstrapped using [Vemto.app](https.//vemto.app)
+Laravel is accessible, powerful, and provides tools required for large, robust applications.
 
-![Vemto Model](laraverse_exported_image.png)
+## Learning Laravel
 
-## Jobs
+Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
 
-Fetching data, calculating and writing even more data to these powerful models is done by jobs:
-
-### PackagistInit
-
-- Get packagist all
-- Batch and wait between creating
-- PackagistPackage jobs each batch
-- Run GithubRepoUpdate for each entry on Github
-- do same for GitHub, Gitlab, Bitbucket, Gitea and other repositories
-
-### PackagistPackage
-
-- Check if package exists and timestamp > config-value
-- Get full data for package
-- Update or create Packagist model
-
-### PackagistUpdater  (runs periodically)
-
-- Get packagist latest by timestamp
-- Run PackagistPackage each
-- Run GithubRepoUpdate for each entry on Github
-- do same for Gitlab, Bitbucket, Gitea and other repositories
-
-### GithubSearch
-
-- Get data from GitHub API by tag or other search
-- Create a GithubRepo Job each result
-
-### GithubRepo
-
-- Check if repo exists and timestamp > config-value
-- Get full repo data from GitHub API
-- Inspect files
-  - Readme
-  - ServiceProvider
-  - Artisan command
-  - Composer.json
-  - Package.json
-  - license
-  - Env example
-- Update or Create Repository
-  - Compatibility
-  - Package type
-
-### NpmInit
-
-- Scan all Repositories for package.json dependencies
-- Run a NpmPackage each
-
-### NpmPackage
-
-- Gets a package 
-- Updates a package
-
-### Item
-
-- Does complex things like compatibility checks, building versions, preparing relations
-- Updates a single Item and all related models
-
-### Watcher (runs periodically)
-
-- Watch for changes in Npm, Repository databases 
-- or picks entries based on last update timestamp
-  - High Popularity ( > 75 ) -> daily
-  - Medium Popularity ( > 50 ) -> weekly
-  - Low Popularity ( <= 50 ) -> monthly
-- Runs the update jobs NpmPackage, GithubRepo and others accordingly
-- Possible also for packagist, but using their API seems much more efficient
-
-## Commands
-
-These commands can be used to run jobs manually:
-
-- InitNpm
-- InitPackagist
-- UpdatePackagist
-- GithubSearch - has parameters like tag or search 
-- Watcher
-
-## DB Updates
-
-- Vendor 
-  - Type: Organization, Developer
-- Item
-- Github -> Repositories
-  - RepositoryType TEXT (Github, Gitlab, Gitea, Bitbucket, other)
-  - Compatibility TEXT (PHP Compatible, Laravel Compatible, Compatibility unknown, Not compatible)
-  - Package type TEXT (Laravel app, Laravel skeleton, PHP package, NPM package, Other package)
-  - Readme (md - how to store and display)
-  - Code analyzer JSON
-  - License TEXT - detected
-  - Composer JSON
-  - Package JSON
-
-## Config
-
-- Laravel compatibility: "9, 10"
-- PHP compatibility: "8.1, 8.2"
-- Known Packages list
-- Array of update interval to popularity for different apis
-
-## Todo
-
--   NPM - https://api-docs.npms.io/ or directly https://stackoverflow.com/questions/34071621/query-npmjs-registry-via-api ... step by step https://www.edoardoscibona.com/exploring-the-npm-registry-api
--   More APIs and maybe some tweaks ... Laracasts, Codecourse, Laravel-Daily, Laravel-News, YT, VS Code Marketplace and many more waiting ...
-
-### Reading from Packagist
-
--   Packagist API - https://packagist.org/search.json?q=laravel, see https://packagist.org/apidoc oder am besten alles: https://packagist.org/packages/list.json
--   
-
-https://laraverse.test/packagist-search
-
--   [ ] populate the Packagist table, update then
--   [ ] create item and all related objects if not exists (packagist url and ID in packagist table), compare and update a bunch of fields then
-
-### Reading from NPM
-
--   [ ] populate the NPM table, update then
--   [ ] create item and all related objects if not exists (npm url and ID in npm table), compare and update a bunch of fields then
-
-### Reading from GitHub
+You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you will be guided through building a modern Laravel application from scratch.
 
 If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains over 2000 video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
 
-https://laraverse.test/github-search/laravel
+## Laravel Sponsors
 
--   [ ] populate the Github table and all related, update then
--   [ ] create item and all related objects if not exists (github url and ID in github table), compare and update a bunch of fields then
+We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the Laravel [Patreon page](https://patreon.com/taylorotwell).
 
-## Create Items
+### Premium Partners
 
-Creating Items should be done by merging all datasets into the items model including all relations. Following rules apply:
+- **[Vehikl](https://vehikl.com/)**
+- **[Tighten Co.](https://tighten.co)**
+- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
+- **[64 Robots](https://64robots.com)**
+- **[Cubet Techno Labs](https://cubettech.com)**
+- **[Cyber-Duck](https://cyber-duck.co.uk)**
+- **[Many](https://www.many.co.uk)**
+- **[Webdock, Fast VPS Hosting](https://www.webdock.io/en)**
+- **[DevSquad](https://devsquad.com)**
+- **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
+- **[OP.GG](https://op.gg)**
+- **[WebReinvent](https://webreinvent.com/?utm_source=laravel&utm_medium=github&utm_campaign=patreon-sponsors)**
+- **[Lendio](https://lendio.com)**
 
-- From Packagist
+## Contributing
 
-  - Fill title
+Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
 
-  - Fill slug
+## Code of Conduct
 
-  - Fill description
+In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
 
-  - Fill latest version
+## Security Vulnerabilities
 
-  - Form versions json
+If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
 
-  - Create vendor
+## License
 
-    - ... data
-
-  - Fill website
-
-  - Calc and set popularity to ...
-
-    - Rating
-    - Form rating data (json)
-    - Health
-    - Form health data (json)
-
-  - Fill Packagist url
-
-    Fill Packagist name
-
-    Fill Packagist description
-
-    Fill Packagist downloads
-
-    Fill Packagist favers
-
-  - Fill Github repo - this is the sign for the Github Consumer to fetch this package, as all (or some special) other GitHub fields are empty
-
-  - Item type = composer-package
-
-  - Platform = php-package (is there sth to differentiate, because there are composer texts...?)
-
-  - Categories = let's see
-
-  - Tags = let's see
-
-  - Item Relation ... that will be harder work
-
-    - composer_suggest
-    - composer_provide
-    - composer_replace
-    - composer_conflict
-    - composer_require_dev
-    - composer_require
-
-  - Create Packagist Relation
-
-## Taxonomies
-
--   Area
-
-    -   Backend Framework
-    -   Frontend Framework
-    -   Middleware
-    -   API Generator
-    -   Authentication and User
-    -   Deployment Platform
-    -   Component Framework
-    -   Development Framework
-    -   CRUD Generator
-    -   Tooling ...
-    -   Webserver
-    -   Webproxy
-    -   Accelerator
-    -   Cache
-    -   Database
-    -   Hosting
-    -   Cloud
-    -   Code Upgrader
-    -   IDE
-    -   VCS
-    -   Devops ...
-
--   Type
-
-    -   PHP Package
-    -   PHP Skeleton
-    -   PHP App
-    -   IDE Extension
-    -   Windows App
-    -   MacOS App
-    -   Linux App
-    -   PHP Extension
-    -   Webserver
-    -   Web Platform
-    -   Web API
-    -   NPM Package
-    -   Other Package
-    -   Other App
-    -   Other
-
--   Pricing
-
-    -   FOSS - Free Open Source Software.
-    -   OSS - Open Source Code but not free.
-    -   SaaS - Commercial Software as a Service product.
-    -   Libre - Free Software as a Service product.
-    -   Shareware - Free but not Open Source Software.
-    -   Freemium - Commercial product with a free version.
-    -   Commercial - Commercial product with one-time fee or lifetime license.
-    -   Subscription - Commercial product with perpetual costs.
-
--   Features (aka Tags) ... can probably be grouped or aliased
-    -   Authentication
-    -   Authorization
-    -   User management
-    -   User profile
-    -   User registration
-    -   ...
-
-## MySQL Problem
-
-The app has pretty large models including fat json data. If you encounter the error: ```SQLSTATE[HY001]: Memory allocation error: 1038 Out of sort memory, consider increasing server sort buffer size``` it is probably related to this MySQL bug: https://bugs.mysql.com/bug.php?id=103318 and can be fixed by `SET GLOBAL sort_buffer_size = 256000000 // It'll reset after server restart`, see https://stackoverflow.com/questions/29575835/error-1038-out-of-sort-memory-consider-increasing-sort-buffer-size or https://www.educba.com/mysql-sort-buffer-size/ for persistence or remove the JSON fields from the table views like so:
-
-```php
-namespace App\Filament\Resources\PackagistPackageResource\Pages;
-
-use ...
-
-class ListPackagistPackages extends ListRecords
-{
-		...
-    
-    protected function getTableQuery(): Builder
-    {
-        return static::getResource()::getEloquentQuery()->select('id', 'title', 'slug');
-    }
-}
-
-```
-
-
-
-## Backlog
-
--   Stack-Installer ... is it possible to combine all install commands automagically to an "installer"? Like laravel.build
--   Receipes and compatibility checks (people can check a stack compat)
--   Stack the big picture ... see the stack as a fancy image or do sth markdownish to go viral ;-)
--   Safe stack ... how safe (active dev, bottlenecks) is your stack?
--   Books, Video Courses, Learning platforms as new types
--   Packalyst RSS - https://packalyst.com/resources (new and requested)
--   User-driven, v. a. Rating für Sortierung, Posts (Request, Recipe, ...)
--   Blog, aggregation
--   Generated newsletter
--   https://filamentphp.com/plugins/leandrocfe-apex-charts
--   https://filamentphp.com/plugins/pxlrbt-spotlight
--   Export / Import / User (with Impersonate)
--   https://filamentphp.com/plugins/awcodes-overlook
--   https://filamentphp.com/plugins/bezhansalleh-exception-viewer
--   Filament V3
--   https://gitlab.com/amvisor/filament-failed-jobs -> nav pos
--   https://github.com/croustibat/filament-jobs-monitor -> nav pos, jobs done instead of current, or pending ... missing view
--   Supervisor or cron (much easier) for Managing and self-healing the Job Queue: https://gist.github.com/deepak-cotocus/6b9865784dee18966e15c74ec6e487c4
--   Better display JSON in Filament: https://github.com/invaders-xx/filament-jsoneditor
--   Fiddle with OpenAI: https://github.com/openai-php/laravel
--   Make something for health ... add monitors ... https://filamentphp.com/plugins/shuvroroy-spatie-laravel-health
-
-## Idea
-
-- What do you want to build today?
-  - A montolithic app with frontend and backend
-  - A headless app with backend and API
-  - I don't know, can we skip that?
-- How do you want to start?
-  - Easy - what about a code generator
-  - Smart - I want to use an AdminPanel
-  - Let me code that from scratch
-- What kind of project do you have in mind
-  - CMS
-  - Online Shop
-  - Blog
-  - Website
-  - Custom App
-  - Else
-- Which of these do you prefer
-  - I use a full-flegded JS framework
-  - I use Laravel Livewire, and code in PHP
-  - I only need static HTML or include another JS library
-- And what about styles
-  - TailwindCSS, the most popular option
-  - Boostrap
-  - I use another CSS framework or start vanilla
-- Do you have some features, you definetly need
-  - Auth
-  - 2-FA
-  - ... type
-- Which testing framework do you prefer
-  - PHP Unit
-  - Pest
-  - Other
-  - I don't write tests, skip that
-- Which IDE do you prefer
-  - VS Code
-  - PHPStorm
-  - Other
-  - What is an IDE?
-- How do you want to deploy your product
-  - Just local on a Mac
-  - Just local on Windows
-  - On my shared host
-  - On a cloud server
-  - Serverless in the cloud
-
-Creating your stack ...
-
-You can now update and finalize your stack, print a stack sheet, get a stack image or build your stack.
-
-Have Fun!
+The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).

@@ -26,9 +26,9 @@ return new class extends Migration {
                 ->onDelete('CASCADE');
 
             $table
-                ->foreign('github_repo_id')
+                ->foreign('repository_id')
                 ->references('id')
-                ->on('github_repos')
+                ->on('repositories')
                 ->onUpdate('CASCADE')
                 ->onDelete('CASCADE');
 
@@ -56,7 +56,7 @@ return new class extends Migration {
         Schema::table('items', function (Blueprint $table) {
             $table->dropForeign(['vendor_id']);
             $table->dropForeign(['itemType_id']);
-            $table->dropForeign(['github_repo_id']);
+            $table->dropForeign(['repository_id']);
             $table->dropForeign(['npm_package_id']);
             $table->dropForeign(['packagist_package_id']);
         });

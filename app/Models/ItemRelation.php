@@ -17,7 +17,9 @@ class ItemRelation extends Model
         'description',
         'data',
         'item_id',
+        'itemto_id',
         'item_relation_type_id',
+        'post_id',
     ];
 
     protected $searchableFields = ['*'];
@@ -28,18 +30,23 @@ class ItemRelation extends Model
         'data' => 'array',
     ];
 
-    public function itemFrom()
+    public function itemRelationType()
     {
-        return $this->belongsTo(Item::class, 'item_id');
+        return $this->belongsTo(ItemRelationType::class);
+    }
+
+    public function post()
+    {
+        return $this->belongsTo(Post::class);
     }
 
     public function itemTo()
     {
-        return $this->belongsTo(Item::class, 'item_id');
+        return $this->belongsTo(Item::class, 'itemto_id');
     }
 
-    public function itemRelationType()
+    public function item()
     {
-        return $this->belongsTo(ItemRelationType::class);
+        return $this->belongsTo(Item::class);
     }
 }

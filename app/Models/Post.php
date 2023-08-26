@@ -47,4 +47,9 @@ class Post extends Model
     {
         return $this->belongsTo(PostType::class);
     }
+
+    public function itemRelations()
+    {
+        return $this->hasMany(ItemRelation::class);
+    }
 }

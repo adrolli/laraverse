@@ -2,10 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Owner;
 use App\Models\Vendor;
 use Illuminate\View\View;
 use Illuminate\Http\Request;
+use App\Models\Organization;
 use Illuminate\Http\RedirectResponse;
+use Illuminate\Support\Facades\Storage;
 use App\Http\Requests\VendorStoreRequest;
 use App\Http\Requests\VendorUpdateRequest;
 
@@ -35,7 +38,10 @@ class VendorController extends Controller
     {
         $this->authorize('create', Vendor::class);
 
-        return view('app.vendors.create');
+        $owners = Owner::pluck('title', 'id');
+        $organizations = Organization::pluck('title', 'id');
+
+        return view('app.vendors.create', compact('owners', 'organizations'));
     }
 
     /**
@@ -46,6 +52,9 @@ class VendorController extends Controller
         $this->authorize('create', Vendor::class);
 
         $validated = $request->validated();
+        if ($request->hasFile('avatar')) {
+            $validated['avatar'] = $request->file('avatar')->store('public');
+        }
 
         $vendor = Vendor::create($validated);
 
@@ -71,7 +80,13 @@ class VendorController extends Controller
     {
         $this->authorize('update', $vendor);
 
-        return view('app.vendors.edit', compact('vendor'));
+        $owners = Owner::pluck('title', 'id');
+        $organizations = Organization::pluck('title', 'id');
+
+        return view(
+            'app.vendors.edit',
+            compact('vendor', 'owners', 'organizations')
+        );
     }
 
     /**
@@ -84,6 +99,13 @@ class VendorController extends Controller
         $this->authorize('update', $vendor);
 
         $validated = $request->validated();
+        if ($request->hasFile('avatar')) {
+            if ($vendor->avatar) {
+                Storage::delete($vendor->avatar);
+            }
+
+            $validated['avatar'] = $request->file('avatar')->store('public');
+        }
 
         $vendor->update($validated);
 
@@ -98,6 +120,10 @@ class VendorController extends Controller
     public function destroy(Request $request, Vendor $vendor): RedirectResponse
     {
         $this->authorize('delete', $vendor);
+
+        if ($vendor->avatar) {
+            Storage::delete($vendor->avatar);
+        }
 
         $vendor->delete();
 

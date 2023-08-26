@@ -67,9 +67,23 @@
                     </div>
                     <div class="mb-4">
                         <h5 class="font-medium text-gray-700">
+                            @lang('crud.items.inputs.ranking')
+                        </h5>
+                        <span>{{ $item->ranking ?? '-' }}</span>
+                    </div>
+                    <div class="mb-4">
+                        <h5 class="font-medium text-gray-700">
                             @lang('crud.items.inputs.popularity')
                         </h5>
                         <span>{{ $item->popularity ?? '-' }}</span>
+                    </div>
+                    <div class="mb-4">
+                        <h5 class="font-medium text-gray-700">
+                            @lang('crud.items.inputs.popularity_data')
+                        </h5>
+                        <pre>
+{{ json_encode($item->popularity_data) ?? '-' }}</pre
+                        >
                     </div>
                     <div class="mb-4">
                         <h5 class="font-medium text-gray-700">
@@ -151,10 +165,26 @@
                     </div>
                     <div class="mb-4">
                         <h5 class="font-medium text-gray-700">
-                            @lang('crud.items.inputs.github_repo_id')
+                            @lang('crud.items.inputs.php_compatibility')
+                        </h5>
+                        <pre>
+{{ json_encode($item->php_compatibility) ?? '-' }}</pre
+                        >
+                    </div>
+                    <div class="mb-4">
+                        <h5 class="font-medium text-gray-700">
+                            @lang('crud.items.inputs.laravel_compatibilty')
+                        </h5>
+                        <pre>
+{{ json_encode($item->laravel_compatibilty) ?? '-' }}</pre
+                        >
+                    </div>
+                    <div class="mb-4">
+                        <h5 class="font-medium text-gray-700">
+                            @lang('crud.items.inputs.repository_id')
                         </h5>
                         <span
-                            >{{ optional($item->githubRepo)->title ?? '-'
+                            >{{ optional($item->repository)->title ?? '-'
                             }}</span
                         >
                     </div>

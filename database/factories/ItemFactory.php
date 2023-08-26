@@ -29,7 +29,9 @@ class ItemFactory extends Factory
             'latest_version' => $this->faker->text(255),
             'versions' => [],
             'website' => $this->faker->text(255),
+            'ranking' => $this->faker->randomNumber(0),
             'popularity' => $this->faker->randomNumber(0),
+            'popularity_data' => [],
             'rating' => $this->faker->randomNumber(0),
             'rating_data' => [],
             'health' => $this->faker->randomNumber(0),
@@ -43,11 +45,13 @@ class ItemFactory extends Factory
             'packagist_favers' => $this->faker->randomNumber(0),
             'npm_url' => $this->faker->text(255),
             'github_maintainers' => $this->faker->randomNumber(0),
+            'php_compatibility' => [],
+            'laravel_compatibilty' => [],
             'vendor_id' => \App\Models\Vendor::factory(),
-            'github_repo_id' => \App\Models\GithubRepo::factory(),
             'npm_package_id' => \App\Models\NpmPackage::factory(),
             'packagist_package_id' => \App\Models\PackagistPackage::factory(),
             'itemType_id' => \App\Models\ItemType::factory(),
+            'repository_id' => \App\Models\Repository::factory(),
         ];
     }
 }

@@ -27,9 +27,11 @@ class ItemRelationFactory extends Factory
             'slug' => $this->faker->slug(),
             'description' => $this->faker->sentence(15),
             'data' => [],
-            'item_id' => \App\Models\Item::factory(),
-            'item_id' => \App\Models\Item::factory(),
+            'itemto_id' => $this->faker->randomNumber(),
             'item_relation_type_id' => \App\Models\ItemRelationType::factory(),
+            'post_id' => \App\Models\Post::factory(),
+            'itemto_id' => \App\Models\Item::factory(),
+            'item_id' => \App\Models\Item::factory(),
         ];
     }
 }

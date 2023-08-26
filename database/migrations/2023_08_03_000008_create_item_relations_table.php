@@ -17,7 +17,9 @@ return new class extends Migration {
             $table->text('description');
             $table->json('data');
             $table->unsignedBigInteger('item_id');
+            $table->unsignedBigInteger('itemto_id');
             $table->unsignedBigInteger('item_relation_type_id');
+            $table->unsignedBigInteger('post_id')->nullable();
 
             $table->timestamps();
         });

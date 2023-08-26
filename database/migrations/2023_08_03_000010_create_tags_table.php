@@ -15,6 +15,7 @@ return new class extends Migration {
             $table->string('title');
             $table->string('slug');
             $table->text('description');
+            $table->integer('weight');
 
             $table->timestamps();
         });

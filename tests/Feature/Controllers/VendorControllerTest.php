@@ -5,6 +5,9 @@ namespace Tests\Feature\Controllers;
 use App\Models\User;
 use App\Models\Vendor;
 
+use App\Models\Owner;
+use App\Models\Organization;
+
 use Tests\TestCase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Foundation\Testing\RefreshDatabase;
@@ -108,14 +111,20 @@ class VendorControllerTest extends TestCase
     {
         $vendor = Vendor::factory()->create();
 
+        $organization = Organization::factory()->create();
+        $owner = Owner::factory()->create();
+
         $data = [
             'title' => $this->faker->sentence(10),
             'slug' => $this->faker->slug(),
+            'description' => $this->faker->sentence(15),
+            'email' => $this->faker->email(),
+            'website' => $this->faker->text(255),
             'github' => $this->faker->text(255),
             'packagist' => $this->faker->text(255),
             'npm' => $this->faker->text(255),
-            'website' => $this->faker->text(255),
-            'description' => $this->faker->sentence(15),
+            'organization_id' => $organization->id,
+            'owner_id' => $owner->id,
         ];
 
         $response = $this->put(route('vendors.update', $vendor), $data);

@@ -21,30 +21,6 @@ class PermissionsSeeder extends Seeder
         Permission::create(['name' => 'update categories']);
         Permission::create(['name' => 'delete categories']);
 
-        Permission::create(['name' => 'list githuborganizations']);
-        Permission::create(['name' => 'view githuborganizations']);
-        Permission::create(['name' => 'create githuborganizations']);
-        Permission::create(['name' => 'update githuborganizations']);
-        Permission::create(['name' => 'delete githuborganizations']);
-
-        Permission::create(['name' => 'list githubowners']);
-        Permission::create(['name' => 'view githubowners']);
-        Permission::create(['name' => 'create githubowners']);
-        Permission::create(['name' => 'update githubowners']);
-        Permission::create(['name' => 'delete githubowners']);
-
-        Permission::create(['name' => 'list githubrepos']);
-        Permission::create(['name' => 'view githubrepos']);
-        Permission::create(['name' => 'create githubrepos']);
-        Permission::create(['name' => 'update githubrepos']);
-        Permission::create(['name' => 'delete githubrepos']);
-
-        Permission::create(['name' => 'list githubtags']);
-        Permission::create(['name' => 'view githubtags']);
-        Permission::create(['name' => 'create githubtags']);
-        Permission::create(['name' => 'update githubtags']);
-        Permission::create(['name' => 'delete githubtags']);
-
         Permission::create(['name' => 'list items']);
         Permission::create(['name' => 'view items']);
         Permission::create(['name' => 'create items']);
@@ -75,6 +51,18 @@ class PermissionsSeeder extends Seeder
         Permission::create(['name' => 'update npmpackages']);
         Permission::create(['name' => 'delete npmpackages']);
 
+        Permission::create(['name' => 'list organizations']);
+        Permission::create(['name' => 'view organizations']);
+        Permission::create(['name' => 'create organizations']);
+        Permission::create(['name' => 'update organizations']);
+        Permission::create(['name' => 'delete organizations']);
+
+        Permission::create(['name' => 'list owners']);
+        Permission::create(['name' => 'view owners']);
+        Permission::create(['name' => 'create owners']);
+        Permission::create(['name' => 'update owners']);
+        Permission::create(['name' => 'delete owners']);
+
         Permission::create(['name' => 'list packagistpackages']);
         Permission::create(['name' => 'view packagistpackages']);
         Permission::create(['name' => 'create packagistpackages']);
@@ -98,6 +86,24 @@ class PermissionsSeeder extends Seeder
         Permission::create(['name' => 'create posttypes']);
         Permission::create(['name' => 'update posttypes']);
         Permission::create(['name' => 'delete posttypes']);
+
+        Permission::create(['name' => 'list repositories']);
+        Permission::create(['name' => 'view repositories']);
+        Permission::create(['name' => 'create repositories']);
+        Permission::create(['name' => 'update repositories']);
+        Permission::create(['name' => 'delete repositories']);
+
+        Permission::create(['name' => 'list repositorytags']);
+        Permission::create(['name' => 'view repositorytags']);
+        Permission::create(['name' => 'create repositorytags']);
+        Permission::create(['name' => 'update repositorytags']);
+        Permission::create(['name' => 'delete repositorytags']);
+
+        Permission::create(['name' => 'list repositorytypes']);
+        Permission::create(['name' => 'view repositorytypes']);
+        Permission::create(['name' => 'create repositorytypes']);
+        Permission::create(['name' => 'update repositorytypes']);
+        Permission::create(['name' => 'delete repositorytypes']);
 
         Permission::create(['name' => 'list stacks']);
         Permission::create(['name' => 'view stacks']);

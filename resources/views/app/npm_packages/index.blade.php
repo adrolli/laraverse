@@ -58,6 +58,12 @@
                                 <th class="px-4 py-3 text-left">
                                     @lang('crud.npm_packages.inputs.data')
                                 </th>
+                                <th class="px-4 py-3 text-left">
+                                    @lang('crud.npm_packages.inputs.type')
+                                </th>
+                                <th class="px-4 py-3 text-left">
+                                    @lang('crud.npm_packages.inputs.repository_updated')
+                                </th>
                                 <th></th>
                             </tr>
                         </thead>
@@ -74,6 +80,12 @@
                                     <pre>
 {{ json_encode($npmPackage->data) ?? '-' }}</pre
                                     >
+                                </td>
+                                <td class="px-4 py-3 text-left">
+                                    {{ $npmPackage->type ?? '-' }}
+                                </td>
+                                <td class="px-4 py-3 text-left">
+                                    {{ $npmPackage->repository_updated ?? '-' }}
                                 </td>
                                 <td
                                     class="px-4 py-3 text-center"
@@ -140,7 +152,7 @@
                             </tr>
                             @empty
                             <tr>
-                                <td colspan="4">
+                                <td colspan="6">
                                     @lang('crud.common.no_items_found')
                                 </td>
                             </tr>
@@ -148,7 +160,7 @@
                         </tbody>
                         <tfoot>
                             <tr>
-                                <td colspan="4">
+                                <td colspan="6">
                                     <div class="mt-10 px-4">
                                         {!! $npmPackages->render() !!}
                                     </div>

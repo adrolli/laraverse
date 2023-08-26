@@ -74,7 +74,13 @@
                                     @lang('crud.items.inputs.website')
                                 </th>
                                 <th class="px-4 py-3 text-right">
+                                    @lang('crud.items.inputs.ranking')
+                                </th>
+                                <th class="px-4 py-3 text-right">
                                     @lang('crud.items.inputs.popularity')
+                                </th>
+                                <th class="px-4 py-3 text-left">
+                                    @lang('crud.items.inputs.popularity_data')
                                 </th>
                                 <th class="px-4 py-3 text-right">
                                     @lang('crud.items.inputs.rating')
@@ -116,7 +122,13 @@
                                     @lang('crud.items.inputs.github_maintainers')
                                 </th>
                                 <th class="px-4 py-3 text-left">
-                                    @lang('crud.items.inputs.github_repo_id')
+                                    @lang('crud.items.inputs.php_compatibility')
+                                </th>
+                                <th class="px-4 py-3 text-left">
+                                    @lang('crud.items.inputs.laravel_compatibilty')
+                                </th>
+                                <th class="px-4 py-3 text-left">
+                                    @lang('crud.items.inputs.repository_id')
                                 </th>
                                 <th class="px-4 py-3 text-left">
                                     @lang('crud.items.inputs.npm_package_id')
@@ -158,7 +170,15 @@
                                     {{ $item->website ?? '-' }}
                                 </td>
                                 <td class="px-4 py-3 text-right">
+                                    {{ $item->ranking ?? '-' }}
+                                </td>
+                                <td class="px-4 py-3 text-right">
                                     {{ $item->popularity ?? '-' }}
+                                </td>
+                                <td class="px-4 py-3 text-right">
+                                    <pre>
+{{ json_encode($item->popularity_data) ?? '-' }}</pre
+                                    >
                                 </td>
                                 <td class="px-4 py-3 text-right">
                                     {{ $item->rating ?? '-' }}
@@ -203,8 +223,18 @@
                                 <td class="px-4 py-3 text-right">
                                     {{ $item->github_maintainers ?? '-' }}
                                 </td>
+                                <td class="px-4 py-3 text-right">
+                                    <pre>
+{{ json_encode($item->php_compatibility) ?? '-' }}</pre
+                                    >
+                                </td>
+                                <td class="px-4 py-3 text-right">
+                                    <pre>
+{{ json_encode($item->laravel_compatibilty) ?? '-' }}</pre
+                                    >
+                                </td>
                                 <td class="px-4 py-3 text-left">
-                                    {{ optional($item->githubRepo)->title ?? '-'
+                                    {{ optional($item->repository)->title ?? '-'
                                     }}
                                 </td>
                                 <td class="px-4 py-3 text-left">
@@ -280,7 +310,7 @@
                             </tr>
                             @empty
                             <tr>
-                                <td colspan="26">
+                                <td colspan="30">
                                     @lang('crud.common.no_items_found')
                                 </td>
                             </tr>
@@ -288,7 +318,7 @@
                         </tbody>
                         <tfoot>
                             <tr>
-                                <td colspan="26">
+                                <td colspan="30">
                                     <div class="mt-10 px-4">
                                         {!! $items->render() !!}
                                     </div>

@@ -20,7 +20,9 @@ return new class extends Migration {
             $table->unsignedBigInteger('vendor_id');
             $table->unsignedBigInteger('itemType_id');
             $table->string('website')->nullable();
-            $table->integer('popularity');
+            $table->integer('ranking')->nullable();
+            $table->integer('popularity')->nullable();
+            $table->json('popularity_data')->nullable();
             $table->integer('rating')->nullable();
             $table->json('rating_data')->nullable();
             $table->integer('health')->nullable();
@@ -34,7 +36,9 @@ return new class extends Migration {
             $table->integer('packagist_favers')->nullable();
             $table->string('npm_url')->nullable();
             $table->integer('github_maintainers')->nullable();
-            $table->unsignedBigInteger('github_repo_id')->nullable();
+            $table->json('php_compatibility')->nullable();
+            $table->json('laravel_compatibilty')->nullable();
+            $table->unsignedBigInteger('repository_id')->nullable();
             $table->unsignedBigInteger('npm_package_id')->nullable();
             $table->unsignedBigInteger('packagist_package_id')->nullable();
 

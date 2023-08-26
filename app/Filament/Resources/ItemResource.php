@@ -2,33 +2,21 @@
 
 namespace App\Filament\Resources;
 
+use App\Models\Item;
+use Filament\{Tables, Forms};
+use Filament\Resources\{Form, Table, Resource};
+use Filament\Forms\Components\Grid;
+use Filament\Forms\Components\Card;
+use Filament\Forms\Components\Select;
+use Filament\Forms\Components\KeyValue;
+use Filament\Forms\Components\TextInput;
+use Filament\Forms\Components\RichEditor;
+use Filament\Tables\Filters\SelectFilter;
 use App\Filament\Filters\DateRangeFilter;
 use App\Filament\Resources\ItemResource\Pages;
-use App\Models\Item;
-use Filament\Forms\Components\Card;
-use Filament\Forms\Components\Grid;
-use Filament\Forms\Components\KeyValue;
-use Filament\Forms\Components\RichEditor;
-use Filament\Forms\Components\Select;
-use Filament\Forms\Components\TextInput;
-use Filament\Resources\Form;
-use Filament\Resources\Resource;
-use Filament\Resources\Table;
-use Filament\Tables;
-use Filament\Tables\Filters\SelectFilter;
 
 class ItemResource extends Resource
 {
-    protected static function getNavigationSort(): int
-    {
-        return 1;
-    }
-
-    protected static function getNavigationLabel(): string
-    {
-        return 'Items';
-    }
-
     protected static ?string $model = Item::class;
 
     protected static ?string $navigationIcon = 'heroicon-o-collection';
@@ -122,11 +110,30 @@ class ItemResource extends Resource
                             'lg' => 12,
                         ]),
 
+                    TextInput::make('ranking')
+                        ->rules(['numeric'])
+                        ->nullable()
+                        ->numeric()
+                        ->placeholder('Ranking')
+                        ->columnSpan([
+                            'default' => 12,
+                            'md' => 12,
+                            'lg' => 12,
+                        ]),
+
                     TextInput::make('popularity')
                         ->rules(['numeric'])
-                        ->required()
+                        ->nullable()
                         ->numeric()
                         ->placeholder('Popularity')
+                        ->columnSpan([
+                            'default' => 12,
+                            'md' => 12,
+                            'lg' => 12,
+                        ]),
+
+                    KeyValue::make('popularity_data')
+                        ->nullable()
                         ->columnSpan([
                             'default' => 12,
                             'md' => 12,
@@ -265,12 +272,28 @@ class ItemResource extends Resource
                             'lg' => 12,
                         ]),
 
-                    Select::make('github_repo_id')
-                        ->rules(['exists:github_repos,id'])
+                    KeyValue::make('php_compatibility')
                         ->nullable()
-                        ->relationship('githubRepo', 'title')
+                        ->columnSpan([
+                            'default' => 12,
+                            'md' => 12,
+                            'lg' => 12,
+                        ]),
+
+                    KeyValue::make('laravel_compatibilty')
+                        ->nullable()
+                        ->columnSpan([
+                            'default' => 12,
+                            'md' => 12,
+                            'lg' => 12,
+                        ]),
+
+                    Select::make('repository_id')
+                        ->rules(['exists:repositories,id'])
+                        ->nullable()
+                        ->relationship('repository', 'title')
                         ->searchable()
-                        ->placeholder('Github Repo')
+                        ->placeholder('Repository')
                         ->columnSpan([
                             'default' => 12,
                             'md' => 12,
@@ -336,6 +359,9 @@ class ItemResource extends Resource
                     ->toggleable()
                     ->searchable(true, null, true)
                     ->limit(50),
+                Tables\Columns\TextColumn::make('ranking')
+                    ->toggleable()
+                    ->searchable(true, null, true),
                 Tables\Columns\TextColumn::make('popularity')
                     ->toggleable()
                     ->searchable(true, null, true),
@@ -377,7 +403,7 @@ class ItemResource extends Resource
                 Tables\Columns\TextColumn::make('github_maintainers')
                     ->toggleable()
                     ->searchable(true, null, true),
-                Tables\Columns\TextColumn::make('githubRepo.title')
+                Tables\Columns\TextColumn::make('repository.title')
                     ->toggleable()
                     ->limit(50),
                 Tables\Columns\TextColumn::make('npmPackage.title')
@@ -402,11 +428,11 @@ class ItemResource extends Resource
                     ->multiple()
                     ->label('ItemType'),
 
-                SelectFilter::make('github_repo_id')
-                    ->relationship('githubRepo', 'title')
-                    ->indicator('GithubRepo')
+                SelectFilter::make('repository_id')
+                    ->relationship('repository', 'title')
+                    ->indicator('Repository')
                     ->multiple()
-                    ->label('GithubRepo'),
+                    ->label('Repository'),
 
                 SelectFilter::make('npm_package_id')
                     ->relationship('npmPackage', 'title')

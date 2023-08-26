@@ -33,6 +33,20 @@
                         </h5>
                         <pre>{{ json_encode($npmPackage->data) ?? '-' }}</pre>
                     </div>
+                    <div class="mb-4">
+                        <h5 class="font-medium text-gray-700">
+                            @lang('crud.npm_packages.inputs.type')
+                        </h5>
+                        <span>{{ $npmPackage->type ?? '-' }}</span>
+                    </div>
+                    <div class="mb-4">
+                        <h5 class="font-medium text-gray-700">
+                            @lang('crud.npm_packages.inputs.repository_updated')
+                        </h5>
+                        <span
+                            >{{ $npmPackage->repository_updated ?? '-' }}</span
+                        >
+                    </div>
                 </div>
 
                 <div class="mt-10">

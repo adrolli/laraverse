@@ -22,11 +22,15 @@ class VendorStoreRequest extends FormRequest
         return [
             'title' => ['required', 'max:255', 'string'],
             'slug' => ['required', 'max:255', 'string'],
-            'github' => ['required', 'max:255', 'string'],
-            'packagist' => ['required', 'max:255', 'string'],
-            'npm' => ['required', 'max:255', 'string'],
-            'website' => ['required', 'max:255', 'string'],
-            'description' => ['required', 'max:255', 'string'],
+            'avatar' => ['nullable', 'file'],
+            'description' => ['nullable', 'max:255', 'string'],
+            'email' => ['nullable', 'email'],
+            'website' => ['nullable', 'max:255', 'string'],
+            'github' => ['nullable', 'max:255', 'string'],
+            'packagist' => ['nullable', 'max:255', 'string'],
+            'npm' => ['nullable', 'max:255', 'string'],
+            'owner_id' => ['nullable', 'exists:owners,id'],
+            'organization_id' => ['nullable', 'exists:organizations,id'],
         ];
     }
 }

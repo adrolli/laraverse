@@ -39,6 +39,8 @@ class ItemRelationTypeItemRelationsController extends Controller
             'description' => ['required', 'max:255', 'string'],
             'data' => ['required', 'max:255', 'json'],
             'item_id' => ['required', 'exists:items,id'],
+            'itemto_id' => ['required', 'max:255'],
+            'post_id' => ['nullable', 'exists:posts,id'],
         ]);
 
         $itemRelation = $itemRelationType->itemRelations()->create($validated);

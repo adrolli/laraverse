@@ -98,6 +98,16 @@ class ItemsRelationManager extends RelationManager
                         'lg' => 12,
                     ]),
 
+                TextInput::make('ranking')
+                    ->rules(['numeric'])
+                    ->numeric()
+                    ->placeholder('Ranking')
+                    ->columnSpan([
+                        'default' => 12,
+                        'md' => 12,
+                        'lg' => 12,
+                    ]),
+
                 TextInput::make('popularity')
                     ->rules(['numeric'])
                     ->numeric()
@@ -107,6 +117,12 @@ class ItemsRelationManager extends RelationManager
                         'md' => 12,
                         'lg' => 12,
                     ]),
+
+                KeyValue::make('popularity_data')->columnSpan([
+                    'default' => 12,
+                    'md' => 12,
+                    'lg' => 12,
+                ]),
 
                 TextInput::make('rating')
                     ->rules(['numeric'])
@@ -225,11 +241,23 @@ class ItemsRelationManager extends RelationManager
                         'lg' => 12,
                     ]),
 
-                Select::make('github_repo_id')
-                    ->rules(['exists:github_repos,id'])
-                    ->relationship('githubRepo', 'title')
+                KeyValue::make('php_compatibility')->columnSpan([
+                    'default' => 12,
+                    'md' => 12,
+                    'lg' => 12,
+                ]),
+
+                KeyValue::make('laravel_compatibilty')->columnSpan([
+                    'default' => 12,
+                    'md' => 12,
+                    'lg' => 12,
+                ]),
+
+                Select::make('repository_id')
+                    ->rules(['exists:repositories,id'])
+                    ->relationship('repository', 'title')
                     ->searchable()
-                    ->placeholder('Github Repo')
+                    ->placeholder('Repository')
                     ->columnSpan([
                         'default' => 12,
                         'md' => 12,
@@ -261,6 +289,7 @@ class ItemsRelationManager extends RelationManager
                 Tables\Columns\TextColumn::make('vendor.title')->limit(50),
                 Tables\Columns\TextColumn::make('itemType.title')->limit(50),
                 Tables\Columns\TextColumn::make('website')->limit(50),
+                Tables\Columns\TextColumn::make('ranking'),
                 Tables\Columns\TextColumn::make('popularity'),
                 Tables\Columns\TextColumn::make('rating'),
                 Tables\Columns\TextColumn::make('health'),
@@ -275,7 +304,7 @@ class ItemsRelationManager extends RelationManager
                 Tables\Columns\TextColumn::make('packagist_favers'),
                 Tables\Columns\TextColumn::make('npm_url')->limit(50),
                 Tables\Columns\TextColumn::make('github_maintainers'),
-                Tables\Columns\TextColumn::make('githubRepo.title')->limit(50),
+                Tables\Columns\TextColumn::make('repository.title')->limit(50),
                 Tables\Columns\TextColumn::make('npmPackage.title')->limit(50),
                 Tables\Columns\TextColumn::make(
                     'packagistPackage.title'
@@ -323,8 +352,8 @@ class ItemsRelationManager extends RelationManager
                     'title'
                 ),
 
-                MultiSelectFilter::make('github_repo_id')->relationship(
-                    'githubRepo',
+                MultiSelectFilter::make('repository_id')->relationship(
+                    'repository',
                     'title'
                 ),
 

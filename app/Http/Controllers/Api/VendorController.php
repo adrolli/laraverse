@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\VendorResource;
+use Illuminate\Support\Facades\Storage;
 use App\Http\Resources\VendorCollection;
 use App\Http\Requests\VendorStoreRequest;
 use App\Http\Requests\VendorUpdateRequest;
@@ -31,6 +32,9 @@ class VendorController extends Controller
         $this->authorize('create', Vendor::class);
 
         $validated = $request->validated();
+        if ($request->hasFile('avatar')) {
+            $validated['avatar'] = $request->file('avatar')->store('public');
+        }
 
         $vendor = Vendor::create($validated);
 
@@ -52,6 +56,14 @@ class VendorController extends Controller
 
         $validated = $request->validated();
 
+        if ($request->hasFile('avatar')) {
+            if ($vendor->avatar) {
+                Storage::delete($vendor->avatar);
+            }
+
+            $validated['avatar'] = $request->file('avatar')->store('public');
+        }
+
         $vendor->update($validated);
 
         return new VendorResource($vendor);
@@ -60,6 +72,10 @@ class VendorController extends Controller
     public function destroy(Request $request, Vendor $vendor): Response
     {
         $this->authorize('delete', $vendor);
+
+        if ($vendor->avatar) {
+            Storage::delete($vendor->avatar);
+        }
 
         $vendor->delete();
 

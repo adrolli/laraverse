@@ -33,6 +33,12 @@
                         </h5>
                         <span>{{ $tag->description ?? '-' }}</span>
                     </div>
+                    <div class="mb-4">
+                        <h5 class="font-medium text-gray-700">
+                            @lang('crud.tags.inputs.weight')
+                        </h5>
+                        <span>{{ $tag->weight ?? '-' }}</span>
+                    </div>
                 </div>
 
                 <div class="mt-10">

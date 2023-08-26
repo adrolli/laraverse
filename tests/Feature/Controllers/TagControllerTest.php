@@ -112,6 +112,7 @@ class TagControllerTest extends TestCase
             'title' => $this->faker->sentence(10),
             'slug' => $this->faker->slug(),
             'description' => $this->faker->sentence(15),
+            'weight' => $this->faker->randomNumber(0),
         ];
 
         $response = $this->put(route('tags.update', $tag), $data);

@@ -29,6 +29,33 @@
                     </div>
                     <div class="mb-4">
                         <h5 class="font-medium text-gray-700">
+                            @lang('crud.vendors.inputs.avatar')
+                        </h5>
+                        <x-partials.thumbnail
+                            src="{{ $vendor->avatar ? \Storage::url($vendor->avatar) : '' }}"
+                            size="150"
+                        />
+                    </div>
+                    <div class="mb-4">
+                        <h5 class="font-medium text-gray-700">
+                            @lang('crud.vendors.inputs.description')
+                        </h5>
+                        <span>{{ $vendor->description ?? '-' }}</span>
+                    </div>
+                    <div class="mb-4">
+                        <h5 class="font-medium text-gray-700">
+                            @lang('crud.vendors.inputs.email')
+                        </h5>
+                        <span>{{ $vendor->email ?? '-' }}</span>
+                    </div>
+                    <div class="mb-4">
+                        <h5 class="font-medium text-gray-700">
+                            @lang('crud.vendors.inputs.website')
+                        </h5>
+                        <span>{{ $vendor->website ?? '-' }}</span>
+                    </div>
+                    <div class="mb-4">
+                        <h5 class="font-medium text-gray-700">
                             @lang('crud.vendors.inputs.github')
                         </h5>
                         <span>{{ $vendor->github ?? '-' }}</span>
@@ -47,15 +74,20 @@
                     </div>
                     <div class="mb-4">
                         <h5 class="font-medium text-gray-700">
-                            @lang('crud.vendors.inputs.website')
+                            @lang('crud.vendors.inputs.owner_id')
                         </h5>
-                        <span>{{ $vendor->website ?? '-' }}</span>
+                        <span
+                            >{{ optional($vendor->owner)->title ?? '-' }}</span
+                        >
                     </div>
                     <div class="mb-4">
                         <h5 class="font-medium text-gray-700">
-                            @lang('crud.vendors.inputs.description')
+                            @lang('crud.vendors.inputs.organization_id')
                         </h5>
-                        <span>{{ $vendor->description ?? '-' }}</span>
+                        <span
+                            >{{ optional($vendor->organization)->title ?? '-'
+                            }}</span
+                        >
                     </div>
                 </div>
 

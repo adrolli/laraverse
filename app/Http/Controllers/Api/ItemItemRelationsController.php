@@ -17,7 +17,7 @@ class ItemItemRelationsController extends Controller
         $search = $request->get('search', '');
 
         $itemRelations = $item
-            ->itemRelationsTo()
+            ->itemRelations()
             ->search($search)
             ->latest()
             ->paginate();
@@ -34,13 +34,15 @@ class ItemItemRelationsController extends Controller
             'slug' => ['required', 'max:255', 'string'],
             'description' => ['required', 'max:255', 'string'],
             'data' => ['required', 'max:255', 'json'],
+            'itemto_id' => ['required', 'max:255'],
             'item_relation_type_id' => [
                 'required',
                 'exists:item_relation_types,id',
             ],
+            'post_id' => ['nullable', 'exists:posts,id'],
         ]);
 
-        $itemRelation = $item->itemRelationsTo()->create($validated);
+        $itemRelation = $item->itemRelations()->create($validated);
 
         return new ItemRelationResource($itemRelation);
     }

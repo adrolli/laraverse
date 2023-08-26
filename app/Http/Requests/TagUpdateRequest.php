@@ -23,6 +23,7 @@ class TagUpdateRequest extends FormRequest
             'title' => ['required', 'max:255', 'string'],
             'slug' => ['required', 'max:255', 'string'],
             'description' => ['required', 'max:255', 'string'],
+            'weight' => ['required', 'numeric'],
         ];
     }
 }

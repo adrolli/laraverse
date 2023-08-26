@@ -23,6 +23,8 @@ class NpmPackageUpdateRequest extends FormRequest
             'title' => ['required', 'max:255', 'string'],
             'slug' => ['required', 'max:255', 'string'],
             'data' => ['required', 'max:255', 'json'],
+            'type' => ['nullable', 'max:255', 'string'],
+            'repository_updated' => ['required', 'boolean'],
         ];
     }
 }

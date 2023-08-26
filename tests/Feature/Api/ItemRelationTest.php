@@ -5,6 +5,7 @@ namespace Tests\Feature\Api;
 use App\Models\User;
 use App\Models\ItemRelation;
 
+use App\Models\Post;
 use App\Models\Item;
 use App\Models\ItemRelationType;
 
@@ -67,18 +68,21 @@ class ItemRelationTest extends TestCase
     {
         $itemRelation = ItemRelation::factory()->create();
 
-        $item = Item::factory()->create();
-        $item = Item::factory()->create();
         $itemRelationType = ItemRelationType::factory()->create();
+        $post = Post::factory()->create();
+        $item = Item::factory()->create();
+        $item = Item::factory()->create();
 
         $data = [
             'title' => $this->faker->sentence(10),
             'slug' => $this->faker->slug(),
             'description' => $this->faker->sentence(15),
             'data' => [],
-            'item_id' => $item->id,
-            'item_id' => $item->id,
+            'itemto_id' => $this->faker->randomNumber(),
             'item_relation_type_id' => $itemRelationType->id,
+            'post_id' => $post->id,
+            'itemto_id' => $item->id,
+            'item_id' => $item->id,
         ];
 
         $response = $this->putJson(

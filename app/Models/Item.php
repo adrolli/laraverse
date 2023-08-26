@@ -20,7 +20,9 @@ class Item extends Model
         'vendor_id',
         'itemType_id',
         'website',
+        'ranking',
         'popularity',
+        'popularity_data',
         'rating',
         'rating_data',
         'health',
@@ -34,7 +36,9 @@ class Item extends Model
         'packagist_favers',
         'npm_url',
         'github_maintainers',
-        'github_repo_id',
+        'php_compatibility',
+        'laravel_compatibilty',
+        'repository_id',
         'npm_package_id',
         'packagist_package_id',
     ];
@@ -43,18 +47,16 @@ class Item extends Model
 
     protected $casts = [
         'versions' => 'array',
+        'popularity_data' => 'array',
         'rating_data' => 'array',
         'health_data' => 'array',
+        'php_compatibility' => 'array',
+        'laravel_compatibilty' => 'array',
     ];
 
     public function vendor()
     {
         return $this->belongsTo(Vendor::class);
-    }
-
-    public function githubRepo()
-    {
-        return $this->belongsTo(GithubRepo::class);
     }
 
     public function npmPackage()
@@ -77,14 +79,19 @@ class Item extends Model
         return $this->hasMany(Post::class);
     }
 
-    public function itemRelationsFrom()
+    public function repository()
     {
-        return $this->hasMany(ItemRelation::class, 'item_id');
+        return $this->belongsTo(Repository::class);
     }
 
     public function itemRelationsTo()
     {
-        return $this->hasMany(ItemRelation::class, 'item_id');
+        return $this->hasMany(ItemRelation::class, 'itemto_id');
+    }
+
+    public function itemRelations()
+    {
+        return $this->hasMany(ItemRelation::class);
     }
 
     public function platforms()

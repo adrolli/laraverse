@@ -135,6 +135,8 @@ class PackagistPackageControllerTest extends TestCase
             'title' => $this->faker->sentence(10),
             'slug' => $this->faker->slug(),
             'data' => [],
+            'type' => $this->faker->word(),
+            'repository_updated' => $this->faker->boolean(),
         ];
 
         $data['data'] = json_encode($data['data']);

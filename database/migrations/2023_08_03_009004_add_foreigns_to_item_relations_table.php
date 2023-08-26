@@ -24,6 +24,13 @@ return new class extends Migration {
                 ->on('item_relation_types')
                 ->onUpdate('CASCADE')
                 ->onDelete('CASCADE');
+
+            $table
+                ->foreign('post_id')
+                ->references('id')
+                ->on('posts')
+                ->onUpdate('CASCADE')
+                ->onDelete('CASCADE');
         });
     }
 
@@ -35,6 +42,7 @@ return new class extends Migration {
         Schema::table('item_relations', function (Blueprint $table) {
             $table->dropForeign(['item_id']);
             $table->dropForeign(['item_relation_type_id']);
+            $table->dropForeign(['post_id']);
         });
     }
 };

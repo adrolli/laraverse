@@ -29,14 +29,14 @@ class Stack extends Model
         'major' => 'boolean',
     ];
 
-    public function comments()
-    {
-        return $this->hasMany(Post::class, 'stack_id');
-    }
-
     public function creator()
     {
         return $this->belongsTo(User::class, 'user_id');
+    }
+
+    public function posts()
+    {
+        return $this->hasMany(Post::class);
     }
 
     public function items()

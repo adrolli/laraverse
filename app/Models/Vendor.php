@@ -14,11 +14,15 @@ class Vendor extends Model
     protected $fillable = [
         'title',
         'slug',
+        'avatar',
+        'description',
+        'email',
+        'website',
         'github',
         'packagist',
         'npm',
-        'website',
-        'description',
+        'owner_id',
+        'organization_id',
     ];
 
     protected $searchableFields = ['*'];
@@ -26,5 +30,15 @@ class Vendor extends Model
     public function items()
     {
         return $this->hasMany(Item::class);
+    }
+
+    public function organization()
+    {
+        return $this->belongsTo(Organization::class);
+    }
+
+    public function owner()
+    {
+        return $this->belongsTo(Owner::class);
     }
 }

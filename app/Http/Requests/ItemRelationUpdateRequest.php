@@ -25,10 +25,12 @@ class ItemRelationUpdateRequest extends FormRequest
             'description' => ['required', 'max:255', 'string'],
             'data' => ['required', 'max:255', 'json'],
             'item_id' => ['required', 'exists:items,id'],
+            'itemto_id' => ['required', 'max:255'],
             'item_relation_type_id' => [
                 'required',
                 'exists:item_relation_types,id',
             ],
+            'post_id' => ['nullable', 'exists:posts,id'],
         ];
     }
 }

@@ -60,11 +60,31 @@ class ItemRelationsRelationManager extends RelationManager
                         'lg' => 12,
                     ]),
 
+                TextInput::make('itemto_id')
+                    ->rules(['max:255'])
+                    ->placeholder('Itemto Id')
+                    ->columnSpan([
+                        'default' => 12,
+                        'md' => 12,
+                        'lg' => 12,
+                    ]),
+
                 Select::make('item_relation_type_id')
                     ->rules(['exists:item_relation_types,id'])
                     ->relationship('itemRelationType', 'title')
                     ->searchable()
                     ->placeholder('Item Relation Type')
+                    ->columnSpan([
+                        'default' => 12,
+                        'md' => 12,
+                        'lg' => 12,
+                    ]),
+
+                Select::make('post_id')
+                    ->rules(['exists:posts,id'])
+                    ->relationship('post', 'title')
+                    ->searchable()
+                    ->placeholder('Post')
                     ->columnSpan([
                         'default' => 12,
                         'md' => 12,
@@ -81,10 +101,12 @@ class ItemRelationsRelationManager extends RelationManager
                 Tables\Columns\TextColumn::make('title')->limit(50),
                 Tables\Columns\TextColumn::make('slug')->limit(50),
                 Tables\Columns\TextColumn::make('description')->limit(50),
-                Tables\Columns\TextColumn::make('itemFrom.title')->limit(50),
+                Tables\Columns\TextColumn::make('item.title')->limit(50),
+                Tables\Columns\TextColumn::make('itemto_id')->limit(50),
                 Tables\Columns\TextColumn::make(
                     'itemRelationType.title'
                 )->limit(50),
+                Tables\Columns\TextColumn::make('post.title')->limit(50),
             ])
             ->filters([
                 Tables\Filters\Filter::make('created_at')
@@ -119,12 +141,17 @@ class ItemRelationsRelationManager extends RelationManager
                     }),
 
                 MultiSelectFilter::make('item_id')->relationship(
-                    'itemFrom',
+                    'item',
                     'title'
                 ),
 
                 MultiSelectFilter::make('item_relation_type_id')->relationship(
                     'itemRelationType',
+                    'title'
+                ),
+
+                MultiSelectFilter::make('post_id')->relationship(
+                    'post',
                     'title'
                 ),
             ])

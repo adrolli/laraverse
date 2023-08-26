@@ -14,11 +14,15 @@ return new class extends Migration {
             $table->bigIncrements('id');
             $table->string('title');
             $table->string('slug');
-            $table->string('github');
-            $table->string('packagist');
-            $table->string('npm');
-            $table->string('website');
-            $table->text('description');
+            $table->string('avatar')->nullable();
+            $table->text('description')->nullable();
+            $table->string('email')->nullable();
+            $table->string('website')->nullable();
+            $table->string('github')->nullable();
+            $table->string('packagist')->nullable();
+            $table->string('npm')->nullable();
+            $table->unsignedBigInteger('owner_id')->nullable();
+            $table->unsignedBigInteger('organization_id')->nullable();
 
             $table->timestamps();
         });

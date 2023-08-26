@@ -65,7 +65,13 @@
                                     @lang('crud.item_relations.inputs.item_id')
                                 </th>
                                 <th class="px-4 py-3 text-left">
+                                    @lang('crud.item_relations.inputs.itemto_id')
+                                </th>
+                                <th class="px-4 py-3 text-left">
                                     @lang('crud.item_relations.inputs.item_relation_type_id')
+                                </th>
+                                <th class="px-4 py-3 text-left">
+                                    @lang('crud.item_relations.inputs.post_id')
                                 </th>
                                 <th></th>
                             </tr>
@@ -88,13 +94,20 @@
                                     >
                                 </td>
                                 <td class="px-4 py-3 text-left">
-                                    {{ optional($itemRelation->itemFrom)->title
-                                    ?? '-' }}
+                                    {{ optional($itemRelation->item)->title ??
+                                    '-' }}
+                                </td>
+                                <td class="px-4 py-3 text-left">
+                                    {{ $itemRelation->itemto_id ?? '-' }}
                                 </td>
                                 <td class="px-4 py-3 text-left">
                                     {{
                                     optional($itemRelation->itemRelationType)->title
                                     ?? '-' }}
+                                </td>
+                                <td class="px-4 py-3 text-left">
+                                    {{ optional($itemRelation->post)->title ??
+                                    '-' }}
                                 </td>
                                 <td
                                     class="px-4 py-3 text-center"
@@ -161,7 +174,7 @@
                             </tr>
                             @empty
                             <tr>
-                                <td colspan="7">
+                                <td colspan="9">
                                     @lang('crud.common.no_items_found')
                                 </td>
                             </tr>
@@ -169,7 +182,7 @@
                         </tbody>
                         <tfoot>
                             <tr>
-                                <td colspan="7">
+                                <td colspan="9">
                                     <div class="mt-10 px-4">
                                         {!! $itemRelations->render() !!}
                                     </div>

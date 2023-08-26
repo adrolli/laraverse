@@ -56,6 +56,18 @@
                                     @lang('crud.vendors.inputs.slug')
                                 </th>
                                 <th class="px-4 py-3 text-left">
+                                    @lang('crud.vendors.inputs.avatar')
+                                </th>
+                                <th class="px-4 py-3 text-left">
+                                    @lang('crud.vendors.inputs.description')
+                                </th>
+                                <th class="px-4 py-3 text-left">
+                                    @lang('crud.vendors.inputs.email')
+                                </th>
+                                <th class="px-4 py-3 text-left">
+                                    @lang('crud.vendors.inputs.website')
+                                </th>
+                                <th class="px-4 py-3 text-left">
                                     @lang('crud.vendors.inputs.github')
                                 </th>
                                 <th class="px-4 py-3 text-left">
@@ -65,10 +77,10 @@
                                     @lang('crud.vendors.inputs.npm')
                                 </th>
                                 <th class="px-4 py-3 text-left">
-                                    @lang('crud.vendors.inputs.website')
+                                    @lang('crud.vendors.inputs.owner_id')
                                 </th>
                                 <th class="px-4 py-3 text-left">
-                                    @lang('crud.vendors.inputs.description')
+                                    @lang('crud.vendors.inputs.organization_id')
                                 </th>
                                 <th></th>
                             </tr>
@@ -83,6 +95,20 @@
                                     {{ $vendor->slug ?? '-' }}
                                 </td>
                                 <td class="px-4 py-3 text-left">
+                                    <x-partials.thumbnail
+                                        src="{{ $vendor->avatar ? \Storage::url($vendor->avatar) : '' }}"
+                                    />
+                                </td>
+                                <td class="px-4 py-3 text-left">
+                                    {{ $vendor->description ?? '-' }}
+                                </td>
+                                <td class="px-4 py-3 text-left">
+                                    {{ $vendor->email ?? '-' }}
+                                </td>
+                                <td class="px-4 py-3 text-left">
+                                    {{ $vendor->website ?? '-' }}
+                                </td>
+                                <td class="px-4 py-3 text-left">
                                     {{ $vendor->github ?? '-' }}
                                 </td>
                                 <td class="px-4 py-3 text-left">
@@ -92,10 +118,11 @@
                                     {{ $vendor->npm ?? '-' }}
                                 </td>
                                 <td class="px-4 py-3 text-left">
-                                    {{ $vendor->website ?? '-' }}
+                                    {{ optional($vendor->owner)->title ?? '-' }}
                                 </td>
                                 <td class="px-4 py-3 text-left">
-                                    {{ $vendor->description ?? '-' }}
+                                    {{ optional($vendor->organization)->title ??
+                                    '-' }}
                                 </td>
                                 <td
                                     class="px-4 py-3 text-center"
@@ -162,7 +189,7 @@
                             </tr>
                             @empty
                             <tr>
-                                <td colspan="8">
+                                <td colspan="12">
                                     @lang('crud.common.no_items_found')
                                 </td>
                             </tr>
@@ -170,7 +197,7 @@
                         </tbody>
                         <tfoot>
                             <tr>
-                                <td colspan="8">
+                                <td colspan="12">
                                     <div class="mt-10 px-4">
                                         {!! $vendors->render() !!}
                                     </div>

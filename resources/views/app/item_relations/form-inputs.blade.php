@@ -42,13 +42,24 @@
     </x-inputs.group>
 
     <x-inputs.group class="w-full">
-        <x-inputs.select name="item_id" label="Item From" required>
+        <x-inputs.select name="item_id" label="Item" required>
             @php $selected = old('item_id', ($editing ? $itemRelation->item_id : '')) @endphp
             <option disabled {{ empty($selected) ? 'selected' : '' }}>Please select the Item</option>
             @foreach($items as $value => $label)
             <option value="{{ $value }}" {{ $selected == $value ? 'selected' : '' }} >{{ $label }}</option>
             @endforeach
         </x-inputs.select>
+    </x-inputs.group>
+
+    <x-inputs.group class="w-full">
+        <x-inputs.text
+            name="itemto_id"
+            label="Itemto Id"
+            :value="old('itemto_id', ($editing ? $itemRelation->itemto_id : ''))"
+            maxlength="255"
+            placeholder="Itemto Id"
+            required
+        ></x-inputs.text>
     </x-inputs.group>
 
     <x-inputs.group class="w-full">
@@ -60,6 +71,16 @@
             @php $selected = old('item_relation_type_id', ($editing ? $itemRelation->item_relation_type_id : '')) @endphp
             <option disabled {{ empty($selected) ? 'selected' : '' }}>Please select the Item Relation Type</option>
             @foreach($itemRelationTypes as $value => $label)
+            <option value="{{ $value }}" {{ $selected == $value ? 'selected' : '' }} >{{ $label }}</option>
+            @endforeach
+        </x-inputs.select>
+    </x-inputs.group>
+
+    <x-inputs.group class="w-full">
+        <x-inputs.select name="post_id" label="Post">
+            @php $selected = old('post_id', ($editing ? $itemRelation->post_id : '')) @endphp
+            <option disabled {{ empty($selected) ? 'selected' : '' }}>Please select the Post</option>
+            @foreach($posts as $value => $label)
             <option value="{{ $value }}" {{ $selected == $value ? 'selected' : '' }} >{{ $label }}</option>
             @endforeach
         </x-inputs.select>

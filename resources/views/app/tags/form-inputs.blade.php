@@ -33,4 +33,15 @@
             }}</x-inputs.textarea
         >
     </x-inputs.group>
+
+    <x-inputs.group class="w-full">
+        <x-inputs.number
+            name="weight"
+            label="Weight"
+            :value="old('weight', ($editing ? $tag->weight : ''))"
+            max="255"
+            placeholder="Weight"
+            required
+        ></x-inputs.number>
+    </x-inputs.group>
 </div>

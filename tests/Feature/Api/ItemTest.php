@@ -7,8 +7,8 @@ use App\Models\Item;
 
 use App\Models\Vendor;
 use App\Models\ItemType;
-use App\Models\GithubRepo;
 use App\Models\NpmPackage;
+use App\Models\Repository;
 use App\Models\PackagistPackage;
 
 use Tests\TestCase;
@@ -71,10 +71,10 @@ class ItemTest extends TestCase
         $item = Item::factory()->create();
 
         $vendor = Vendor::factory()->create();
-        $githubRepo = GithubRepo::factory()->create();
         $npmPackage = NpmPackage::factory()->create();
         $packagistPackage = PackagistPackage::factory()->create();
         $itemType = ItemType::factory()->create();
+        $repository = Repository::factory()->create();
 
         $data = [
             'title' => $this->faker->sentence(10),
@@ -83,7 +83,9 @@ class ItemTest extends TestCase
             'latest_version' => $this->faker->text(255),
             'versions' => [],
             'website' => $this->faker->text(255),
+            'ranking' => $this->faker->randomNumber(0),
             'popularity' => $this->faker->randomNumber(0),
+            'popularity_data' => [],
             'rating' => $this->faker->randomNumber(0),
             'rating_data' => [],
             'health' => $this->faker->randomNumber(0),
@@ -97,11 +99,13 @@ class ItemTest extends TestCase
             'packagist_favers' => $this->faker->randomNumber(0),
             'npm_url' => $this->faker->text(255),
             'github_maintainers' => $this->faker->randomNumber(0),
+            'php_compatibility' => [],
+            'laravel_compatibilty' => [],
             'vendor_id' => $vendor->id,
-            'github_repo_id' => $githubRepo->id,
             'npm_package_id' => $npmPackage->id,
             'packagist_package_id' => $packagistPackage->id,
             'itemType_id' => $itemType->id,
+            'repository_id' => $repository->id,
         ];
 
         $response = $this->putJson(route('api.items.update', $item), $data);

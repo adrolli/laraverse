@@ -25,11 +25,14 @@ class VendorFactory extends Factory
         return [
             'title' => $this->faker->sentence(10),
             'slug' => $this->faker->slug(),
+            'description' => $this->faker->sentence(15),
+            'email' => $this->faker->email(),
+            'website' => $this->faker->text(255),
             'github' => $this->faker->text(255),
             'packagist' => $this->faker->text(255),
             'npm' => $this->faker->text(255),
-            'website' => $this->faker->text(255),
-            'description' => $this->faker->sentence(15),
+            'organization_id' => \App\Models\Organization::factory(),
+            'owner_id' => \App\Models\Owner::factory(),
         ];
     }
 }

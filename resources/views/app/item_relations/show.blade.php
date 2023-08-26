@@ -44,9 +44,15 @@
                             @lang('crud.item_relations.inputs.item_id')
                         </h5>
                         <span
-                            >{{ optional($itemRelation->itemFrom)->title ?? '-'
+                            >{{ optional($itemRelation->item)->title ?? '-'
                             }}</span
                         >
+                    </div>
+                    <div class="mb-4">
+                        <h5 class="font-medium text-gray-700">
+                            @lang('crud.item_relations.inputs.itemto_id')
+                        </h5>
+                        <span>{{ $itemRelation->itemto_id ?? '-' }}</span>
                     </div>
                     <div class="mb-4">
                         <h5 class="font-medium text-gray-700">
@@ -55,6 +61,15 @@
                         <span
                             >{{ optional($itemRelation->itemRelationType)->title
                             ?? '-' }}</span
+                        >
+                    </div>
+                    <div class="mb-4">
+                        <h5 class="font-medium text-gray-700">
+                            @lang('crud.item_relations.inputs.post_id')
+                        </h5>
+                        <span
+                            >{{ optional($itemRelation->post)->title ?? '-'
+                            }}</span
                         >
                     </div>
                 </div>

@@ -33,6 +33,11 @@ class ItemController extends Controller
         $validated = $request->validated();
         $validated['versions'] = json_decode($validated['versions'], true);
 
+        $validated['popularity_data'] = json_decode(
+            $validated['popularity_data'],
+            true
+        );
+
         $validated['rating_data'] = json_decode(
             $validated['rating_data'],
             true
@@ -40,6 +45,16 @@ class ItemController extends Controller
 
         $validated['health_data'] = json_decode(
             $validated['health_data'],
+            true
+        );
+
+        $validated['php_compatibility'] = json_decode(
+            $validated['php_compatibility'],
+            true
+        );
+
+        $validated['laravel_compatibilty'] = json_decode(
+            $validated['laravel_compatibilty'],
             true
         );
 
@@ -63,6 +78,11 @@ class ItemController extends Controller
 
         $validated['versions'] = json_decode($validated['versions'], true);
 
+        $validated['popularity_data'] = json_decode(
+            $validated['popularity_data'],
+            true
+        );
+
         $validated['rating_data'] = json_decode(
             $validated['rating_data'],
             true
@@ -70,6 +90,16 @@ class ItemController extends Controller
 
         $validated['health_data'] = json_decode(
             $validated['health_data'],
+            true
+        );
+
+        $validated['php_compatibility'] = json_decode(
+            $validated['php_compatibility'],
+            true
+        );
+
+        $validated['laravel_compatibilty'] = json_decode(
+            $validated['laravel_compatibilty'],
             true
         );
 

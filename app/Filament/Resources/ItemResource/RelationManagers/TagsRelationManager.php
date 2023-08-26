@@ -47,6 +47,16 @@ class TagsRelationManager extends RelationManager
                         'md' => 12,
                         'lg' => 12,
                     ]),
+
+                TextInput::make('weight')
+                    ->rules(['numeric'])
+                    ->numeric()
+                    ->placeholder('Weight')
+                    ->columnSpan([
+                        'default' => 12,
+                        'md' => 12,
+                        'lg' => 12,
+                    ]),
             ]),
         ]);
     }
@@ -58,6 +68,7 @@ class TagsRelationManager extends RelationManager
                 Tables\Columns\TextColumn::make('title')->limit(50),
                 Tables\Columns\TextColumn::make('slug')->limit(50),
                 Tables\Columns\TextColumn::make('description')->limit(50),
+                Tables\Columns\TextColumn::make('weight'),
             ])
             ->filters([
                 Tables\Filters\Filter::make('created_at')

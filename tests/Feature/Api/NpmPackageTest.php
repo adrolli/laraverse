@@ -68,6 +68,8 @@ class NpmPackageTest extends TestCase
             'title' => $this->faker->sentence(10),
             'slug' => $this->faker->slug(),
             'data' => [],
+            'type' => $this->faker->word(),
+            'repository_updated' => $this->faker->boolean(),
         ];
 
         $response = $this->putJson(

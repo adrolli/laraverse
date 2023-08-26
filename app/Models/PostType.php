@@ -17,8 +17,8 @@ class PostType extends Model
 
     protected $table = 'post_types';
 
-    public function comments()
+    public function posts()
     {
-        return $this->hasMany(Post::class, 'post_type_id');
+        return $this->hasMany(Post::class);
     }
 }
