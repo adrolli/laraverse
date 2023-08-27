@@ -14,33 +14,29 @@ php artisan queue:work
 
 ## Model
 
-Not only this shiny model is created with Vemto. The whole app is bootstrapped using [Vemto.app](https.//vemto.app)
+Not only this shiny model is created with Vemto. The whole app is bootstrapped using [Vemto.app](https.//vemto.app). I use a patched version of the https://github.com/adrolli/vemto-filament-plugin, that is prepared to easily step up to Filament V3.
 
 ![Vemto Model](laraverse_exported_image.png)
 
 ## Packages
 
--   Installed bezhansalleh/filament-shield
--   Installed jeffgreco13/filament-breezy
--   Installed pxlrbt/filament-spotlight, but shortcuts don't work
--   Forked adrolli/filament-spatie-laravel-activitylog
--   Forked adrolli/filament-jobs-monitor
-
-
-
--   Fork! amvisor/filament-failed-jobs - v2 on gitlab
--   shuvroroy/filament-spatie-laravel-backup
--   shuvroroy/filament-spatie-laravel-health
--   Fork! 3x1io/filament-user
--   archilex/filament-toggle-icon-column
--   buildix/timex, test only
--   invaders-xx/filament-kanban-board, test only
--   camya/filament-title-with-slug
--   konnco/filament-import
--   leandrocfe/filament-apex-charts
--   pxlrbt/filament-excel
--   z3d0x/filament-logger
--   
+-   [x] Installed bezhansalleh/filament-shield
+-   [x] Installed jeffgreco13/filament-breezy
+-   [x] Installed pxlrbt/filament-spotlight, but shortcuts don't work
+-   [x] Forked adrolli/filament-spatie-laravel-activitylog
+-   [x] Forked adrolli/filament-jobs-monitor
+-   [ ] Fork! amvisor/filament-failed-jobs - v2 on gitlab
+-   [ ] shuvroroy/filament-spatie-laravel-backup
+-   [ ] shuvroroy/filament-spatie-laravel-health
+-   [ ] Fork! 3x1io/filament-user
+-   [ ] archilex/filament-toggle-icon-column
+-   [ ] buildix/timex, test only
+-   [ ] invaders-xx/filament-kanban-board, test only
+-   [ ] camya/filament-title-with-slug
+-   [ ] konnco/filament-import
+-   [ ] leandrocfe/filament-apex-charts
+-   [ ] pxlrbt/filament-excel
+-   [ ] z3d0x/filament-logger
 
 ## Jobs
 
@@ -48,122 +44,99 @@ Fetching data, calculating and writing even more data to these powerful models i
 
 ### PackagistUpdater (runs hourly, but not concurrent)
 
--   Check table for pending updates and collect them in an array
+Packagist API - https://packagist.org/search.json?q=laravel, see https://packagist.org/apidoc oder am besten alles: https://packagist.org/packages/list.json
 
-    -   Item popularity > 75 % should be checked hourly
-    -   Item popularity > 50 % should be checked daily
-    -   Item popularity <= 50% should be checked weekly
-    -   Null or no Item should be checked monthly
+-   [ ] Check table for pending updates and collect them in an array
 
--   If table empty get all packages from Packagist
--   Else get Packagist latest by timestamp of last run
--   Run PackagistPackages batch 100, do a 1 sec sleep between
+    -   [ ] Item popularity > 75 % should be checked hourly
+    -   [ ] Item popularity > 50 % should be checked daily
+    -   [ ] Item popularity <= 50% should be checked weekly
+    -   [ ] Null or no Item should be checked monthly
+
+-   [ ] If table empty get all packages from Packagist
+-   [ ] Else get Packagist latest by timestamp of last run
+-   [ ] Run PackagistPackages batch 100, do a 1 sec sleep between
 
 ### PackagistPackagesUpdate
 
--   Needs an array of packagist packages, so it can do 1 or many packages and are enabled to be used witch batch mode
--   Get full data for package from Packagist API, do a 1 sec sleep between
--   Update or create Packagist model with fields, set Repo Updated to false
+-   [ ] Needs an array of packagist packages, so it can do 1 or many packages and are enabled to be used witch batch mode
+-   [ ] Get full data for package from Packagist API, do a 1 sec sleep between
+-   [ ] Update or create Packagist model with fields, set Repo Updated to false
 
 ### RepositoriesUpdater (runs hourly, but not concurrent)
 
--   Checks Packagist table for all entries with Repo Updated = false and creates an array
--   Checks Repositories table for needed updates (set rules) and creates an array
--   Combine the arrays, remove duplicates, batch 100 and run Repositories
+-   [ ] Checks Packagist table for all entries with Repo Updated = false and creates an array
+-   [ ] Checks Repositories table for needed updates (set rules) and creates an array
+-   [ ] Combine the arrays, remove duplicates, batch 100 and run Repositories
 
 ### GithubSearch
 
--   Get data from GitHub API by tag or other search
--   Create a GithubRepo Job each result
+-   [ ] Get data from GitHub API by tag or other search
+-   [ ] Create a GithubRepo Job each result
 
 ### RepositoriesUpdate
 
--   Needs an array of repositories, so it can do 1 or many packages and are enabled to be used witch batch mode
--   Get full repo data from GitHub API, Gitlab, Bitbucket
--   Inspect files
-    -   Readme
-    -   ServiceProvider
-    -   Artisan command
-    -   Composer.json
-    -   Package.json
-    -   license
-    -   Env example
--   Update or Create Repository
-    -   Compatibility
-    -   Package type
+-   [ ] Needs an array of repositories, so it can do 1 or many packages and are enabled to be used witch batch mode
+-   [ ] Get full repo data from GitHub API, Gitlab, Bitbucket
+-   [ ] Inspect files
+    -   [ ] Readme
+    -   [ ] ServiceProvider
+    -   [ ] Artisan command
+    -   [ ] Composer.json
+    -   [ ] Package.json
+    -   [ ] license
+    -   [ ] Env example
+-   [ ] Update or Create Repository
+    -   [ ] Compatibility
+    -   [ ] Package type
 
 ### NpmInit
 
--   Scan all Repositories for package.json dependencies
--   Run a NpmPackage each
+-   [ ] Scan all Repositories for package.json dependencies
+-   [ ] Run a NpmPackage each
 
 ### NpmPackage
 
--   Gets a package
--   Updates a package
+NPM - https://api-docs.npms.io/ or directly https://stackoverflow.com/questions/34071621/query-npmjs-registry-via-api ... step by step https://www.edoardoscibona.com/exploring-the-npm-registry-api
+
+-   [ ] Gets a package
+-   [ ] Updates a package
 
 ### Item
 
--   Does complex things like compatibility checks, building versions, preparing relations
--   Updates a single Item and all related models
+-   [ ] Does complex things like compatibility checks, building versions, preparing relations
+-   [ ] Updates a single Item and all related models
 
 ### Watcher (runs periodically)
 
--   Watch for changes in Npm, Repository databases
--   or picks entries based on last update timestamp
-    -   High Popularity ( > 75 ) -> daily
-    -   Medium Popularity ( > 50 ) -> weekly
-    -   Low Popularity ( <= 50 ) -> monthly
--   Runs the update jobs NpmPackage, GithubRepo and others accordingly
--   Possible also for packagist, but using their API seems much more efficient
+-   [ ] Watch for changes in Npm, Repository databases
+-   [ ] or picks entries based on last update timestamp
+    -   [ ] High Popularity ( > 75 ) -> daily
+    -   [ ] Medium Popularity ( > 50 ) -> weekly
+    -   [ ] Low Popularity ( <= 50 ) -> monthly
+-   [ ] Runs the update jobs NpmPackage, GithubRepo and others accordingly
+-   [ ] Possible also for packagist, but using their API seems much more efficient
 
 ## Commands
 
 These commands can be used to run jobs manually:
 
--   InitNpm
--   InitPackagist
--   UpdatePackagist
--   GithubSearch - has parameters like tag or search
--   Watcher
+-   [ ] InitNpm
+-   [ ] InitPackagist
+-   [ ] UpdatePackagist
+-   [ ] GithubSearch - has parameters like tag or search
+-   [ ] Watcher
 
 ## Config
 
--   Laravel compatibility: "9, 10"
--   PHP compatibility: "8.1, 8.2"
--   Known Packages list
--   Array of update interval to popularity for different apis
-    -   Update interval
-        -   Packagist
+-   [ ] Laravel compatibility: "9, 10"
+-   [ ] PHP compatibility: "8.1, 8.2"
+-   [ ] Known Packages list
+-   [ ] Array of update interval to popularity for different apis
+    -   [ ] Update interval
+        -   [ ] Packagist
 
-## Todo
 
--   NPM - https://api-docs.npms.io/ or directly https://stackoverflow.com/questions/34071621/query-npmjs-registry-via-api ... step by step https://www.edoardoscibona.com/exploring-the-npm-registry-api
--   More APIs and maybe some tweaks ... Laracasts, Codecourse, Laravel-Daily, Laravel-News, YT, VS Code Marketplace and many more waiting ...
-
-### Reading from Packagist
-
--   Packagist API - https://packagist.org/search.json?q=laravel, see https://packagist.org/apidoc oder am besten alles: https://packagist.org/packages/list.json
--
-
-https://laraverse.test/packagist-search
-
--   [ ] populate the Packagist table, update then
--   [ ] create item and all related objects if not exists (packagist url and ID in packagist table), compare and update a bunch of fields then
-
-### Reading from NPM
-
--   [ ] populate the NPM table, update then
--   [ ] create item and all related objects if not exists (npm url and ID in npm table), compare and update a bunch of fields then
-
-### Reading from GitHub
-
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains over 2000 video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
-
-https://laraverse.test/github-search/laravel
-
--   [ ] populate the Github table and all related, update then
--   [ ] create item and all related objects if not exists (github url and ID in github table), compare and update a bunch of fields then
 
 ## Create Items
 
@@ -314,6 +287,7 @@ class ListPackagistPackages extends ListRecords
 -   https://filamentphp.com/plugins/bezhansalleh-exception-viewer
 -   Better display JSON in Filament: https://github.com/invaders-xx/filament-jsoneditor
 -   Display Markdown
+-   Awesome Lists, Items that needs to be there
 -   Fiddle with OpenAI: https://github.com/openai-php/laravel
 -   Make something for health ... add monitors ... https://filamentphp.com/plugins/shuvroroy-spatie-laravel-health
 
