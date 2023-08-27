@@ -4,6 +4,7 @@ namespace App\Providers\Filament;
 
 use AlexJustesen\FilamentSpatieLaravelActivitylog\FilamentSpatieLaravelActivitylogPlugin;
 use BezhanSalleh\FilamentShield\FilamentShieldPlugin;
+use Croustibat\FilamentJobsMonitor\FilamentJobsMonitorPlugin;
 use Filament\Http\Middleware\Authenticate;
 use Filament\Http\Middleware\DisableBladeIconComponents;
 use Filament\Http\Middleware\DispatchServingFilamentEvent;
@@ -70,6 +71,16 @@ class AdminPanelProvider extends PanelProvider
                         force: false, // force the user to enable 2FA before they can use the application (default = false)
                     ),
                 new FilamentSpatieLaravelActivitylogPlugin(),
+                FilamentJobsMonitorPlugin::make()
+                    ->label('Job')
+                    ->pluralLabel('Jobs')
+                    ->enableNavigation(true)
+                    ->navigationIcon('heroicon-o-cpu-chip')
+                    ->navigationGroup('Settings')
+                    ->navigationSort(5)
+                    ->navigationCountBadge(true)
+                    ->enablePruning(true)
+                    ->pruningRetention(7),
             ]);
     }
 }

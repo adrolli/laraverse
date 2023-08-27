@@ -9,6 +9,7 @@
     "license": "MIT",
     "require": {
         "php": "^8.1",
+        "adrolli/filament-jobs-monitor": "^1.0",
         "adrolli/filament-spatie-laravel-activitylog": "^1.1",
         "bezhansalleh/filament-shield": "^3.0@beta",
         "filament/filament": "^3.0-stable",

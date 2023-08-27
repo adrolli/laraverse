@@ -20,16 +20,27 @@ Not only this shiny model is created with Vemto. The whole app is bootstrapped u
 
 ## Packages
 
--   bezhansalleh/filament-shield
--   jeffgreco13/filament-breezy
--   pxlrbt/filament-spotlight - shortcuts doesn't work
--   adrolli/filament-spatie-laravel-activitylog
--   amvisor/filament-failed-jobs
--   croustibat/filament-jobs-monitor
+-   Installed bezhansalleh/filament-shield
+-   Installed jeffgreco13/filament-breezy
+-   Installed pxlrbt/filament-spotlight, but shortcuts don't work
+-   Forked adrolli/filament-spatie-laravel-activitylog
+-   Forked adrolli/filament-jobs-monitor
+
+
+
+-   Fork! amvisor/filament-failed-jobs - v2 on gitlab
 -   shuvroroy/filament-spatie-laravel-backup
 -   shuvroroy/filament-spatie-laravel-health
--   alexjustesen/filament-spatie-laravel-activitylog
--   see below and mss...
+-   Fork! 3x1io/filament-user
+-   archilex/filament-toggle-icon-column
+-   buildix/timex, test only
+-   invaders-xx/filament-kanban-board, test only
+-   camya/filament-title-with-slug
+-   konnco/filament-import
+-   leandrocfe/filament-apex-charts
+-   pxlrbt/filament-excel
+-   z3d0x/filament-logger
+-   
 
 ## Jobs
 
@@ -300,76 +311,9 @@ class ListPackagistPackages extends ListRecords
 
 ## Backlog
 
--   Stack-Installer ... is it possible to combine all install commands automagically to an "installer"? Like laravel.build
--   Receipes and compatibility checks (people can check a stack compat)
--   Stack the big picture ... see the stack as a fancy image or do sth markdownish to go viral ;-)
--   Safe stack ... how safe (active dev, bottlenecks) is your stack?
--   Books, Video Courses, Learning platforms as new types
--   Packalyst RSS - https://packalyst.com/resources (new and requested)
--   User-driven, v. a. Rating für Sortierung, Posts (Request, Recipe, ...)
--   Blog, aggregation
--   Generated newsletter
--   https://filamentphp.com/plugins/leandrocfe-apex-charts
--   https://filamentphp.com/plugins/pxlrbt-spotlight
--   Export / Import / User (with Impersonate)
--   https://filamentphp.com/plugins/awcodes-overlook
 -   https://filamentphp.com/plugins/bezhansalleh-exception-viewer
--   Filament V3
--   https://gitlab.com/amvisor/filament-failed-jobs -> nav pos
--   https://github.com/croustibat/filament-jobs-monitor -> nav pos, jobs done instead of current, or pending ... missing view
--   Supervisor or cron (much easier) for Managing and self-healing the Job Queue: https://gist.github.com/deepak-cotocus/6b9865784dee18966e15c74ec6e487c4
 -   Better display JSON in Filament: https://github.com/invaders-xx/filament-jsoneditor
+-   Display Markdown
 -   Fiddle with OpenAI: https://github.com/openai-php/laravel
 -   Make something for health ... add monitors ... https://filamentphp.com/plugins/shuvroroy-spatie-laravel-health
 
-## Idea
-
--   What do you want to build today?
-    -   A montolithic app with frontend and backend
-    -   A headless app with backend and API
-    -   I don't know, can we skip that?
--   How do you want to start?
-    -   Easy - what about a code generator
-    -   Smart - I want to use an AdminPanel
-    -   Let me code that from scratch
--   What kind of project do you have in mind
-    -   CMS
-    -   Online Shop
-    -   Blog
-    -   Website
-    -   Custom App
-    -   Else
--   Which of these do you prefer
-    -   I use a full-flegded JS framework
-    -   I use Laravel Livewire, and code in PHP
-    -   I only need static HTML or include another JS library
--   And what about styles
-    -   TailwindCSS, the most popular option
-    -   Boostrap
-    -   I use another CSS framework or start vanilla
--   Do you have some features, you definetly need
-    -   Auth
-    -   2-FA
-    -   ... type
--   Which testing framework do you prefer
-    -   PHP Unit
-    -   Pest
-    -   Other
-    -   I don't write tests, skip that
--   Which IDE do you prefer
-    -   VS Code
-    -   PHPStorm
-    -   Other
-    -   What is an IDE?
--   How do you want to deploy your product
-    -   Just local on a Mac
-    -   Just local on Windows
-    -   On my shared host
-    -   On a cloud server
-    -   Serverless in the cloud
-
-Creating your stack ...
-
-You can now update and finalize your stack, print a stack sheet, get a stack image or build your stack.
-
-Have Fun!

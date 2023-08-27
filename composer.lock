@@ -4,8 +4,77 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "e2eaaa17e939979356fedd9c0cd4485a",
+    "content-hash": "4163b02dfc964ecac43f2d477a5a8a53",
     "packages": [
+        {
+            "name": "adrolli/filament-jobs-monitor",
+            "version": "v1.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/adrolli/filament-jobs-monitor.git",
+                "reference": "058bb8da92c87525ea23409b8ed7efa383eb5312"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/adrolli/filament-jobs-monitor/zipball/058bb8da92c87525ea23409b8ed7efa383eb5312",
+                "reference": "058bb8da92c87525ea23409b8ed7efa383eb5312",
+                "shasum": ""
+            },
+            "require": {
+                "filament/filament": "^3.0",
+                "illuminate/contracts": "^10.0",
+                "php": "^8.1",
+                "spatie/laravel-package-tools": "^1.13.5"
+            },
+            "require-dev": {
+                "laravel/pint": "^1.0"
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "Croustibat\\FilamentJobsMonitor\\FilamentJobsMonitorServiceProvider",
+                        "Croustibat\\FilamentJobsMonitor\\QueueMonitorProvider"
+                    ],
+                    "aliases": {
+                        "QueueMonitor": "Croustibat\\FilamentJobsMonitor\\QueueMonitorProvider\\Facade"
+                    }
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Croustibat\\FilamentJobsMonitor\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Baptiste",
+                    "email": "baptiste@derniercri.io",
+                    "role": "Developer"
+                }
+            ],
+            "description": "Background Jobs monitoring like Horizon for all drivers for FilamentPHP",
+            "homepage": "https://github.com/croustibat/filament-jobs-monitor",
+            "keywords": [
+                "croustibat",
+                "filament-jobs-monitor",
+                "laravel"
+            ],
+            "support": {
+                "source": "https://github.com/adrolli/filament-jobs-monitor/tree/v1.0"
+            },
+            "funding": [
+                {
+                    "url": "https://github.com/croustibat",
+                    "type": "github"
+                }
+            ],
+            "time": "2023-08-27T19:36:03+00:00"
+        },
         {
             "name": "adrolli/filament-spatie-laravel-activitylog",
             "version": "v1.1",
