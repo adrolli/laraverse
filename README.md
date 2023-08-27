@@ -18,99 +18,112 @@ Not only this shiny model is created with Vemto. The whole app is bootstrapped u
 
 ![Vemto Model](laraverse_exported_image.png)
 
+## Packages
+
+-   bezhansalleh/filament-shield
+-   jeffgreco13/filament-breezy
+-   pxlrbt/filament-spotlight - shortcuts doesn't work
+-   adrolli/filament-spatie-laravel-activitylog
+-   amvisor/filament-failed-jobs
+-   croustibat/filament-jobs-monitor
+-   shuvroroy/filament-spatie-laravel-backup
+-   shuvroroy/filament-spatie-laravel-health
+-   alexjustesen/filament-spatie-laravel-activitylog
+-   see below and mss...
+
 ## Jobs
 
 Fetching data, calculating and writing even more data to these powerful models is done by jobs:
 
-### PackagistUpdater  (runs hourly, but not concurrent)
+### PackagistUpdater (runs hourly, but not concurrent)
 
-- Check table for pending updates and collect them in an array
-  - Item popularity > 75 % should be checked hourly
-  - Item popularity > 50 % should be checked daily
-  - Item popularity <= 50% should be checked weekly
-  - Null or no Item should be checked monthly
+-   Check table for pending updates and collect them in an array
 
-- If table empty get all packages from Packagist
-- Else get Packagist latest by timestamp of last run
-- Run PackagistPackages batch 100, do a 1 sec sleep between
+    -   Item popularity > 75 % should be checked hourly
+    -   Item popularity > 50 % should be checked daily
+    -   Item popularity <= 50% should be checked weekly
+    -   Null or no Item should be checked monthly
+
+-   If table empty get all packages from Packagist
+-   Else get Packagist latest by timestamp of last run
+-   Run PackagistPackages batch 100, do a 1 sec sleep between
 
 ### PackagistPackagesUpdate
 
-- Needs an array of packagist packages, so it can do 1 or many packages and are enabled to be used witch batch mode
-- Get full data for package from Packagist API, do a 1 sec sleep between
-- Update or create Packagist model with fields, set Repo Updated to false
+-   Needs an array of packagist packages, so it can do 1 or many packages and are enabled to be used witch batch mode
+-   Get full data for package from Packagist API, do a 1 sec sleep between
+-   Update or create Packagist model with fields, set Repo Updated to false
 
 ### RepositoriesUpdater (runs hourly, but not concurrent)
 
-- Checks Packagist table for all entries with Repo Updated = false and creates an array
-- Checks Repositories table for needed updates (set rules) and creates an array
-- Combine the arrays, remove duplicates, batch 100 and run Repositories
+-   Checks Packagist table for all entries with Repo Updated = false and creates an array
+-   Checks Repositories table for needed updates (set rules) and creates an array
+-   Combine the arrays, remove duplicates, batch 100 and run Repositories
 
 ### GithubSearch
 
-- Get data from GitHub API by tag or other search
-- Create a GithubRepo Job each result
+-   Get data from GitHub API by tag or other search
+-   Create a GithubRepo Job each result
 
 ### RepositoriesUpdate
 
-- Needs an array of repositories, so it can do 1 or many packages and are enabled to be used witch batch mode
-- Get full repo data from GitHub API, Gitlab, Bitbucket
-- Inspect files
-  - Readme
-  - ServiceProvider
-  - Artisan command
-  - Composer.json
-  - Package.json
-  - license
-  - Env example
-- Update or Create Repository
-  - Compatibility
-  - Package type
+-   Needs an array of repositories, so it can do 1 or many packages and are enabled to be used witch batch mode
+-   Get full repo data from GitHub API, Gitlab, Bitbucket
+-   Inspect files
+    -   Readme
+    -   ServiceProvider
+    -   Artisan command
+    -   Composer.json
+    -   Package.json
+    -   license
+    -   Env example
+-   Update or Create Repository
+    -   Compatibility
+    -   Package type
 
 ### NpmInit
 
-- Scan all Repositories for package.json dependencies
-- Run a NpmPackage each
+-   Scan all Repositories for package.json dependencies
+-   Run a NpmPackage each
 
 ### NpmPackage
 
-- Gets a package 
-- Updates a package
+-   Gets a package
+-   Updates a package
 
 ### Item
 
-- Does complex things like compatibility checks, building versions, preparing relations
-- Updates a single Item and all related models
+-   Does complex things like compatibility checks, building versions, preparing relations
+-   Updates a single Item and all related models
 
 ### Watcher (runs periodically)
 
-- Watch for changes in Npm, Repository databases 
-- or picks entries based on last update timestamp
-  - High Popularity ( > 75 ) -> daily
-  - Medium Popularity ( > 50 ) -> weekly
-  - Low Popularity ( <= 50 ) -> monthly
-- Runs the update jobs NpmPackage, GithubRepo and others accordingly
-- Possible also for packagist, but using their API seems much more efficient
+-   Watch for changes in Npm, Repository databases
+-   or picks entries based on last update timestamp
+    -   High Popularity ( > 75 ) -> daily
+    -   Medium Popularity ( > 50 ) -> weekly
+    -   Low Popularity ( <= 50 ) -> monthly
+-   Runs the update jobs NpmPackage, GithubRepo and others accordingly
+-   Possible also for packagist, but using their API seems much more efficient
 
 ## Commands
 
 These commands can be used to run jobs manually:
 
-- InitNpm
-- InitPackagist
-- UpdatePackagist
-- GithubSearch - has parameters like tag or search 
-- Watcher
+-   InitNpm
+-   InitPackagist
+-   UpdatePackagist
+-   GithubSearch - has parameters like tag or search
+-   Watcher
 
 ## Config
 
-- Laravel compatibility: "9, 10"
-- PHP compatibility: "8.1, 8.2"
-- Known Packages list
-- Array of update interval to popularity for different apis
-  - Update interval
-    - Packagist 
-
+-   Laravel compatibility: "9, 10"
+-   PHP compatibility: "8.1, 8.2"
+-   Known Packages list
+-   Array of update interval to popularity for different apis
+    -   Update interval
+        -   Packagist
 
 ## Todo
 
@@ -120,7 +133,7 @@ These commands can be used to run jobs manually:
 ### Reading from Packagist
 
 -   Packagist API - https://packagist.org/search.json?q=laravel, see https://packagist.org/apidoc oder am besten alles: https://packagist.org/packages/list.json
--   
+-
 
 https://laraverse.test/packagist-search
 
@@ -145,61 +158,61 @@ https://laraverse.test/github-search/laravel
 
 Creating Items should be done by merging all datasets into the items model including all relations. Following rules apply:
 
-- From Packagist
+-   From Packagist
 
-  - Fill title
+    -   Fill title
 
-  - Fill slug
+    -   Fill slug
 
-  - Fill description
+    -   Fill description
 
-  - Fill latest version
+    -   Fill latest version
 
-  - Form versions json
+    -   Form versions json
 
-  - Create vendor
+    -   Create vendor
 
-    - ... data
+        -   ... data
 
-  - Fill website
+    -   Fill website
 
-  - Calc and set popularity to ...
+    -   Calc and set popularity to ...
 
-    - Rating
-    - Form rating data (json)
-    - Health
-    - Form health data (json)
+        -   Rating
+        -   Form rating data (json)
+        -   Health
+        -   Form health data (json)
 
-  - Fill Packagist url
+    -   Fill Packagist url
 
-    Fill Packagist name
+        Fill Packagist name
 
-    Fill Packagist description
+        Fill Packagist description
 
-    Fill Packagist downloads
+        Fill Packagist downloads
 
-    Fill Packagist favers
+        Fill Packagist favers
 
-  - Fill Github repo - this is the sign for the Github Consumer to fetch this package, as all (or some special) other GitHub fields are empty
+    -   Fill Github repo - this is the sign for the Github Consumer to fetch this package, as all (or some special) other GitHub fields are empty
 
-  - Item type = composer-package
+    -   Item type = composer-package
 
-  - Platform = php-package (is there sth to differentiate, because there are composer texts...?)
+    -   Platform = php-package (is there sth to differentiate, because there are composer texts...?)
 
-  - Categories = let's see
+    -   Categories = let's see
 
-  - Tags = let's see
+    -   Tags = let's see
 
-  - Item Relation ... that will be harder work
+    -   Item Relation ... that will be harder work
 
-    - composer_suggest
-    - composer_provide
-    - composer_replace
-    - composer_conflict
-    - composer_require_dev
-    - composer_require
+        -   composer_suggest
+        -   composer_provide
+        -   composer_replace
+        -   composer_conflict
+        -   composer_require_dev
+        -   composer_require
 
-  - Create Packagist Relation
+    -   Create Packagist Relation
 
 ## Taxonomies
 
@@ -266,7 +279,7 @@ Creating Items should be done by merging all datasets into the items model inclu
 
 ## MySQL Problem
 
-The app has pretty large models including fat json data. If you encounter the error: ```SQLSTATE[HY001]: Memory allocation error: 1038 Out of sort memory, consider increasing server sort buffer size``` it is probably related to this MySQL bug: https://bugs.mysql.com/bug.php?id=103318 and can be fixed by `SET GLOBAL sort_buffer_size = 256000000 // It'll reset after server restart`, see https://stackoverflow.com/questions/29575835/error-1038-out-of-sort-memory-consider-increasing-sort-buffer-size or https://www.educba.com/mysql-sort-buffer-size/ for persistence or remove the JSON fields from the table views like so:
+The app has pretty large models including fat json data. If you encounter the error: `SQLSTATE[HY001]: Memory allocation error: 1038 Out of sort memory, consider increasing server sort buffer size` it is probably related to this MySQL bug: https://bugs.mysql.com/bug.php?id=103318 and can be fixed by `SET GLOBAL sort_buffer_size = 256000000 // It'll reset after server restart`, see https://stackoverflow.com/questions/29575835/error-1038-out-of-sort-memory-consider-increasing-sort-buffer-size or https://www.educba.com/mysql-sort-buffer-size/ for persistence or remove the JSON fields from the table views like so:
 
 ```php
 namespace App\Filament\Resources\PackagistPackageResource\Pages;
@@ -276,7 +289,7 @@ use ...
 class ListPackagistPackages extends ListRecords
 {
 		...
-    
+
     protected function getTableQuery(): Builder
     {
         return static::getResource()::getEloquentQuery()->select('id', 'title', 'slug');
@@ -284,8 +297,6 @@ class ListPackagistPackages extends ListRecords
 }
 
 ```
-
-
 
 ## Backlog
 
@@ -313,49 +324,49 @@ class ListPackagistPackages extends ListRecords
 
 ## Idea
 
-- What do you want to build today?
-  - A montolithic app with frontend and backend
-  - A headless app with backend and API
-  - I don't know, can we skip that?
-- How do you want to start?
-  - Easy - what about a code generator
-  - Smart - I want to use an AdminPanel
-  - Let me code that from scratch
-- What kind of project do you have in mind
-  - CMS
-  - Online Shop
-  - Blog
-  - Website
-  - Custom App
-  - Else
-- Which of these do you prefer
-  - I use a full-flegded JS framework
-  - I use Laravel Livewire, and code in PHP
-  - I only need static HTML or include another JS library
-- And what about styles
-  - TailwindCSS, the most popular option
-  - Boostrap
-  - I use another CSS framework or start vanilla
-- Do you have some features, you definetly need
-  - Auth
-  - 2-FA
-  - ... type
-- Which testing framework do you prefer
-  - PHP Unit
-  - Pest
-  - Other
-  - I don't write tests, skip that
-- Which IDE do you prefer
-  - VS Code
-  - PHPStorm
-  - Other
-  - What is an IDE?
-- How do you want to deploy your product
-  - Just local on a Mac
-  - Just local on Windows
-  - On my shared host
-  - On a cloud server
-  - Serverless in the cloud
+-   What do you want to build today?
+    -   A montolithic app with frontend and backend
+    -   A headless app with backend and API
+    -   I don't know, can we skip that?
+-   How do you want to start?
+    -   Easy - what about a code generator
+    -   Smart - I want to use an AdminPanel
+    -   Let me code that from scratch
+-   What kind of project do you have in mind
+    -   CMS
+    -   Online Shop
+    -   Blog
+    -   Website
+    -   Custom App
+    -   Else
+-   Which of these do you prefer
+    -   I use a full-flegded JS framework
+    -   I use Laravel Livewire, and code in PHP
+    -   I only need static HTML or include another JS library
+-   And what about styles
+    -   TailwindCSS, the most popular option
+    -   Boostrap
+    -   I use another CSS framework or start vanilla
+-   Do you have some features, you definetly need
+    -   Auth
+    -   2-FA
+    -   ... type
+-   Which testing framework do you prefer
+    -   PHP Unit
+    -   Pest
+    -   Other
+    -   I don't write tests, skip that
+-   Which IDE do you prefer
+    -   VS Code
+    -   PHPStorm
+    -   Other
+    -   What is an IDE?
+-   How do you want to deploy your product
+    -   Just local on a Mac
+    -   Just local on Windows
+    -   On my shared host
+    -   On a cloud server
+    -   Serverless in the cloud
 
 Creating your stack ...
 

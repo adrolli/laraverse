@@ -2,6 +2,7 @@
 
 namespace App\Providers\Filament;
 
+use AlexJustesen\FilamentSpatieLaravelActivitylog\FilamentSpatieLaravelActivitylogPlugin;
 use BezhanSalleh\FilamentShield\FilamentShieldPlugin;
 use Filament\Http\Middleware\Authenticate;
 use Filament\Http\Middleware\DisableBladeIconComponents;
@@ -68,6 +69,7 @@ class AdminPanelProvider extends PanelProvider
                     ->enableTwoFactorAuthentication(
                         force: false, // force the user to enable 2FA before they can use the application (default = false)
                     ),
+                new FilamentSpatieLaravelActivitylogPlugin(),
             ]);
     }
 }
