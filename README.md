@@ -8,7 +8,9 @@ Laraverse is a project that combines data from Packagist, NPM, GitHub, Gitlab an
 gh repo clone adrolli/laraverse
 cp .env-example .env
 composer install
+# seeding installs filament demo-data and admin@admin.com:admin as superuser
 php artisan migrate:fresh --seed
+# do not run, if seeded with demo-data, start fresh
 php artisan queue:work
 ```
 
@@ -26,10 +28,12 @@ Not only this shiny model is created with Vemto. The whole app is bootstrapped u
 -   [x] Forked adrolli/filament-spatie-laravel-activitylog
 -   [x] Forked adrolli/filament-jobs-monitor
 -   [ ] Fork! amvisor/filament-failed-jobs - v2 on gitlab
+-   [ ] husam-tariq/filament-database-schedule
 -   [ ] shuvroroy/filament-spatie-laravel-backup
 -   [ ] shuvroroy/filament-spatie-laravel-health
 -   [ ] Fork! 3x1io/filament-user
--   [ ] archilex/filament-toggle-icon-column
+    -   [ ] archilex/filament-toggle-icon-column
+
 -   [ ] buildix/timex, test only
 -   [ ] invaders-xx/filament-kanban-board, test only
 -   [ ] camya/filament-title-with-slug
