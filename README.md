@@ -1,4 +1,4 @@
-# Laraverse W-I-P
+# Laraverse
 
 Laraverse is a project that combines data from Packagist, NPM, GitHub, Gitlab and others to provide a useful search accross the Laravel ecosystem. It is of course made with Laravel, the TALL-Stack including Livewire and Tailwind, and last but not least Filament.
 
@@ -8,10 +8,12 @@ Laraverse is a project that combines data from Packagist, NPM, GitHub, Gitlab an
 gh repo clone adrolli/laraverse
 cp .env-example .env
 composer install
-# seeding installs filament demo-data and admin@admin.com:admin as superuser
+# seeding installs filament demo-data 
+# and admin@admin.com:admin as superuser
 php artisan migrate:fresh --seed
-# do not run, if seeded with demo-data, start fresh
-php artisan queue:work
+# do not run if seeded with demo-data
+# packagist all needs a 10 minute timeout
+php artisan queue:work --timout=600
 ```
 
 ## Model
@@ -46,7 +48,7 @@ Not only this shiny model is created with Vemto. The whole app is bootstrapped u
 
 Fetching data, calculating and writing even more data to these powerful models is done by jobs:
 
-### PackagistUpdater (runs hourly, but not concurrent)
+### PackagistUpdate (runs hourly, but not concurrent)
 
 Packagist API - https://packagist.org/search.json?q=laravel, see https://packagist.org/apidoc oder am besten alles: https://packagist.org/packages/list.json
 
@@ -57,15 +59,16 @@ Packagist API - https://packagist.org/search.json?q=laravel, see https://packagi
     -   [ ] Item popularity <= 50% should be checked weekly
     -   [ ] Null or no Item should be checked monthly
 
--   [ ] If table empty get all packages from Packagist
+-   [x] If table empty get all packages from Packagist
 -   [ ] Else get Packagist latest by timestamp of last run
--   [ ] Run PackagistPackages batch 100, do a 1 sec sleep between
+-   [x] Run PackagistPackages in a batch of 100, do a 1 sec sleep between
 
 ### PackagistPackagesUpdate
 
--   [ ] Needs an array of packagist packages, so it can do 1 or many packages and are enabled to be used witch batch mode
--   [ ] Get full data for package from Packagist API, do a 1 sec sleep between
--   [ ] Update or create Packagist model with fields, set Repo Updated to false
+-   [x] Needs an array of packagist packages, so it can do 1 or many packages and are enabled to be used witch batch mode
+-   [x] Get full data for package from Packagist API, do a 1 sec sleep between
+-   [x] Update or create Packagist model with fields
+-   [x] set Repo Updated to false
 
 ### RepositoriesUpdater (runs hourly, but not concurrent)
 
@@ -127,7 +130,7 @@ These commands can be used to run jobs manually:
 
 -   [ ] InitNpm
 -   [ ] InitPackagist
--   [ ] UpdatePackagist
+-   [x] UpdatePackagist
 -   [ ] GithubSearch - has parameters like tag or search
 -   [ ] Watcher
 
