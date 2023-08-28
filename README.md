@@ -13,7 +13,7 @@ composer install
 php artisan migrate:fresh --seed
 # do not run if seeded with demo-data
 # packagist all needs a 10 minute timeout
-php artisan queue:work --timout=600
+php artisan queue:work --timeout=600
 ```
 
 ## Model
