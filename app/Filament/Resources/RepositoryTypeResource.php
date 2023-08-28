@@ -2,23 +2,37 @@
 
 namespace App\Filament\Resources;
 
-use Filament\Forms;
-use Filament\Tables;
-use Filament\Forms\Form;
-use Filament\Tables\Table;
-use App\Models\RepositoryType;
-use Filament\Resources\Resource;
-use Filament\Forms\Components\Grid;
-use Filament\Forms\Components\Card;
-use Filament\Tables\Actions\ViewAction;
-use Filament\Tables\Actions\EditAction;
-use Filament\Forms\Components\TextInput;
 use App\Filament\Filters\DateRangeFilter;
-use Filament\Tables\Actions\DeleteBulkAction;
 use App\Filament\Resources\RepositoryTypeResource\Pages;
+use App\Models\RepositoryType;
+use Filament\Forms\Components\Card;
+use Filament\Forms\Components\Grid;
+use Filament\Forms\Components\TextInput;
+use Filament\Forms\Form;
+use Filament\Resources\Resource;
+use Filament\Tables;
+use Filament\Tables\Actions\DeleteBulkAction;
+use Filament\Tables\Actions\EditAction;
+use Filament\Tables\Actions\ViewAction;
+use Filament\Tables\Table;
 
 class RepositoryTypeResource extends Resource
 {
+    public static function getNavigationGroup(): string
+    {
+        return 'Taxonomies';
+    }
+
+    public static function getNavigationSort(): int
+    {
+        return 8;
+    }
+
+    public static function getNavigationLabel(): string
+    {
+        return 'Repository types';
+    }
+
     protected static ?string $model = RepositoryType::class;
 
     protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';

@@ -2,24 +2,38 @@
 
 namespace App\Filament\Resources;
 
-use Filament\Forms;
-use Filament\Tables;
-use Filament\Forms\Form;
-use Filament\Tables\Table;
-use App\Models\ItemRelationType;
-use Filament\Resources\Resource;
-use Filament\Forms\Components\Grid;
-use Filament\Forms\Components\Card;
-use Filament\Tables\Actions\ViewAction;
-use Filament\Tables\Actions\EditAction;
-use Filament\Forms\Components\TextInput;
-use Filament\Forms\Components\RichEditor;
 use App\Filament\Filters\DateRangeFilter;
-use Filament\Tables\Actions\DeleteBulkAction;
 use App\Filament\Resources\ItemRelationTypeResource\Pages;
+use App\Models\ItemRelationType;
+use Filament\Forms\Components\Card;
+use Filament\Forms\Components\Grid;
+use Filament\Forms\Components\RichEditor;
+use Filament\Forms\Components\TextInput;
+use Filament\Forms\Form;
+use Filament\Resources\Resource;
+use Filament\Tables;
+use Filament\Tables\Actions\DeleteBulkAction;
+use Filament\Tables\Actions\EditAction;
+use Filament\Tables\Actions\ViewAction;
+use Filament\Tables\Table;
 
 class ItemRelationTypeResource extends Resource
 {
+    public static function getNavigationGroup(): string
+    {
+        return 'Taxonomies';
+    }
+
+    public static function getNavigationSort(): int
+    {
+        return 9;
+    }
+
+    public static function getNavigationLabel(): string
+    {
+        return 'Item relation types';
+    }
+
     protected static ?string $model = ItemRelationType::class;
 
     protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';

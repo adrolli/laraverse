@@ -20,9 +20,24 @@ use Livewire\Component;
 
 class UserResource extends Resource
 {
+    public static function getNavigationGroup(): string
+    {
+        return 'User management';
+    }
+
+    public static function getNavigationSort(): int
+    {
+        return 7;
+    }
+
+    public static function getNavigationLabel(): string
+    {
+        return 'Users';
+    }
+
     protected static ?string $model = User::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
+    protected static ?string $navigationIcon = 'heroicon-o-user';
 
     protected static ?string $recordTitleAttribute = 'name';
 

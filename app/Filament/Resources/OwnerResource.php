@@ -2,28 +2,41 @@
 
 namespace App\Filament\Resources;
 
-use Filament\Forms;
-use Filament\Tables;
+use App\Filament\Filters\DateRangeFilter;
+use App\Filament\Resources\OwnerResource\Pages;
 use App\Models\Owner;
-use Filament\Forms\Form;
-use Filament\Tables\Table;
-use Filament\Resources\Resource;
-use Filament\Forms\Components\Grid;
 use Filament\Forms\Components\Card;
-use Filament\Tables\Actions\ViewAction;
-use Filament\Tables\Actions\EditAction;
+use Filament\Forms\Components\Grid;
 use Filament\Forms\Components\KeyValue;
 use Filament\Forms\Components\TextInput;
-use Filament\Forms\Components\RichEditor;
-use App\Filament\Filters\DateRangeFilter;
+use Filament\Forms\Form;
+use Filament\Resources\Resource;
+use Filament\Tables;
 use Filament\Tables\Actions\DeleteBulkAction;
-use App\Filament\Resources\OwnerResource\Pages;
+use Filament\Tables\Actions\EditAction;
+use Filament\Tables\Actions\ViewAction;
+use Filament\Tables\Table;
 
 class OwnerResource extends Resource
 {
+    public static function getNavigationGroup(): string
+    {
+        return 'API data';
+    }
+
+    public static function getNavigationSort(): int
+    {
+        return 5;
+    }
+
+    public static function getNavigationLabel(): string
+    {
+        return 'Owners';
+    }
+
     protected static ?string $model = Owner::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
+    protected static ?string $navigationIcon = 'heroicon-o-archive-box-arrow-down';
 
     protected static ?string $recordTitleAttribute = 'title';
 

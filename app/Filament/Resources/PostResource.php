@@ -2,27 +2,36 @@
 
 namespace App\Filament\Resources;
 
-use Filament\Forms;
-use App\Models\Post;
-use Filament\Tables;
-use Filament\Forms\Form;
-use Filament\Tables\Table;
-use Filament\Resources\Resource;
-use Filament\Forms\Components\Grid;
-use Filament\Forms\Components\Card;
-use Filament\Forms\Components\Select;
-use Filament\Tables\Actions\ViewAction;
-use Filament\Tables\Actions\EditAction;
-use Filament\Forms\Components\KeyValue;
-use Filament\Forms\Components\TextInput;
-use Filament\Forms\Components\RichEditor;
-use Filament\Tables\Filters\SelectFilter;
 use App\Filament\Filters\DateRangeFilter;
-use Filament\Tables\Actions\DeleteBulkAction;
 use App\Filament\Resources\PostResource\Pages;
+use App\Models\Post;
+use Filament\Forms\Components\Card;
+use Filament\Forms\Components\Grid;
+use Filament\Forms\Components\KeyValue;
+use Filament\Forms\Components\RichEditor;
+use Filament\Forms\Components\Select;
+use Filament\Forms\Components\TextInput;
+use Filament\Forms\Form;
+use Filament\Resources\Resource;
+use Filament\Tables;
+use Filament\Tables\Actions\DeleteBulkAction;
+use Filament\Tables\Actions\EditAction;
+use Filament\Tables\Actions\ViewAction;
+use Filament\Tables\Filters\SelectFilter;
+use Filament\Tables\Table;
 
 class PostResource extends Resource
 {
+    public static function getNavigationSort(): int
+    {
+        return 2;
+    }
+
+    public static function getNavigationLabel(): string
+    {
+        return 'Posts';
+    }
+
     protected static ?string $model = Post::class;
 
     protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';

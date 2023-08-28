@@ -2,24 +2,38 @@
 
 namespace App\Filament\Resources;
 
-use Filament\Forms;
-use Filament\Tables;
-use App\Models\Category;
-use Filament\Forms\Form;
-use Filament\Tables\Table;
-use Filament\Resources\Resource;
-use Filament\Forms\Components\Grid;
-use Filament\Forms\Components\Card;
-use Filament\Tables\Actions\ViewAction;
-use Filament\Tables\Actions\EditAction;
-use Filament\Forms\Components\TextInput;
-use Filament\Forms\Components\RichEditor;
 use App\Filament\Filters\DateRangeFilter;
-use Filament\Tables\Actions\DeleteBulkAction;
 use App\Filament\Resources\CategoryResource\Pages;
+use App\Models\Category;
+use Filament\Forms\Components\Card;
+use Filament\Forms\Components\Grid;
+use Filament\Forms\Components\RichEditor;
+use Filament\Forms\Components\TextInput;
+use Filament\Forms\Form;
+use Filament\Resources\Resource;
+use Filament\Tables;
+use Filament\Tables\Actions\DeleteBulkAction;
+use Filament\Tables\Actions\EditAction;
+use Filament\Tables\Actions\ViewAction;
+use Filament\Tables\Table;
 
 class CategoryResource extends Resource
 {
+    public static function getNavigationGroup(): string
+    {
+        return 'Taxonomies';
+    }
+
+    public static function getNavigationSort(): int
+    {
+        return 1;
+    }
+
+    public static function getNavigationLabel(): string
+    {
+        return 'Categories';
+    }
+
     protected static ?string $model = Category::class;
 
     protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';

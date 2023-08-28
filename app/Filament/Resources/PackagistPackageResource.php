@@ -2,29 +2,42 @@
 
 namespace App\Filament\Resources;
 
-use Filament\Forms;
-use Filament\Tables;
-use Filament\Forms\Form;
-use Filament\Tables\Table;
+use App\Filament\Filters\DateRangeFilter;
+use App\Filament\Resources\PackagistPackageResource\Pages;
 use App\Models\PackagistPackage;
-use Filament\Resources\Resource;
-use Filament\Forms\Components\Grid;
 use Filament\Forms\Components\Card;
-use Filament\Forms\Components\Toggle;
-use Filament\Tables\Actions\ViewAction;
-use Filament\Tables\Actions\EditAction;
+use Filament\Forms\Components\Grid;
 use Filament\Forms\Components\KeyValue;
 use Filament\Forms\Components\TextInput;
-use Filament\Forms\Components\RichEditor;
-use App\Filament\Filters\DateRangeFilter;
+use Filament\Forms\Components\Toggle;
+use Filament\Forms\Form;
+use Filament\Resources\Resource;
+use Filament\Tables;
 use Filament\Tables\Actions\DeleteBulkAction;
-use App\Filament\Resources\PackagistPackageResource\Pages;
+use Filament\Tables\Actions\EditAction;
+use Filament\Tables\Actions\ViewAction;
+use Filament\Tables\Table;
 
 class PackagistPackageResource extends Resource
 {
+    public static function getNavigationGroup(): string
+    {
+        return 'API data';
+    }
+
+    public static function getNavigationSort(): int
+    {
+        return 1;
+    }
+
+    public static function getNavigationLabel(): string
+    {
+        return 'Packagist packages';
+    }
+
     protected static ?string $model = PackagistPackage::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
+    protected static ?string $navigationIcon = 'heroicon-o-archive-box-arrow-down';
 
     protected static ?string $recordTitleAttribute = 'title';
 

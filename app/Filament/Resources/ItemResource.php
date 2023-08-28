@@ -22,6 +22,16 @@ use Filament\Tables\Table;
 
 class ItemResource extends Resource
 {
+    public static function getNavigationSort(): int
+    {
+        return 1;
+    }
+
+    public static function getNavigationLabel(): string
+    {
+        return 'Items';
+    }
+
     protected static ?string $model = Item::class;
 
     protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
