@@ -208,66 +208,77 @@ Creating Items should be done by merging all datasets into the items model inclu
 
 ## Taxonomies
 
--   Area
-
-    -   Backend Framework
-    -   Frontend Framework
-    -   Middleware
-    -   API Generator
-    -   Authentication and User
-    -   Deployment Platform
-    -   Component Framework
-    -   Development Framework
-    -   CRUD Generator
-    -   Tooling ...
-    -   Webserver
-    -   Webproxy
-    -   Accelerator
-    -   Cache
-    -   Database
-    -   Hosting
-    -   Cloud
-    -   Code Upgrader
-    -   IDE
-    -   VCS
-    -   Devops ...
-
--   Type
-
-    -   PHP Package
-    -   PHP Skeleton
-    -   PHP App
-    -   IDE Extension
-    -   Windows App
-    -   MacOS App
-    -   Linux App
-    -   PHP Extension
-    -   Webserver
-    -   Web Platform
-    -   Web API
-    -   NPM Package
-    -   Other Package
-    -   Other App
-    -   Other
-
--   Pricing
-
-    -   FOSS - Free Open Source Software.
-    -   OSS - Open Source Code but not free.
-    -   SaaS - Commercial Software as a Service product.
-    -   Libre - Free Software as a Service product.
-    -   Shareware - Free but not Open Source Software.
-    -   Freemium - Commercial product with a free version.
-    -   Commercial - Commercial product with one-time fee or lifetime license.
-    -   Subscription - Commercial product with perpetual costs.
-
--   Features (aka Tags) ... can probably be grouped or aliased
-    -   Authentication
-    -   Authorization
-    -   User management
-    -   User profile
-    -   User registration
-    -   ...
+- Categories
+  - FOSS - Free Open Source Software.
+  - OSS - Open Source Code but not free.
+  - SaaS - Commercial Software as a Service product.
+  - Libre - Free Software as a Service product.
+  - Shareware - Free but not Open Source Software.
+  - Freemium - Commercial product with a free version.
+  - Commercial - Commercial product with one-time fee or lifetime license.
+  - Subscription - Commercial product with perpetual costs.
+- Tags ... can be called "Features", must be curated, can be grouped or aliased?
+  -   Authentication
+  -   Authorization
+  -   User management
+  -   User profile
+  -   User registration
+  -   ...
+- Platforms
+  - Laravel Package
+  - Laravel Skeleton
+  - Laravel App
+  - Laravel Template
+  - PHP Package
+  - PHP Skeleton
+  - PHP App
+  - PHP Template
+  - PHP Extension
+  - NPM Package
+  - App for Linux
+  - App for MacOS
+  - App for Windows
+  - Software for Linux
+  - Software for MacOS
+  - Software for Windows
+  - Webserver
+  - Webserver plugin
+  - Website or platform
+  - Android App
+  - iOS App
+  - Browser
+  - IDE or Editor
+  - IDE Extension
+  - Other Package
+  - Other App
+  - Other
+  - Web API
+  - GitHub Action
+  - Bash-Scripts
+  - Python
+  - Composer extension
+- Item Types
+  - Backend Framework
+  - Frontend Framework
+  - Middleware
+  - API Generator
+  - Authentication and User
+  - Deployment Platform
+  - Component Framework
+  - Development Framework
+  - CRUD Generator
+  - Tooling ...
+  - Webserver
+  - Webproxy
+  - Accelerator
+  - Cache
+  - Database
+  - Hosting
+  - Cloud
+  - Code Upgrader
+  - IDE
+  - VCS
+  - Devops ...
 
 ## MySQL Problem
 
