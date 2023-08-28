@@ -2,10 +2,11 @@
 
 namespace App\Filament\Resources\PackagistPackageResource\Pages;
 
+use App\Filament\Resources\PackagistPackageResource;
+use App\Filament\Traits\HasDescendingOrder;
 use Filament\Actions\CreateAction;
 use Filament\Resources\Pages\ListRecords;
-use App\Filament\Traits\HasDescendingOrder;
-use App\Filament\Resources\PackagistPackageResource;
+use Illuminate\Database\Eloquent\Builder;
 
 class ListPackagistPackages extends ListRecords
 {
@@ -16,5 +17,11 @@ class ListPackagistPackages extends ListRecords
     protected function getHeaderActions(): array
     {
         return [CreateAction::make()];
+
+    }
+
+    protected function getTableQuery(): Builder
+    {
+        return static::getResource()::getEloquentQuery()->select('id', 'title', 'slug', 'type', 'repository_updated');
     }
 }

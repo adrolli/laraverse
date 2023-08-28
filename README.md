@@ -13,7 +13,7 @@ composer install
 php artisan migrate:fresh --seed
 # do not run if seeded with demo-data
 # packagist all needs a 10 minute timeout
-php artisan queue:work --timeout=600
+php artisan queue:work --timout=600
 ```
 
 ## Model
@@ -30,12 +30,12 @@ Not only this shiny model is created with Vemto. The whole app is bootstrapped u
 -   [x] Forked adrolli/filament-spatie-laravel-activitylog
 -   [x] Forked adrolli/filament-jobs-monitor
 -   [ ] Fork! amvisor/filament-failed-jobs - v2 on gitlab
+-   [ ] https://filamentphp.com/plugins/z3d0x-fabricator - test
 -   [ ] husam-tariq/filament-database-schedule
 -   [ ] shuvroroy/filament-spatie-laravel-backup
 -   [ ] shuvroroy/filament-spatie-laravel-health
 -   [ ] Fork! 3x1io/filament-user
-    -   [ ] archilex/filament-toggle-icon-column
-
+-   [ ] archilex/filament-toggle-icon-column
 -   [ ] buildix/timex, test only
 -   [ ] invaders-xx/filament-kanban-board, test only
 -   [ ] camya/filament-title-with-slug
