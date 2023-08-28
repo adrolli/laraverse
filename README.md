@@ -8,17 +8,20 @@ Laraverse is a project that combines data from Packagist, NPM, GitHub, Gitlab an
 gh repo clone adrolli/laraverse
 cp .env-example .env
 composer install
+
 # seeding installs filament demo-data 
 # and admin@admin.com:admin as superuser
 php artisan migrate:fresh --seed
-# do not run if seeded with demo-data
-# packagist all needs a 10 minute timeout
+
+# Do not run queue:work if seeded with demo-data
+# use laraverse.gz sql-file to tinker with real data
+# and running packagist all needs a 10 minute timeout
 php artisan queue:work --timout=600
 ```
 
 ## Model
 
-Not only this shiny model is created with Vemto. The whole app is bootstrapped using [Vemto.app](https.//vemto.app). I use a patched version of the https://github.com/adrolli/vemto-filament-plugin, that is prepared to easily step up to Filament V3.
+Not only this shiny model is created with Vemto. The whole app is bootstrapped using [Vemto.app](https.//vemto.app). I use a patched version of the https://github.com/adrolli/vemto-filament-plugin, prepared to easily step up to Filament V3.
 
 ![Vemto Model](laraverse_exported_image.png)
 
@@ -143,8 +146,6 @@ These commands can be used to run jobs manually:
     -   [ ] Update interval
         -   [ ] Packagist
 
-
-
 ## Create Items
 
 Creating Items should be done by merging all datasets into the items model including all relations. Following rules apply:
@@ -194,7 +195,7 @@ Creating Items should be done by merging all datasets into the items model inclu
 
     -   Tags = let's see
 
-    -   Item Relation ... that will be harder work
+    -   Item Relation
 
         -   composer_suggest
         -   composer_provide
