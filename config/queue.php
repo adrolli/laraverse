@@ -38,7 +38,8 @@ return [
             'driver' => 'database',
             'table' => 'jobs',
             'queue' => 'default',
-            'retry_after' => 90,
+            // retry_after needs to be higher than the timeout of any job
+            'retry_after' => 1200,
             'after_commit' => false,
         ],
 

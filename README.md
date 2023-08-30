@@ -13,10 +13,15 @@ composer install
 # and admin@admin.com:admin as superuser
 php artisan migrate:fresh --seed
 
-# Do not run queue:work if seeded with demo-data
-# use laraverse.gz sql-file to tinker with real data
-# and running packagist all needs a 10 minute timeout
-php artisan queue:work --timout=600
+# If not using Redis as backend for queues
+php artisan queue:table
+php artisan queue:failed-table
+php artisan queue:batches-table
+php artisan migrate
+
+# Do not run queue:work if seeded with lorem ipsum
+# use laraverse.gz sql-file to tinker with dev-data
+php artisan queue:work
 ```
 
 ## Model
@@ -300,6 +305,40 @@ class ListPackagistPackages extends ListRecords
 }
 
 ```
+
+## Optimizing Jobs
+
+Jobs are failing, that's OK, but some Jobs do kill the Queue, that's not OK.
+
+   Symfony\Component\ErrorHandler\Error\FatalError
+
+  Allowed memory size of 134217728 bytes exhausted (tried to allocate 4096 bytes)
+
+  at vendor/laravel/framework/src/Illuminate/Database/Eloquent/Casts/Json.php:36
+     32▕     public static function decode(mixed $value, ?bool $associative = true): mixed
+     33▕     {
+     34▕         return isset(static::$decoder)
+     35▕                 ? (static::$decoder)($value, $associative)
+  ➜  36▕                 : json_decode($value, $associative);
+     37▕     }
+     38▕
+     39▕     /**
+     40▕      * Encode all values using the given callable.
+
+
+   Whoops\Exception\ErrorException
+
+  Allowed memory size of 134217728 bytes exhausted (tried to allocate 4096 bytes)
+
+  at vendor/laravel/framework/src/Illuminate/Database/Eloquent/Casts/Json.php:36
+     32▕     public static function decode(mixed $value, ?bool $associative = true): mixed
+     33▕     {
+     34▕         return isset(static::$decoder)
+     35▕                 ? (static::$decoder)($value, $associative)
+  ➜  36▕                 : json_decode($value, $associative);
+     37▕     }
+
+
 
 ## Backlog
 

@@ -2,6 +2,9 @@
 
 namespace App\Providers\Filament;
 
+use Adrolli\FilamentJobManager\FilamentFailedJobsPlugin;
+use Adrolli\FilamentJobManager\FilamentJobBatchesPlugin;
+use Adrolli\FilamentJobManager\FilamentJobManagerPlugin;
 use AlexJustesen\FilamentSpatieLaravelActivitylog\FilamentSpatieLaravelActivitylogPlugin;
 use BezhanSalleh\FilamentShield\FilamentShieldPlugin;
 use Croustibat\FilamentJobsMonitor\FilamentJobsMonitorPlugin;
@@ -76,11 +79,14 @@ class AdminPanelProvider extends PanelProvider
                     ->pluralLabel('Jobs')
                     ->enableNavigation(true)
                     ->navigationIcon('heroicon-o-cpu-chip')
-                    ->navigationGroup('Settings')
+                    ->navigationGroup('Job manager')
                     ->navigationSort(5)
                     ->navigationCountBadge(true)
                     ->enablePruning(true)
                     ->pruningRetention(7),
+                FilamentJobManagerPlugin::make(),
+                FilamentFailedJobsPlugin::make(),
+                FilamentJobBatchesPlugin::make(),
             ])
             ->maxContentWidth('full');
     }
