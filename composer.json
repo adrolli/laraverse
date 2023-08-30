@@ -10,11 +10,11 @@
     "require": {
         "php": "^8.1",
         "adrolli/filament-job-manager": "*",
-        "adrolli/filament-jobs-monitor": "^1.0",
         "adrolli/filament-spatie-laravel-activitylog": "^1.1",
         "bezhansalleh/filament-shield": "^3.0@beta",
         "filament/filament": "^3.0-stable",
         "guzzlehttp/guzzle": "^7.2",
+        "husam-tariq/filament-database-schedule": "^2.0",
         "jeffgreco13/filament-breezy": "^2.1",
         "laravel/framework": "^10.10",
         "laravel/jetstream": "^3.2",

@@ -36,10 +36,9 @@ Not only this shiny model is created with Vemto. The whole app is bootstrapped u
 -   [x] Installed jeffgreco13/filament-breezy
 -   [x] Installed pxlrbt/filament-spotlight, but shortcuts don't work
 -   [x] Forked adrolli/filament-spatie-laravel-activitylog
--   [x] Forked adrolli/filament-jobs-monitor
--   [ ] Fork! amvisor/filament-failed-jobs - v2 on gitlab
+-   [x] Installed adrolli/filament-job-manager
+-   [x] husam-tariq/filament-database-schedule
 -   [ ] https://filamentphp.com/plugins/z3d0x-fabricator - test
--   [ ] husam-tariq/filament-database-schedule
 -   [ ] shuvroroy/filament-spatie-laravel-backup
 -   [ ] shuvroroy/filament-spatie-laravel-health
 -   [ ] Fork! 3x1io/filament-user

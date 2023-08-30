@@ -2,10 +2,10 @@
 
 namespace App\Jobs;
 
+use Adrolli\FilamentJobManager\Traits\JobProgress;
 use App\Traits\ErrorHandler;
 use App\Traits\GetPackagistPackage;
 use App\Traits\UpdatePackagistPackage;
-use Croustibat\FilamentJobsMonitor\Traits\QueueProgress;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
@@ -14,7 +14,7 @@ use Illuminate\Queue\SerializesModels;
 
 class PackagistPackagesUpdate implements ShouldQueue
 {
-    use Dispatchable, InteractsWithQueue, Queueable, SerializesModels, QueueProgress, GetPackagistPackage, ErrorHandler, UpdatePackagistPackage;
+    use Dispatchable, InteractsWithQueue, Queueable, SerializesModels, JobProgress, GetPackagistPackage, ErrorHandler, UpdatePackagistPackage;
 
     public $tries = 5;
 

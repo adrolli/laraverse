@@ -7,7 +7,6 @@ use Adrolli\FilamentJobManager\FilamentJobBatchesPlugin;
 use Adrolli\FilamentJobManager\FilamentJobManagerPlugin;
 use AlexJustesen\FilamentSpatieLaravelActivitylog\FilamentSpatieLaravelActivitylogPlugin;
 use BezhanSalleh\FilamentShield\FilamentShieldPlugin;
-use Croustibat\FilamentJobsMonitor\FilamentJobsMonitorPlugin;
 use Filament\Http\Middleware\Authenticate;
 use Filament\Http\Middleware\DisableBladeIconComponents;
 use Filament\Http\Middleware\DispatchServingFilamentEvent;
@@ -16,6 +15,7 @@ use Filament\Panel;
 use Filament\PanelProvider;
 use Filament\Support\Colors\Color;
 use Filament\Widgets;
+use HusamTariq\FilamentDatabaseSchedule\FilamentDatabaseSchedulePlugin;
 use Illuminate\Cookie\Middleware\AddQueuedCookiesToResponse;
 use Illuminate\Cookie\Middleware\EncryptCookies;
 use Illuminate\Foundation\Http\Middleware\VerifyCsrfToken;
@@ -74,19 +74,10 @@ class AdminPanelProvider extends PanelProvider
                         force: false, // force the user to enable 2FA before they can use the application (default = false)
                     ),
                 new FilamentSpatieLaravelActivitylogPlugin(),
-                FilamentJobsMonitorPlugin::make()
-                    ->label('Job')
-                    ->pluralLabel('Jobs')
-                    ->enableNavigation(true)
-                    ->navigationIcon('heroicon-o-cpu-chip')
-                    ->navigationGroup('Job manager')
-                    ->navigationSort(5)
-                    ->navigationCountBadge(true)
-                    ->enablePruning(true)
-                    ->pruningRetention(7),
                 FilamentJobManagerPlugin::make(),
                 FilamentFailedJobsPlugin::make(),
                 FilamentJobBatchesPlugin::make(),
+                FilamentDatabaseSchedulePlugin::make(),
             ])
             ->maxContentWidth('full');
     }
