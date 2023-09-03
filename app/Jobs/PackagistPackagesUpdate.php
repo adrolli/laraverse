@@ -14,7 +14,7 @@ use Illuminate\Queue\SerializesModels;
 
 class PackagistPackagesUpdate implements ShouldQueue
 {
-    use Dispatchable, InteractsWithQueue, Queueable, SerializesModels, JobProgress, GetPackagistPackage, ErrorHandler, UpdatePackagistPackage;
+    use Dispatchable, ErrorHandler, GetPackagistPackage, InteractsWithQueue, JobProgress, Queueable, SerializesModels, UpdatePackagistPackage;
 
     public $tries = 5;
 

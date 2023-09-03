@@ -4,7 +4,8 @@ namespace App\Providers\Filament;
 
 use Adrolli\FilamentJobManager\FilamentFailedJobsPlugin;
 use Adrolli\FilamentJobManager\FilamentJobBatchesPlugin;
-use Adrolli\FilamentJobManager\FilamentJobManagerPlugin;
+use Adrolli\FilamentJobManager\FilamentJobsPlugin;
+use Adrolli\FilamentJobManager\FilamentWaitingJobsPlugin;
 use AlexJustesen\FilamentSpatieLaravelActivitylog\FilamentSpatieLaravelActivitylogPlugin;
 use BezhanSalleh\FilamentShield\FilamentShieldPlugin;
 use Filament\Http\Middleware\Authenticate;
@@ -74,7 +75,8 @@ class AdminPanelProvider extends PanelProvider
                         force: false, // force the user to enable 2FA before they can use the application (default = false)
                     ),
                 new FilamentSpatieLaravelActivitylogPlugin(),
-                FilamentJobManagerPlugin::make(),
+                FilamentJobsPlugin::make(),
+                FilamentWaitingJobsPlugin::make(),
                 FilamentFailedJobsPlugin::make(),
                 FilamentJobBatchesPlugin::make(),
                 FilamentDatabaseSchedulePlugin::make(),

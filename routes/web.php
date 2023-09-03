@@ -1,28 +1,28 @@
 <?php
 
-use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\TagController;
-use App\Http\Controllers\HomeController;
-use App\Http\Controllers\PostController;
-use App\Http\Controllers\UserController;
-use App\Http\Controllers\ItemController;
-use App\Http\Controllers\RoleController;
-use App\Http\Controllers\OwnerController;
-use App\Http\Controllers\StackController;
-use App\Http\Controllers\VendorController;
 use App\Http\Controllers\CategoryController;
-use App\Http\Controllers\ItemTypeController;
-use App\Http\Controllers\PlatformController;
-use App\Http\Controllers\PostTypeController;
-use App\Http\Controllers\NpmPackageController;
-use App\Http\Controllers\RepositoryController;
-use App\Http\Controllers\PermissionController;
-use App\Http\Controllers\OrganizationController;
+use App\Http\Controllers\ItemController;
 use App\Http\Controllers\ItemRelationController;
+use App\Http\Controllers\ItemRelationTypeController;
+use App\Http\Controllers\ItemTypeController;
+use App\Http\Controllers\Laraverse\PackagistController;
+use App\Http\Controllers\NpmPackageController;
+use App\Http\Controllers\OrganizationController;
+use App\Http\Controllers\OwnerController;
+use App\Http\Controllers\PackagistPackageController;
+use App\Http\Controllers\PermissionController;
+use App\Http\Controllers\PlatformController;
+use App\Http\Controllers\PostController;
+use App\Http\Controllers\PostTypeController;
+use App\Http\Controllers\RepositoryController;
 use App\Http\Controllers\RepositoryTagController;
 use App\Http\Controllers\RepositoryTypeController;
-use App\Http\Controllers\ItemRelationTypeController;
-use App\Http\Controllers\PackagistPackageController;
+use App\Http\Controllers\RoleController;
+use App\Http\Controllers\StackController;
+use App\Http\Controllers\TagController;
+use App\Http\Controllers\UserController;
+use App\Http\Controllers\VendorController;
+use Illuminate\Support\Facades\Route;
 
 /*
 |--------------------------------------------------------------------------
@@ -34,6 +34,8 @@ use App\Http\Controllers\PackagistPackageController;
 | contains the "web" middleware group. Now create something great!
 |
 */
+
+Route::get('/dev', PackagistController::class);
 
 Route::get('/', function () {
     return view('welcome');

@@ -3,22 +3,21 @@
 namespace App\Filament\Resources\CategoryResource\RelationManagers;
 
 use Filament\Forms;
-use Filament\Tables;
-use Filament\Forms\Form;
-use Filament\Tables\Table;
 use Filament\Forms\Components\Grid;
-use Filament\Forms\Components\Select;
-use Filament\Tables\Actions\EditAction;
 use Filament\Forms\Components\KeyValue;
+use Filament\Forms\Components\RichEditor;
+use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TextInput;
+use Filament\Forms\Form;
+use Filament\Resources\RelationManagers\RelationManager;
+use Filament\Tables;
 use Filament\Tables\Actions\CreateAction;
 use Filament\Tables\Actions\DeleteAction;
-use Filament\Forms\Components\RichEditor;
-use Filament\Tables\Filters\SelectFilter;
-use Illuminate\Database\Eloquent\Builder;
 use Filament\Tables\Actions\DeleteBulkAction;
-use Filament\Forms\Components\BelongsToSelect;
-use Filament\Resources\RelationManagers\RelationManager;
+use Filament\Tables\Actions\EditAction;
+use Filament\Tables\Filters\SelectFilter;
+use Filament\Tables\Table;
+use Illuminate\Database\Eloquent\Builder;
 
 class ItemsRelationManager extends RelationManager
 {
@@ -336,7 +335,7 @@ class ItemsRelationManager extends RelationManager
                         return $query
                             ->when(
                                 $data['created_from'],
-                                fn(
+                                fn (
                                     Builder $query,
                                     $date
                                 ): Builder => $query->whereDate(
@@ -347,7 +346,7 @@ class ItemsRelationManager extends RelationManager
                             )
                             ->when(
                                 $data['created_until'],
-                                fn(
+                                fn (
                                     Builder $query,
                                     $date
                                 ): Builder => $query->whereDate(
