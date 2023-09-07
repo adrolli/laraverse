@@ -24,6 +24,10 @@ php artisan migrate
 php artisan queue:work
 ```
 
+- Frontend: https://laraverse.test
+- Filament: https://laraverse.test/admin 
+- Develop: https://laraverse.test/dev
+
 ## Model
 
 Not only this shiny model is created with Vemto. The whole app is bootstrapped using [Vemto.app](https.//vemto.app). I use a patched version of the https://github.com/adrolli/vemto-filament-plugin, prepared to easily step up to Filament V3.
