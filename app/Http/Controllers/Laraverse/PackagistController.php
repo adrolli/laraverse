@@ -48,14 +48,22 @@ class PackagistController extends Controller
             $packageRemoveApiCount = count($packagesToRemoveApi);
             $packageAddCount = count($packagesToAdd);
             $packageRemoveCount = count($packagesToRemove);
+
             echo 'Add: '.$packageAddCount.' (from DB: '.$packageAddDbCount.', from API: '.$packageAddApiCount.')<br>';
             echo 'Remove: '.$packageRemoveCount.' (from DB: '.$packageRemoveDbCount.', from API: '.$packageRemoveApiCount.')';
 
             dd($packagesToAdd);
 
-            // Todo:
-            // - Packages to update against rules
-            // - Merge to array $packagesToAdd
+            $deletedPackages = 0;
+
+            foreach ($packagesToRemove as $packageToRemove) {
+
+                $deleteCount = PackagistPackage::where('slug', $packageToRemove)->delete();
+                $deletedPackages = $deletedPackages + $deleteCount;
+
+            }
+
+            echo '<br><br>'.$deletedPackages.' packages deleted from database.';
 
         } else {
 
