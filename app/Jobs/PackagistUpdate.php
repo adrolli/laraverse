@@ -7,6 +7,7 @@ use App\Models\PackagistPackage;
 use App\Traits\ErrorHandler;
 use App\Traits\GetPackagistAll;
 use App\Traits\GetPackagistDiff;
+use App\Traits\GetPackagistUpdates;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
@@ -15,15 +16,15 @@ use Illuminate\Queue\SerializesModels;
 
 class PackagistUpdate implements ShouldQueue
 {
-    use Dispatchable, InteractsWithQueue, Queueable, SerializesModels, JobProgress, GetPackagistAll, ErrorHandler, GetPackagistDiff;
+    use Dispatchable, ErrorHandler, GetPackagistAll, GetPackagistDiff, GetPackagistUpdates, InteractsWithQueue, JobProgress, Queueable, SerializesModels;
 
     public $tries = 5;
 
-    public $maxExceptions = 3;
-
     public $timeout = 600;
 
-    public $backoff = 120;
+    //  public $maxExceptions = 3;
+
+    //  public $backoff = 120;
 
     public function __construct()
     {
@@ -40,22 +41,27 @@ class PackagistUpdate implements ShouldQueue
 
         if ($packageCount > 0) {
 
-            $packagesDiff = $this->compareWithDatabase();
-            $packagesToAdd = $packagesDiff['packagesToAdd'];
+            //Works fine for new/delete, but does no updates
+            //$packagesDiff = $this->compareWithDatabase();
+            //$packagesToAdd = $packagesDiff['packagesToAdd'];
+            //$packagesToRemove = $packagesDiff['packagesToRemove];
 
+            $packageChanges = $this->fetchPackageChanges(1);
+            $packagesToAdd = $packageChanges['packagesToAdd'];
+            $packagesToRemove = $packageChanges['packagesToRemove'];
+
+            $packageCount = array_count_values($packagesToAdd);
+
+            throw new \Exception("Something went wrong, there are $packageCount packages in database.");
             $this->setProgress(10);
 
             // Todo:
             // - Packages to update against rules
             // - Merge to array $packagesToAdd
 
-            $this->setProgress(15);
-
         } else {
 
-            $packagesToAdd = $this->getAllPackages();
-
-            $this->setProgress(15);
+            $packagesToAdd = json_decode($this->getAllPackages());
 
         }
 
@@ -66,8 +72,10 @@ class PackagistUpdate implements ShouldQueue
         $chunkCount = count($packagesChunks);
         $stepSize = 80 / $chunkCount;
         $currentProgress = 15;
+        $this->setProgress(15);
 
         foreach ($packagesChunks as $chunk) {
+
             PackagistPackagesUpdate::dispatch($chunk);
 
             $currentProgress = $currentProgress + $stepSize;
@@ -75,7 +83,7 @@ class PackagistUpdate implements ShouldQueue
 
         }
 
-        $this->setProgress(100);
+        //$this->setProgress(100);
 
     }
 

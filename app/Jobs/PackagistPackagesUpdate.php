@@ -16,13 +16,13 @@ class PackagistPackagesUpdate implements ShouldQueue
 {
     use Dispatchable, ErrorHandler, GetPackagistPackage, InteractsWithQueue, JobProgress, Queueable, SerializesModels, UpdatePackagistPackage;
 
-    public $tries = 5;
+    public $tries = 2;
 
-    public $maxExceptions = 3;
+    public $timeout = 180;
 
-    public $timeout = 300;
+    //  public $maxExceptions = 3;
 
-    public $backoff = 60;
+    //  public $backoff = 120;
 
     protected $packageNames;
 
