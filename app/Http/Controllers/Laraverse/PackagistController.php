@@ -32,8 +32,8 @@ class PackagistController extends Controller
             $packagesToRemoveDb = $packagesDiffDb['packagesToRemove'];
 
             $timestamp = 16938521430000;
-            $minutesAgo = 600;
-            $timestamp = (int) (microtime(true) * 10000) - ($minutesAgo * 60 * 10000);
+            $hoursAgo = 24;
+            $timestamp = (int) (microtime(true) * 10000) - ($hoursAgo * 60 * 60 * 10000);
 
             $packageChanges = $this->fetchPackageChanges($timestamp);
             $packagesToAddApi = $packageChanges['packagesToAdd'];
@@ -58,8 +58,7 @@ class PackagistController extends Controller
 
             foreach ($packagesToRemove as $packageToRemove) {
 
-                $deleteCount = PackagistPackage::where('slug', $packageToRemove)->delete();
-                $deletedPackages = $deletedPackages + $deleteCount;
+                $deletedPackages = PackagistPackage::whereIn('slug', $packagesToRemove)->delete();
 
             }
 
