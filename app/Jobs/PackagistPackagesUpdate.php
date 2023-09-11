@@ -43,7 +43,9 @@ class PackagistPackagesUpdate implements ShouldQueue
             $progress = $progress + $stepsize;
 
             $packageData = $this->getPackage($package);
-            $this->updatePackage($packageData);
+            if ($packageData) {
+                $this->updatePackage($packageData);
+            }
         }
 
         $this->setProgress(100);

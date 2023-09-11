@@ -8,12 +8,15 @@ use App\Models\PackagistPackage;
 use App\Traits\ErrorHandler;
 use App\Traits\GetPackagistAll;
 use App\Traits\GetPackagistDiff;
+use App\Traits\GetPackagistPackage;
 use App\Traits\GetPackagistUpdates;
+use App\Traits\RemovePackagistPackages;
+use App\Traits\UpdatePackagistPackage;
 use Illuminate\Queue\SerializesModels;
 
 class PackagistController extends Controller
 {
-    use ErrorHandler, GetPackagistAll, GetPackagistDiff, GetPackagistUpdates, SerializesModels;
+    use ErrorHandler, GetPackagistAll, GetPackagistDiff, GetPackagistPackage, GetPackagistUpdates, RemovePackagistPackages, SerializesModels, UpdatePackagistPackage;
 
     public function __invoke()
     {
@@ -29,53 +32,57 @@ class PackagistController extends Controller
 
             $packagesDiffDb = $this->compareWithDatabase();
             $packagesToAddDb = $packagesDiffDb['packagesToAdd'];
-            $packagesToRemoveDb = $packagesDiffDb['packagesToRemove'];
 
-            $timestamp = 16938521430000;
-            $hoursAgo = 24;
+            $hoursAgo = 1;
             $timestamp = (int) (microtime(true) * 10000) - ($hoursAgo * 60 * 60 * 10000);
 
             $packageChanges = $this->fetchPackageChanges($timestamp);
             $packagesToAddApi = $packageChanges['packagesToAdd'];
-            $packagesToRemoveApi = $packageChanges['packagesToRemove'];
 
             $packagesToAdd = array_unique(array_merge($packagesToAddDb, $packagesToAddApi));
-            $packagesToRemove = array_unique(array_merge($packagesToRemoveDb, $packagesToRemoveApi));
+
+            $this->removeDevBranches($packagesToAdd);
 
             $packageAddDbCount = count($packagesToAddDb);
-            $packageRemoveDbCount = count($packagesToRemoveDb);
             $packageAddApiCount = count($packagesToAddApi);
-            $packageRemoveApiCount = count($packagesToRemoveApi);
             $packageAddCount = count($packagesToAdd);
-            $packageRemoveCount = count($packagesToRemove);
 
-            echo 'Add: '.$packageAddCount.' (from DB: '.$packageAddDbCount.', from API: '.$packageAddApiCount.')<br>';
-            echo 'Remove: '.$packageRemoveCount.' (from DB: '.$packageRemoveDbCount.', from API: '.$packageRemoveApiCount.')';
+            activity()->log("{$packageAddCount} Packagist packages to update, {$packageAddDbCount} from DB and {$packageAddApiCount} from API.");
 
-            dd($packagesToAdd);
-
-            $deletedPackages = 0;
-
-            foreach ($packagesToRemove as $packageToRemove) {
-
-                $deletedPackages = PackagistPackage::whereIn('slug', $packagesToRemove)->delete();
-
-            }
-
-            echo '<br><br>'.$deletedPackages.' packages deleted from database.';
+            $this->removePackages($packagesDiffDb, $packageChanges);
 
         } else {
 
             $packagesToAdd = json_decode($this->getAllPackages());
+            $packageAddCount = count($packagesToAdd);
+
+            activity()->log("{$packageAddCount} Packagist packages to initialize.");
 
         }
 
-        $batchSize = 100;
+        $batchSize = 25;
         $packagesChunks = array_chunk($packagesToAdd, $batchSize);
 
         foreach ($packagesChunks as $chunk) {
             PackagistPackagesUpdate::dispatch($chunk);
-        }
 
+        }
+    }
+
+    // Check if the value contains '~dev'
+    public function removeDevBranches(&$array)
+    {
+        foreach ($array as $key => $value) {
+            if (strpos($value, '~dev') !== false) {
+
+                $newValue = str_replace('~dev', '', $value);
+
+                if (array_search($newValue, $array) !== false) {
+                    unset($array[$key]);
+                } else {
+                    $array[$key] = $newValue;
+                }
+            }
+        }
     }
 }

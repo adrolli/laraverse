@@ -38,9 +38,8 @@ trait GetPackagistUpdates
 
         } catch (RequestException $requestException) {
 
-            $apiErrorMessage = 'An error occurred while fetching all packages from Packagist.';
+            return $this->handleApiError($requestException, $packagesToAdd);
 
-            return $this->handleApiError($apiErrorMessage, $requestException);
         }
 
     }

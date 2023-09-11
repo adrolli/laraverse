@@ -41,23 +41,13 @@ class PackagistUpdate implements ShouldQueue
 
         if ($packageCount > 0) {
 
-            //Works fine for new/delete, but does no updates
-            //$packagesDiff = $this->compareWithDatabase();
-            //$packagesToAdd = $packagesDiff['packagesToAdd'];
-            //$packagesToRemove = $packagesDiff['packagesToRemove];
-
             $packageChanges = $this->fetchPackageChanges(1);
             $packagesToAdd = $packageChanges['packagesToAdd'];
             $packagesToRemove = $packageChanges['packagesToRemove'];
 
             $packageCount = array_count_values($packagesToAdd);
 
-            throw new \Exception("Something went wrong, there are $packageCount packages in database.");
             $this->setProgress(10);
-
-            // Todo:
-            // - Packages to update against rules
-            // - Merge to array $packagesToAdd
 
         } else {
 
@@ -83,26 +73,7 @@ class PackagistUpdate implements ShouldQueue
 
         }
 
-        //$this->setProgress(100);
+        $this->setProgress(100);
 
     }
-
-    /* use Batchable instead of Queueable
-    public function processPackages()
-    {
-        $packageNames = $this->getAllPackages();
-        $batchSize = 50;
-
-        $packagesChunks = array_chunk($packageNames, $batchSize);
-
-        $batch = Bus::batch([]);
-
-        foreach ($packagesChunks as $chunk) {
-            $batch->add(new PackagistPackagesUpdate($chunk));
-        }
-
-        $batch->dispatch();
-    }
-    */
-
 }

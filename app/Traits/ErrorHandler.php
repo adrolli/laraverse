@@ -4,24 +4,20 @@ namespace App\Traits;
 
 trait ErrorHandler
 {
-    public function handleApiError($apiErrorMessage, $requestException)
+    public function handleApiError($requestException, $packageName)
     {
         $response = $requestException->getResponse();
 
-        activity()->log($apiErrorMessage);
-
         if ($response) {
             $statusCode = $response->getStatusCode();
-            $responseBody = $response->getBody()->getContents();
-
-            return response()->json([
-                'error' => $apiErrorMessage,
-                'statusCode' => $statusCode,
-                'responseBody' => $responseBody,
-            ], $statusCode);
+            $apiErrorMessage = "An error with status code {$statusCode} occurred while fetching the package {$packageName}: {$requestException->getMessage()}";
         } else {
-            return response()->json(['error' => $apiErrorMessage]);
+            $apiErrorMessage = "An error occurred while fetching the package {$packageName}: {$requestException->getMessage()}";
         }
+
+        activity()->log($apiErrorMessage);
+
+        return null;
 
     }
 }

@@ -19,9 +19,7 @@ trait GetPackagistPackage
 
         } catch (RequestException $requestException) {
 
-            $apiErrorMessage = "An error occurred while fetching the package {$packageName}.";
-
-            return $this->handleApiError($apiErrorMessage, $requestException);
+            return $this->handleApiError($requestException, $packageName);
         }
     }
 }

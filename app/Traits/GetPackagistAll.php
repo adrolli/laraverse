@@ -14,6 +14,7 @@ trait GetPackagistAll
         $client = new Client();
 
         try {
+
             $response = $client->get($packagistApiUrl);
             $data = json_decode($response->getBody(), true);
             $packageNames = $data['packageNames'];
@@ -22,9 +23,8 @@ trait GetPackagistAll
 
         } catch (RequestException $requestException) {
 
-            $apiErrorMessage = 'An error occurred while fetching all packages from Packagist.';
+            return $this->handleApiError($requestException, $packageNames);
 
-            return $this->handleApiError($apiErrorMessage, $requestException);
         }
 
     }
