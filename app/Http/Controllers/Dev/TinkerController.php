@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Laraverse;
+namespace App\Http\Controllers\Dev;
 
 use App\Http\Controllers\Controller;
 use App\Jobs\PackagistPackagesUpdate;
@@ -14,7 +14,7 @@ use App\Traits\RemovePackagistPackages;
 use App\Traits\UpdatePackagistPackage;
 use Illuminate\Queue\SerializesModels;
 
-class PackagistController extends Controller
+class TinkerController extends Controller
 {
     use ErrorHandler, GetPackagistAll, GetPackagistDiff, GetPackagistPackage, GetPackagistUpdates, RemovePackagistPackages, SerializesModels, UpdatePackagistPackage;
 
@@ -33,7 +33,7 @@ class PackagistController extends Controller
             $packagesDiffDb = $this->compareWithDatabase();
             $packagesToAddDb = $packagesDiffDb['packagesToAdd'];
 
-            $hoursAgo = 1;
+            $hoursAgo = 24;
             $timestamp = (int) (microtime(true) * 10000) - ($hoursAgo * 60 * 60 * 10000);
 
             $packageChanges = $this->fetchPackageChanges($timestamp);

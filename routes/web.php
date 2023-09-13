@@ -1,11 +1,11 @@
 <?php
 
 use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\Dev\TinkerController;
 use App\Http\Controllers\ItemController;
 use App\Http\Controllers\ItemRelationController;
 use App\Http\Controllers\ItemRelationTypeController;
 use App\Http\Controllers\ItemTypeController;
-use App\Http\Controllers\Laraverse\PackagistController;
 use App\Http\Controllers\NpmPackageController;
 use App\Http\Controllers\OrganizationController;
 use App\Http\Controllers\OwnerController;
@@ -22,6 +22,7 @@ use App\Http\Controllers\StackController;
 use App\Http\Controllers\TagController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\VendorController;
+use App\Livewire\Frontend\Welcome;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -35,11 +36,11 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/dev', PackagistController::class);
+Route::get('/', Welcome::class);
 
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::get('/dev', TinkerController::class);
+
+/* Jetstream and Vemto Resources for Jetstream - ditch!
 
 Route::middleware(['auth:sanctum', 'verified'])
     ->get('/dashboard', function () {
@@ -79,3 +80,4 @@ Route::prefix('/')
         Route::resource('repositories', RepositoryController::class);
         Route::resource('repository-tags', RepositoryTagController::class);
     });
+*/
