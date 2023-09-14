@@ -33,7 +33,7 @@ class TinkerController extends Controller
             $packagesDiffDb = $this->compareWithDatabase();
             $packagesToAddDb = $packagesDiffDb['packagesToAdd'];
 
-            $hoursAgo = 24;
+            $hoursAgo = 1;
             $timestamp = (int) (microtime(true) * 10000) - ($hoursAgo * 60 * 60 * 10000);
 
             $packageChanges = $this->fetchPackageChanges($timestamp);
