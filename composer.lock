@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "cceb5872b8b66b577b5daa8a4bc6bedf",
+    "content-hash": "89d9c611a9806b84b8d4b6f3554731de",
     "packages": [
         {
             "name": "adrolli/filament-job-manager",
