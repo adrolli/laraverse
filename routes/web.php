@@ -23,6 +23,7 @@ use App\Http\Controllers\TagController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\VendorController;
 use App\Livewire\Frontend\Welcome;
+use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -39,6 +40,10 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', Welcome::class);
 
 Route::get('/dev', TinkerController::class);
+
+Route::get('/534jltt242il2tj42ilvav0', function () {
+    Artisan::call('schedule:run');
+});
 
 /* Jetstream and Vemto Resources for Jetstream - ditch!
 

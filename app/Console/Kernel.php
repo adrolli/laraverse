@@ -12,7 +12,15 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule): void
     {
-        // $schedule->command('inspire')->hourly();
+
+        $schedule->command('queue:work --timeout=300 --stop-when-empty')
+            ->everyFiveMinutes()
+            ->withoutOverlapping();
+
+        /* see https://stackoverflow.com/questions/46141652/running-laravel-queuework-on-a-shared-hosting
+        $schedule->command('queue:restart')
+            ->everyFiveMinutes();
+        */
     }
 
     /**
