@@ -4,6 +4,8 @@ namespace App\Models;
 
 use App\Models\Scopes\Searchable;
 use App\Models\Traits\FilamentTrait;
+use Filament\Models\Contracts\FilamentUser;
+use Filament\Panel;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
@@ -12,15 +14,15 @@ use Laravel\Jetstream\HasProfilePhoto;
 use Laravel\Sanctum\HasApiTokens;
 use Spatie\Permission\Traits\HasRoles;
 
-class User extends Authenticatable
+class User extends Authenticatable implements FilamentUser
 {
+    use FilamentTrait;
+    use HasApiTokens;
+    use HasFactory;
+    use HasProfilePhoto;
     use HasRoles;
     use Notifiable;
-    use HasFactory;
     use Searchable;
-    use HasApiTokens;
-    use FilamentTrait;
-    use HasProfilePhoto;
     use TwoFactorAuthenticatable;
 
     protected $fillable = ['name', 'email', 'password'];
@@ -32,6 +34,12 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    public function canAccessPanel(Panel $panel): bool
+    {
+        //return str_ends_with($this->email, '@yourdomain.com') && $this->hasVerifiedEmail();
+        return $this->hasVerifiedEmail();
+    }
 
     public function posts()
     {
