@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\Artisan\QueueWorker;
+use App\Http\Controllers\Artisan\Scheduler;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\Dev\TinkerController;
 use App\Http\Controllers\ItemController;
@@ -23,7 +25,6 @@ use App\Http\Controllers\TagController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\VendorController;
 use App\Livewire\Frontend\Welcome;
-use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -41,9 +42,8 @@ Route::get('/', Welcome::class);
 
 Route::get('/dev', TinkerController::class);
 
-Route::get('/534jltt242il2tj42ilvav0', function () {
-    Artisan::call('schedule:run');
-});
+Route::get('/queue/work', QueueWorker::class);
+Route::get('/schedule/run', Scheduler::class);
 
 /* Jetstream and Vemto Resources for Jetstream - ditch!
 

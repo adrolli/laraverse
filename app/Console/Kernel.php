@@ -13,8 +13,8 @@ class Kernel extends ConsoleKernel
     protected function schedule(Schedule $schedule): void
     {
 
-        $schedule->command('queue:work --timeout=300 --stop-when-empty')
-            ->everyFiveMinutes()
+        $schedule->command('queue:work --stop-when-empty')
+            ->everyMinute()
             ->withoutOverlapping();
 
         /* see https://stackoverflow.com/questions/46141652/running-laravel-queuework-on-a-shared-hosting
