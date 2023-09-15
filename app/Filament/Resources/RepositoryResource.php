@@ -69,7 +69,7 @@ class RepositoryResource extends Resource
                         ]),
 
                     RichEditor::make('description')
-                        ->rules(['max:255', 'string'])
+                        ->rules(['string'])
                         ->required()
                         ->placeholder('Description')
                         ->columnSpan([
@@ -79,7 +79,7 @@ class RepositoryResource extends Resource
                         ]),
 
                     TextInput::make('license')
-                        ->rules(['max:255', 'string'])
+                        ->rules(['string'])
                         ->required()
                         ->placeholder('License')
                         ->columnSpan([
@@ -89,7 +89,7 @@ class RepositoryResource extends Resource
                         ]),
 
                     RichEditor::make('readme')
-                        ->rules(['max:255', 'string'])
+                        ->rules(['string'])
                         ->required()
                         ->placeholder('Readme')
                         ->columnSpan([

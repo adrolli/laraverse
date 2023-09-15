@@ -64,7 +64,7 @@ class ItemResource extends Resource
                         ]),
 
                     RichEditor::make('description')
-                        ->rules(['max:255', 'string'])
+                        ->rules(['string'])
                         ->required()
                         ->placeholder('Description')
                         ->columnSpan([
