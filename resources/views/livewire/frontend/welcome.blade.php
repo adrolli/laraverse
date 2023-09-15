@@ -27,7 +27,7 @@
                   </div>
                 </div>
 
-                @if(App::environment('production'))
+                @if(App::environment('local'))
 
                 <dl class="mt-10 grid grid-cols-1 gap-0.5 rounded-4xl text-center sm:grid-cols-2 lg:grid-cols-3">
                   <div class="flex flex-col p-4 bg-blue-900">
