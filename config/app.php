@@ -188,4 +188,10 @@ return [
         // 'Example' => App\Facades\Example::class,
     ])->toArray(),
 
+    /*
+     | Laraverse Artisan Secret Token
+    */
+
+    'artisan_secret_token' => env('ARTISAN_SECRET_TOKEN', 'laraverse'),
+
 ];

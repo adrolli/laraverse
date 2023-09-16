@@ -12,10 +12,14 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule): void
     {
-
-        $schedule->command('queue:work --stop-when-empty')
+        $schedule->command('queue:work --once')
             ->everyMinute()
-            ->withoutOverlapping();
+            ->before(function () {
+                activity()->log('About to run queue:work');
+            })
+            ->after(function () {
+                activity()->log('Finished running queue:work');
+            });
 
         /* see https://stackoverflow.com/questions/46141652/running-laravel-queuework-on-a-shared-hosting
         $schedule->command('queue:restart')

@@ -9,7 +9,9 @@ class QueueWorker extends Controller
 {
     public function __invoke()
     {
-        if (request('token') !== 'faer2rv') {
+        $secretToken = config('app.artisan_secret_token');
+
+        if (request('token') !== $secretToken) {
             activity()->log('Unauthorized queue worker request');
 
             abort(403, 'Unauthorized');
@@ -17,7 +19,13 @@ class QueueWorker extends Controller
 
         activity()->log('Queue worker invoked by route');
 
-        $output = Artisan::call('queue:work --once --timeout=300');
+        $timeout = 60;
+
+        if (request('timeout')) {
+            $timeout = request('timeout');
+        }
+
+        $output = Artisan::call('queue:work --once --timeout='.$timeout);
 
         if ($output == 0) {
             activity()->log('Queue worker ran successfully');

@@ -9,7 +9,9 @@ class Scheduler extends Controller
 {
     public function __invoke()
     {
-        if (request('token') !== 'faer2rv') {
+        $secretToken = config('app.artisan_secret_token');
+
+        if (request('token') !== $secretToken) {
             activity()->log('Unauthorized scheduler request');
 
             abort(403, 'Unauthorized');
@@ -17,7 +19,7 @@ class Scheduler extends Controller
 
         activity()->log('Scheduler invoked by route');
 
-        $output = Artisan::call('queue:work --once --timeout='.request('timeout'));
+        $output = Artisan::call('schedule:run');
 
         if ($output == 0) {
             activity()->log('Scheduler ran successfully');
