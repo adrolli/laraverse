@@ -17,6 +17,7 @@
         "husam-tariq/filament-database-schedule": "^2.0",
         "jeffgreco13/filament-breezy": "^2.1",
         "laravel/framework": "^10.10",
+        "laravel/horizon": "^5.20",
         "laravel/jetstream": "^3.2",
         "laravel/sanctum": "^3.2",
         "laravel/scout": "^10.3",
