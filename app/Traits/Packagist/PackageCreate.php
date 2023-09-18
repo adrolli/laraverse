@@ -40,7 +40,7 @@ trait PackageCreate
 
         } catch (Exception $e) {
 
-            activity()->log("Packagist package {$packageName} create failed");
+            activity()->log("Packagist package {$packageName} create failed: ".$e);
 
         }
     }

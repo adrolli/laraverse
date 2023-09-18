@@ -40,7 +40,7 @@ trait PackageUpdate
 
         } catch (Exception $e) {
 
-            activity()->log("Packagist package {$packageName} update failed");
+            activity()->log("Packagist package {$packageName} update failed: ".$e);
 
         }
     }

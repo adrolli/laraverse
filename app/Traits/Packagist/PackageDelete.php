@@ -20,7 +20,7 @@ trait PackageDelete
 
         } catch (Exception $e) {
 
-            activity()->log("Packagist package {$packageToRemove} deletion failed");
+            activity()->log("Packagist package {$packageToRemove} deletion failed: ".$e);
 
         }
     }
