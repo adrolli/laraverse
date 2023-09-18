@@ -2,31 +2,32 @@
 
 /*
 |--------------------------------------------------------------------------
-| Laraverse Packagist Updater
+| Laraverse Packagist Deleter
 |--------------------------------------------------------------------------
 |
 | This job is triggered by PackagistWorker. It works through a batch
-| of packages and updates the packages with data from Packagist API,
-| to the PackagistPackages model. The batch size is set in .env
+| of packages and deletes the packages, fetched from Packagist API,
+| in the PackagistPackages model. The batch size is set in .env
 |
 */
 
 namespace App\Jobs;
 
 use Adrolli\FilamentJobManager\Traits\JobProgress;
+use App\Models\PackagistPackage;
 use App\Traits\Packagist\ErrorHandler;
 use App\Traits\Packagist\GetApiPackage;
-use App\Traits\Packagist\PackageUpdate;
+use App\Traits\Packagist\PackageDelete;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
 
-class PackagistUpdate implements ShouldQueue
+class PackagistDelete implements ShouldQueue
 {
     use Dispatchable, ErrorHandler, GetApiPackage, InteractsWithQueue, JobProgress,
-        PackageUpdate, Queueable, SerializesModels;
+        PackageDelete, Queueable, SerializesModels;
 
     public $tries;
 
@@ -58,10 +59,13 @@ class PackagistUpdate implements ShouldQueue
             $this->setProgress($progress);
             $progress = $progress + $stepsize;
 
-            $packageData = $this->getPackage($package);
-            if ($packageData) {
-                $this->updatePackage($packageData);
+            $packageDeleted = PackagistPackage::where('slug', $package)->delete();
+
+            if ($packageDeleted == 1) {
+
+                activity()->log("Packagist package {$package} deleted");
             }
+
         }
 
         $this->setProgress(100);

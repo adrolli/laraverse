@@ -1,11 +1,11 @@
 <?php
 
-namespace App\Traits;
+namespace App\Traits\Packagist;
 
 use GuzzleHttp\Client;
 use GuzzleHttp\Exception\RequestException;
 
-trait GetPackagistPackage
+trait GetApiPackage
 {
     public function getPackage($packageName)
     {
@@ -14,6 +14,8 @@ trait GetPackagistPackage
             $client = new Client();
             $packageInfo = $client->get("https://packagist.org/packages/{$packageName}.json");
             $packageJson = json_decode($packageInfo->getBody(), true);
+
+            activity()->log("Packagist package {$packageName} fetched");
 
             return $packageJson;
 

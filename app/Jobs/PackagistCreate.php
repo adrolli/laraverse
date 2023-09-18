@@ -2,12 +2,12 @@
 
 /*
 |--------------------------------------------------------------------------
-| Laraverse Packagist Updater
+| Laraverse Packagist Creator
 |--------------------------------------------------------------------------
 |
 | This job is triggered by PackagistWorker. It works through a batch
-| of packages and updates the packages with data from Packagist API,
-| to the PackagistPackages model. The batch size is set in .env
+| of packages and creates the packages, fetched from Packagist API,
+| in the PackagistPackages model. The batch size is set in .env
 |
 */
 
@@ -16,17 +16,17 @@ namespace App\Jobs;
 use Adrolli\FilamentJobManager\Traits\JobProgress;
 use App\Traits\Packagist\ErrorHandler;
 use App\Traits\Packagist\GetApiPackage;
-use App\Traits\Packagist\PackageUpdate;
+use App\Traits\Packagist\PackageCreate;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
 
-class PackagistUpdate implements ShouldQueue
+class PackagistCreate implements ShouldQueue
 {
     use Dispatchable, ErrorHandler, GetApiPackage, InteractsWithQueue, JobProgress,
-        PackageUpdate, Queueable, SerializesModels;
+        PackageCreate, Queueable, SerializesModels;
 
     public $tries;
 
@@ -60,7 +60,7 @@ class PackagistUpdate implements ShouldQueue
 
             $packageData = $this->getPackage($package);
             if ($packageData) {
-                $this->updatePackage($packageData);
+                $this->createPackage($packageData);
             }
         }
 

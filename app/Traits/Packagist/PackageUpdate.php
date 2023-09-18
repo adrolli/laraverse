@@ -1,11 +1,11 @@
 <?php
 
-namespace App\Traits;
+namespace App\Traits\Packagist;
 
 use App\Models\PackagistPackage;
 use Exception;
 
-trait UpdatePackagistPackage
+trait PackageUpdate
 {
     public function updatePackage($packageDetails)
     {

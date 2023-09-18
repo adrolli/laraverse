@@ -2,47 +2,58 @@
 
 /*
 |--------------------------------------------------------------------------
-| Laraverse Tinker Controller
+| Laraverse Packagist Worker
 |--------------------------------------------------------------------------
 |
-| Test things here ...
+| This job should run hourly to manage all updates (create, update, and
+| delete) from the Packagist API and write them to PackagistPackages.
+| This job starts PackagistUpdate and PackagistDelete in batch.
 |
 */
 
-namespace App\Http\Controllers\Dev;
+namespace App\Jobs;
 
-use App\Http\Controllers\Controller;
-use App\Jobs\PackagistCreate;
-use App\Jobs\PackagistDelete;
-use App\Jobs\PackagistUpdate;
+use Adrolli\FilamentJobManager\Traits\JobProgress;
+use App\Traits\Packagist\ErrorHandler;
 use App\Traits\Packagist\GetApiAll;
+use App\Traits\Packagist\GetApiPackage;
 use App\Traits\Packagist\GetApiUpdates;
 use App\Traits\Packagist\GetDatabase;
+use Illuminate\Bus\Queueable;
+use Illuminate\Contracts\Queue\ShouldQueue;
+use Illuminate\Foundation\Bus\Dispatchable;
+use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
 
-class TinkerController extends Controller
+class PackagistWorker implements ShouldQueue
 {
-    use GetApiAll, GetApiUpdates, GetDatabase, SerializesModels;
+    use Dispatchable, ErrorHandler, GetApiAll, GetApiPackage, GetApiUpdates, GetDatabase,
+        InteractsWithQueue, JobProgress, Queueable, SerializesModels;
+
+    public $tries;
+
+    public $timeout;
+
+    public $maxExceptions;
+
+    public $backoff;
 
     public $batch;
 
-    public function __invoke()
+    public function __construct()
     {
+        $this->tries = config('app.laraverse_tries');
+        $this->timeout = config('app.laraverse_timeout');
+        $this->maxExceptions = config('app.laraverse_exceptions');
+        $this->backoff = config('app.laraverse_backoff');
         $this->batch = config('app.laraverse_batch');
-        $this->tinkerNow();
     }
 
-    public function tinkerNow()
+    public function handle(): void
     {
-        $secretToken = config('app.laraverse_token');
-
-        if (request('token') !== $secretToken) {
-            activity()->log('Unauthorized tinker request');
-
-            abort(403, 'Unauthorized');
-        }
-
         activity()->log('Packagist Worker started');
+
+        $this->setProgress(0);
 
         $batchSize = $this->batch;
 
@@ -51,10 +62,14 @@ class TinkerController extends Controller
 
         activity()->log('Packagist Worker found '.$packagesFromDbCount.' packages in database');
 
+        $this->setProgress(10);
+
         $packagesFromApi = $this->getPackagistPackagesFromApi();
         $packagesFromApiCount = count($packagesFromApi);
 
         activity()->log('Packagist Worker found '.$packagesFromApiCount.' packages in All API');
+
+        $this->setProgress(20);
 
         $hoursAgo = 1;
         $timestamp = (int) (microtime(true) * 10000) - ($hoursAgo * 60 * 60 * 10000);
@@ -63,6 +78,8 @@ class TinkerController extends Controller
         $deletesFromApiCount = count($updatesFromApi['packagesToDelete']);
 
         activity()->log('Packagist Worker found '.$updatesFromApiCount.' updates and '.$deletesFromApiCount.' deletions in Update API');
+
+        $this->setProgress(30);
 
         $packagesToCreateFromDb = array_diff($packagesFromApi, $packagesFromDb);
         $packagesToDeleteFromDb = array_diff($packagesFromDb, $packagesFromApi);
@@ -86,11 +103,15 @@ class TinkerController extends Controller
 
         activity()->log('Packagist Worker will create '.$createCount.', update '.$updateCount.' and delete '.$deleteCount.' packages');
 
+        $this->setProgress(40);
+
         $createChunks = array_chunk($packagesToCreate, $batchSize);
 
         foreach ($createChunks as $createChunk) {
             PackagistCreate::dispatch($createChunk);
         }
+
+        $this->setProgress(60);
 
         $updateChunks = array_chunk($packagesToUpdate, $batchSize);
 
@@ -98,14 +119,19 @@ class TinkerController extends Controller
             PackagistUpdate::dispatch($updateChunk);
         }
 
+        $this->setProgress(80);
+
         $deleteChunks = array_chunk($packagesToDelete, $batchSize);
 
         foreach ($deleteChunks as $deleteChunk) {
             PackagistDelete::dispatch($deleteChunk);
         }
+
+        $this->setProgress(100);
+
     }
 
-    // Check if the value contains '~dev'
+    // Check if the package contains '~dev'
     public function removeDevBranches(&$array)
     {
         foreach ($array as $key => $value) {

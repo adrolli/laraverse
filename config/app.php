@@ -189,9 +189,19 @@ return [
     ])->toArray(),
 
     /*
-     | Laraverse Artisan Secret Token
+    |--------------------------------------------------------------------------
+    | Laraverse Settings
+    |--------------------------------------------------------------------------
+    |
+    | All settings for Laraverse should be handled by config but normally
+    | provided by .env, so all is cacheable and adjustable per platform.
+    |
     */
 
-    'artisan_secret_token' => env('ARTISAN_SECRET_TOKEN', 'laraverse'),
-
+    'laraverse_token' => env('LARAVERSE_TOKEN', 'laraverse'),
+    'laraverse_tries' => env('LARAVERSE_TRIES', 3),
+    'laraverse_timeout' => env('LARAVERSE_TIMEOUT', 60),
+    'laraverse_exceptions' => env('LARAVERSE_EXCEPTIONS', 1),
+    'laraverse_backoff' => env('LARAVERSE_BACKOFF', 120),
+    'laraverse_batch' => env('LARAVERSE_BATCH', 25),
 ];

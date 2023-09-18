@@ -1,13 +1,13 @@
 <?php
 
-namespace App\Traits;
+namespace App\Traits\Packagist;
 
 use GuzzleHttp\Client;
 use GuzzleHttp\Exception\RequestException;
 
-trait GetPackagistUpdates
+trait GetApiUpdates
 {
-    public function fetchPackageChanges($timestamp)
+    public function getPackagistUpdatesFromApi($timestamp)
     {
 
         $packagistApiUrl = "https://packagist.org/metadata/changes.json?since=$timestamp";
@@ -18,29 +18,28 @@ trait GetPackagistUpdates
             $response = $client->get($packagistApiUrl);
             $packageChanges = json_decode($response->getBody(), true);
 
-            $packagesToAdd = [];
-            $packagesToRemove = [];
+            $packagesToCreate = [];
+            $packagesToDelete = [];
 
             foreach ($packageChanges['actions'] as $action) {
                 if ($action['type'] === 'update') {
-                    $packagesToAdd[] = $action['package'];
+                    $packagesToCreate[] = $action['package'];
                 } elseif ($action['type'] === 'delete') {
-                    $packagesToRemove[] = $action['package'];
+                    $packagesToDelete[] = $action['package'];
                 }
             }
 
             return [
-                'packagesToAdd' => $packagesToAdd,
-                'packagesToRemove' => $packagesToRemove,
+                'packagesToCreate' => $packagesToCreate,
+                'packagesToDelete' => $packagesToDelete,
             ];
 
             return $packageChanges;
 
         } catch (RequestException $requestException) {
 
-            return $this->handleApiError($requestException, $packagesToAdd);
+            return $this->handleApiError($requestException);
 
         }
-
     }
 }

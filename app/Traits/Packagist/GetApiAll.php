@@ -1,14 +1,15 @@
 <?php
 
-namespace App\Traits;
+namespace App\Traits\Packagist;
 
 use GuzzleHttp\Client;
 use GuzzleHttp\Exception\RequestException;
 
-trait GetPackagistAll
+trait GetApiAll
 {
-    public function getAllPackages()
+    public function getPackagistPackagesFromApi()
     {
+
         $packagistApiUrl = 'https://packagist.org/packages/list.json';
 
         $client = new Client();

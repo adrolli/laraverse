@@ -9,7 +9,7 @@ class Scheduler extends Controller
 {
     public function __invoke()
     {
-        $secretToken = config('app.artisan_secret_token');
+        $secretToken = config('app.laraverse_token');
 
         if (request('token') !== $secretToken) {
             activity()->log('Unauthorized scheduler request');
