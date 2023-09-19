@@ -12,6 +12,9 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule): void
     {
+        /*
+        Done in Filament Scheduler
+
         $schedule->command('queue:work --once')
             ->everyMinute()
             ->before(function () {
@@ -21,9 +24,9 @@ class Kernel extends ConsoleKernel
                 activity()->log('Finished running queue:work');
             });
 
-        /* see https://stackoverflow.com/questions/46141652/running-laravel-queuework-on-a-shared-hosting
-        $schedule->command('queue:restart')
-            ->everyFiveMinutes();
+        // see https://stackoverflow.com/questions/46141652/running-laravel-queuework-on-a-shared-hosting
+        //$schedule->command('queue:restart')
+        //    ->everyFiveMinutes();
         */
     }
 
