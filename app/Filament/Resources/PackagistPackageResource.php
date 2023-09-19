@@ -5,9 +5,9 @@ namespace App\Filament\Resources;
 use App\Filament\Filters\DateRangeFilter;
 use App\Filament\Resources\PackagistPackageResource\Pages;
 use App\Models\PackagistPackage;
-use Filament\Forms\Components\Card;
 use Filament\Forms\Components\Grid;
 use Filament\Forms\Components\KeyValue;
+use Filament\Forms\Components\Section;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\Toggle;
 use Filament\Forms\Form;
@@ -44,7 +44,7 @@ class PackagistPackageResource extends Resource
     public static function form(Form $form): Form
     {
         return $form->schema([
-            Card::make()->schema([
+            Section::make()->schema([
                 Grid::make(['default' => 0])->schema([
                     TextInput::make('title')
                         ->rules(['max:255', 'string'])
