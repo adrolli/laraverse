@@ -9,6 +9,8 @@ trait PackageDelete
 {
     public function deletePackage($packageToRemove)
     {
+        $packageToRemove = 'undefined';
+
         try {
 
             $packageDeleted = PackagistPackage::where('slug', $packageToRemove)->delete();

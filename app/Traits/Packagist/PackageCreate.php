@@ -9,6 +9,8 @@ trait PackageCreate
 {
     public function createPackage($packageDetails)
     {
+        $packageName = 'undefined';
+
         try {
 
             $packageName = $packageDetails['package']['name'];
