@@ -45,6 +45,10 @@ Route::get('/dev', TinkerController::class);
 Route::get('/queue/work', QueueWorker::class);
 Route::get('/schedule/run', Scheduler::class);
 
+Route::middleware(['auth:sanctum', 'verified'])->get('/dev-index', function () {
+    return view('dev-index');
+});
+
 /* Jetstream and Vemto Resources for Jetstream - ditch!
 
 Route::middleware(['auth:sanctum', 'verified'])
