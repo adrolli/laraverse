@@ -32,4 +32,12 @@ class PackagistPackage extends Model
     {
         return $this->hasMany(Item::class);
     }
+
+    public function toSearchableArray()
+    {
+        return [
+            'title' => $this->title,
+            'slug' => $this->slug,
+        ];
+    }
 }
