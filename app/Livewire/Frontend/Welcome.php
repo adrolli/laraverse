@@ -10,20 +10,21 @@ class Welcome extends Component
 {
     use WithPagination;
 
-    public $items = [];
-
     public $search;
+
+    public function mount()
+    {
+        $this->search = request()->query('search', '');
+    }
 
     public function render()
     {
         if ($this->search) {
-            $this->items = PackagistPackage::where('title', 'like', '%'.$this->search.'%')
-                ->orWhere('slug', 'like', '%'.$this->search.'%')
-                ->limit(150)->get();
+            $items = PackagistPackage::search($this->search)->paginate(15);
         } else {
-            $this->items = PackagistPackage::skip(0)->take(15)->get();
+            $items = PackagistPackage::paginate(15);
         }
 
-        return view('livewire.frontend.welcome');
+        return view('livewire.frontend.welcome', compact('items'));
     }
 }

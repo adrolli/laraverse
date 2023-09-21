@@ -536,6 +536,10 @@
                     @endforeach
 
                 </div>
+
+                <div class="pt-10 mt-5">
+                    {{ $items   ->links() }}
+                </div>
             </div>
           </div>
 
