@@ -15,7 +15,7 @@ trait GetApiPackage
             $packageInfo = $client->get("https://packagist.org/packages/{$packageName}.json");
             $packageJson = json_decode($packageInfo->getBody(), true);
 
-            activity()->log("Packagist package {$packageName} fetched");
+            // Debug activity()->log("Packagist package {$packageName} fetched");
 
             return $packageJson;
 

@@ -207,6 +207,8 @@ return [
         'local' => [
             'supervisor-1' => [
                 'maxProcesses' => 1,
+                'balanceMaxShift' => 1,
+                'balanceCooldown' => 1,
             ],
         ],
     ],
