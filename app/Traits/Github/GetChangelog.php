@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Traits\GitHub;
+namespace App\Traits\Github;
 
 use GuzzleHttp\Client;
 
