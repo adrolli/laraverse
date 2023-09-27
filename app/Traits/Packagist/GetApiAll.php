@@ -7,6 +7,8 @@ use GuzzleHttp\Exception\RequestException;
 
 trait GetApiAll
 {
+    use ErrorHandler;
+
     public function getPackagistPackagesFromApi()
     {
 

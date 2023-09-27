@@ -7,6 +7,8 @@ use GuzzleHttp\Exception\RequestException;
 
 trait GetApiUpdates
 {
+    use ErrorHandler;
+
     public function getPackagistUpdatesFromApi($timestamp)
     {
 
@@ -38,7 +40,7 @@ trait GetApiUpdates
 
         } catch (RequestException $requestException) {
 
-            return $this->handleApiError($requestException);
+            return $this->handleApiError($requestException, 'Update at '.$timestamp);
 
         }
     }

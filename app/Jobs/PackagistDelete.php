@@ -15,7 +15,6 @@ namespace App\Jobs;
 
 use Adrolli\FilamentJobManager\Traits\JobProgress;
 use App\Models\PackagistPackage;
-use App\Traits\Packagist\ErrorHandler;
 use App\Traits\Packagist\GetApiPackage;
 use App\Traits\Packagist\PackageDelete;
 use Illuminate\Bus\Queueable;
@@ -26,7 +25,7 @@ use Illuminate\Queue\SerializesModels;
 
 class PackagistDelete implements ShouldQueue
 {
-    use Dispatchable, ErrorHandler, GetApiPackage, InteractsWithQueue, JobProgress,
+    use Dispatchable, GetApiPackage, InteractsWithQueue, JobProgress,
         PackageDelete, Queueable, SerializesModels;
 
     public $tries;

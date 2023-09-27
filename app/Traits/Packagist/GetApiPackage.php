@@ -7,6 +7,8 @@ use GuzzleHttp\Exception\RequestException;
 
 trait GetApiPackage
 {
+    use ErrorHandler;
+
     public function getPackage($packageName)
     {
         try {
@@ -14,8 +16,6 @@ trait GetApiPackage
             $client = new Client();
             $packageInfo = $client->get("https://packagist.org/packages/{$packageName}.json");
             $packageJson = json_decode($packageInfo->getBody(), true);
-
-            // Debug activity()->log("Packagist package {$packageName} fetched");
 
             return $packageJson;
 

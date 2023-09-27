@@ -16,7 +16,7 @@ return [
     |
     */
 
-    'name' => env('APP_NAME', 'Laravel'),
+    'name' => env('APP_NAME', 'Laraverse'),
 
     /*
     |--------------------------------------------------------------------------
@@ -55,7 +55,7 @@ return [
     |
     */
 
-    'url' => env('APP_URL', 'http://localhost'),
+    'url' => env('APP_URL', 'https://laraver.se'),
 
     'asset_url' => env('ASSET_URL'),
 
@@ -205,4 +205,255 @@ return [
     'laraverse_exceptions' => env('LARAVERSE_EXCEPTIONS', 1),
     'laraverse_backoff' => env('LARAVERSE_BACKOFF', 120),
     'laraverse_batch' => env('LARAVERSE_BATCH', 25),
+    'github_api_token' => env('GITHUB_API_TOKEN'),
+
+    /*
+    |--------------------------------------------------------------------------
+    | Laraverse Known Packages
+    |--------------------------------------------------------------------------
+    |
+    | The known packages are scaffolded here to allow the jobs to find
+    | packages and apps, compatible to a spedific stack and version.
+    |
+    */
+
+    'compatibility' => [
+
+        'php' => [
+            'latest' => '8.2',
+            'versions' => [
+                '8.2',
+                '8.1',
+                '8.0',
+                '7.4',
+                '7.3',
+                'unknown',
+            ],
+            'packages' => [
+                'laravel/framework' => 'v10.0.0',
+                'illuminate/auth' => 'v10.0.0',
+                'illuminate/support' => 'v10.0.0',
+                'illuminate/database' => 'v10.0.0',
+                'illuminate/contracts' => 'v10.0.0',
+                'illuminate/container' => 'v10.0.0',
+                'illuminate/view' => 'v10.0.0',
+                'illuminate/validation' => 'v10.0.0',
+                'illuminate/session' => 'v10.0.0',
+                'illuminate/queue' => 'v10.0.0',
+                'illuminate/pipeline' => 'v10.0.0',
+                'illuminate/macroable' => 'v10.0.0',
+                'illuminate/http' => 'v10.0.0',
+                'illuminate/filesystem' => 'v10.0.0',
+                'illuminate/events' => 'v10.0.0',
+                // phpunit etc.
+            ],
+        ],
+        'laravel' => [
+            'latest' => '10',
+            'versions' => [
+                '10',
+                '9',
+                '8',
+                '7',
+                '6',
+                'unknown',
+            ],
+            'packages' => [
+                'laravel/framework' => 'v10.0.0',
+                'illuminate/auth' => 'v10.0.0',
+                'illuminate/support' => 'v10.0.0',
+                'illuminate/database' => 'v10.0.0',
+                'illuminate/contracts' => 'v10.0.0',
+                'illuminate/container' => 'v10.0.0',
+                'illuminate/view' => 'v10.0.0',
+                'illuminate/validation' => 'v10.0.0',
+                'illuminate/session' => 'v10.0.0',
+                'illuminate/queue' => 'v10.0.0',
+                'illuminate/pipeline' => 'v10.0.0',
+                'illuminate/macroable' => 'v10.0.0',
+                'illuminate/http' => 'v10.0.0',
+                'illuminate/filesystem' => 'v10.0.0',
+                'illuminate/events' => 'v10.0.0',
+                'livewire/livewire' => 'v3.0.0',
+                'livewire/volt' => 'v1.0.0',
+                'laravel/jetstream' => 'v3.1.0',
+                'laravel/breeze' => 'v1.20.0',
+                'filament/filament' => 'v3.0.9',
+                'spatie/laravel-permission' => 'unknown',
+                'fideloper/proxy' => 'unknown',
+                'jenssegers/agent' => 'unknown',
+                'barryvdh/laravel-ide-helper' => 'unknown',
+                'spatie/laravel-package-tools' => 'unknown',
+                'spatie/laravel-backup' => 'unknown',
+                'spatie/laravel-activitylog' => 'unknown',
+                'spatie/eloquent-sortable' => 'unknown',
+                'barryvdh/laravel-debugbar' => 'unknown',
+                'barryvdh/laravel-ide-helper' => 'unknown',
+            ],
+        ],
+        // shares with tall-stack and ball-stack
+        'livewire' => [
+            'packages' => [
+                'livewire/livewire' => 'v3.0.0',
+                'livewire/volt' => 'v1.0.0',
+                'laravel/jetstream' => 'v3.1.0',
+                'laravel/breeze' => 'v1.20.0',
+                'filament/filament' => 'v3.0.9',
+                // some more well known livewire
+            ],
+        ],
+        'filament' => [
+            'latest' => '3',
+            'versions' => [
+                '3',
+                '2',
+                '1',
+                'unknown',
+            ],
+            'packages' => [
+                'filament/filament' => 'v3.0.9',
+            ],
+        ],
+        // statamic and more ...
+    ],
+
+    /*
+    |--------------------------------------------------------------------------
+    | Laraverse Packagist Search
+    |--------------------------------------------------------------------------
+    |
+    | This array is for all keyword-based searches, using the PackagistPackages
+    | model. Key = search, Content = tags to be set for the Package.
+    |
+    */
+
+    'packagist_search' => [
+
+        'laravel' => 'php, laravel',
+        'eloquent' => 'php, laravel, eloquent',
+        'livewire' => 'php, laravel, livewire, tall-stack',
+        'tailwind laravel' => 'php, laravel, tailwind',
+        'tall' => 'php, laravel, livewire, alpinejs, tailwindcss, tall-stack',
+        'tallstack' => 'php, laravel, livewire, alpinejs, tailwindcss, tall-stack',
+        'tall-stack' => 'php, laravel, livewire, alpinejs, tailwindcss, tall-stack',
+        'filament' => 'php, laravel, livewire, tall-stack, filament, tailwindcss, alpinejs, admin, crud',
+        'statamic' => 'php, laravel, statamic, cms',
+        'octobercms' => 'php, laravel, october, cms',
+        'october' => 'php, laravel, october, cms',
+        'asgard' => 'php, laravel, asgard, cms',
+        'asgardcms' => 'php, laravel, asgard, cms',
+        'winter' => 'php, laravel, winter, cms',
+        'wintercms' => 'php, laravel, winter, cms',
+        'flarum' => 'php, laravel, flarum, forum',
+        'vilt' => 'php, laravel, inertia, vue, tailwind, vilt-stack',
+        'rilt' => 'php, laravel, inertia, react, tailwind, rilt-stack',
+        'inertia' => 'php, laravel, inertia',
+        'laravel nova' => 'php, laravel, nova, admin, crud',
+        'spatie/' => 'php, spatie',
+        'spatie/laravel' => 'php, laravel, spatie',
+        'spatie' => 'php, spatie',
+        'lunarphp' => 'php, laravel, lunar, livewire, shop, ecommerce',
+        'bagisto' => 'php, laravel, bagisto, shop, ecommerce',
+        'vanilo' => 'php, laravel, vanilo, shop, ecommerce',
+        'aimeos' => 'php, laravel, aimeos, shop, ecommerce',
+        'blade icons' => 'php, laravel, blade, blade-ui-kit, blade-icons',
+        'blade ui' => 'php, laravel, blade, blade-ui-kit, blade-icons',
+    ],
+
+    /*
+    |--------------------------------------------------------------------------
+    | Laraverse Packagist Tags
+    |--------------------------------------------------------------------------
+    |
+    | This array is for all tag-based searches, using the Packagist API
+    | Key = tag (API), Content = tags to be set for the Package.
+    |
+    */
+
+    'packagist_tags' => [
+
+        'laravel' => 'php, laravel',
+        'eloquent' => 'php, laravel, eloquent',
+        'livewire' => 'php, laravel, livewire, tall-stack',
+        'tailwind laravel' => 'php, laravel, tailwind',
+        'tall' => 'php, laravel, livewire, alpinejs, tailwindcss, tall-stack',
+        'tallstack' => 'php, laravel, livewire, alpinejs, tailwindcss, tall-stack',
+        'tall-stack' => 'php, laravel, livewire, alpinejs, tailwindcss, tall-stack',
+        'filament' => 'php, laravel, livewire, tall-stack, filament, tailwindcss, alpinejs, admin, crud',
+        'statamic' => 'php, laravel, statamic, cms',
+        'octobercms' => 'php, laravel, october, cms',
+        'october' => 'php, laravel, october, cms',
+        'asgard' => 'php, laravel, asgard, cms',
+        'asgardcms' => 'php, laravel, asgard, cms',
+        'winter' => 'php, laravel, winter, cms',
+        'wintercms' => 'php, laravel, winter, cms',
+        'flarum' => 'php, laravel, flarum, forum',
+        'vilt' => 'php, laravel, inertia, vue, tailwind, vilt-stack',
+        'rilt' => 'php, laravel, inertia, react, tailwind, rilt-stack',
+        'inertia' => 'php, laravel, inertia',
+        'laravel nova' => 'php, laravel, nova, admin, crud',
+        'spatie/' => 'php, spatie',
+        'spatie/laravel' => 'php, laravel, spatie',
+        'spatie' => 'php, spatie',
+        'lunarphp' => 'php, laravel, lunar, livewire, shop, ecommerce',
+        'bagisto' => 'php, laravel, bagisto, shop, ecommerce',
+        'vanilo' => 'php, laravel, vanilo, shop, ecommerce',
+        'aimeos' => 'php, laravel, aimeos, shop, ecommerce',
+        'blade icons' => 'php, laravel, blade, blade-ui-kit, blade-icons',
+        'blade ui' => 'php, laravel, blade, ui',
+        'laravel blade' => 'php, laravel, blade',
+    ],
+
+    /*
+    |--------------------------------------------------------------------------
+    | Laraverse GitHub Search
+    |--------------------------------------------------------------------------
+    |
+    | This array is for all keyword-based searches, using the GitHub Search
+    | API. Key = search, Content = tags to be set for the Package.
+    |
+    */
+
+    'github_search' => [
+        /*
+        https://github.com/search?q=laravel&type=repositories = 566k repos
+        https://github.com/search?q=filament&type=repositories = 3k
+        https://github.com/search?q=livewire&type=repositories = 8.1k
+        https://github.com/search?q=statamic&type=repositories = 1k
+        https://github.com/search?q=octobercms&type=repositories = 1k
+        https://github.com/search?q=flarum&type=repositories = 1k
+        */
+    ],
+
+    /*
+    |--------------------------------------------------------------------------
+    | Laraverse GitHub Monitor
+    |--------------------------------------------------------------------------
+    |
+    | This array is for all people and organisations, that should be monitored
+    | monitored for new repositories. They will be fetched regularly.
+    |
+    */
+
+    'github_monitor' => [
+        /*
+        - laravel
+        - illuminate
+        - spatie
+        - livewire
+        - barryvdh
+        - flarum
+        - nahid
+        - thedevdojo
+        - z-song
+        - octobercms
+        */
+    ],
 ];
+
+/*
+
+
+
+
+*/

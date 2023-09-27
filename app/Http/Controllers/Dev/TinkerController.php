@@ -15,23 +15,197 @@ use App\Http\Controllers\Controller;
 use App\Jobs\PackagistCreate;
 use App\Jobs\PackagistDelete;
 use App\Jobs\PackagistUpdate;
+use App\Traits\GitHub\GetChangelog;
+use App\Traits\GitHub\GetComposerJson;
+use App\Traits\GitHub\GetContents;
+use App\Traits\GitHub\GetLicense;
+use App\Traits\Github\GetPackageJson;
+use App\Traits\GitHub\GetReadme;
+use App\Traits\GitHub\GetRepository;
 use App\Traits\Packagist\GetApiAll;
 use App\Traits\Packagist\GetApiUpdates;
 use App\Traits\Packagist\GetDatabase;
+use App\Traits\PackagistItem\ErrorHandler;
+use App\Traits\PackagistItem\GetLatest;
+use App\Traits\PackagistItem\GetPackage;
+use App\Traits\PackagistItem\GetVersion;
+use App\Traits\PackagistItem\GetVersions;
 use Illuminate\Queue\SerializesModels;
 
 class TinkerController extends Controller
 {
-    use GetApiAll, GetApiUpdates, GetDatabase, SerializesModels;
+    //use GetApiAll, GetApiUpdates, GetDatabase, SerializesModels;
+
+    use ErrorHandler, GetChangelog, GetComposerJson, GetContents, GetLatest, GetLicense, GetPackage,
+        GetPackageJson, GetReadme, GetRepository, GetVersion, GetVersions;
 
     public $batch;
 
+    public $slug;
+
     public function __invoke()
     {
+        //$this->slug = '00f100/cakephp-opauth';
+        //$this->slug = 'spatie/laravel-permission';
+        //$this->slug = 'laravel/framework';
+        //$this->slug = 'filament/spatie-laravel-media-library-plugin';
+        //$this->slug = 'bezhansalleh/filament-shield';
+        $this->slug = 'adrolli/filament-job-manager';
         $this->batch = config('app.laraverse_batch');
+
         $this->tinkerNow();
     }
 
+    public function tinkerNow()
+    {
+        $repositoryData = $this->getGitHubRepository($this->slug);
+        $repositoryContents = $this->getGitHubContents($this->slug);
+
+        if ($repositoryContents['README.md'] != false) {
+            $repositoryReadme = $this->getGitHubReadme($repositoryContents['README.md']);
+        }
+
+        if ($repositoryContents['CHANGELOG.md'] != false) {
+            $repositoryChangelog = $this->getGitHubChangelog($repositoryContents['CHANGELOG.md']);
+        }
+
+        if ($repositoryContents['composer.json'] != false) {
+            $repositoryComposer = $this->getGitHubComposerJson($repositoryContents['composer.json']);
+        }
+
+        if ($repositoryContents['package.json'] != false) {
+            $repositoryPackage = $this->getGitHubPackageJson($repositoryContents['package.json']);
+        }
+
+        if ($repositoryContents['LICENSE.md'] != false) {
+            $repositoryLicense = $this->getGitHubLicense($repositoryContents['LICENSE.md']);
+        }
+
+        dd($repositoryComposer);
+    }
+
+    public function packageData()
+    {
+        $packageData = $this->getPackage($this->slug);
+
+        echo 'Start job for: '.$packageData['repository'].'<br>';
+
+        $versions = $packageData['versions'];
+
+        $versionsData = $this->getVersions($versions);
+
+        $latest = $this->getLatest($versionsData);
+
+        if ($latest['release']) {
+            $latest = $latest['release'];
+        } else {
+            $latest = $latest['branch'];
+        }
+
+        if ($versions[$latest]) {
+            var_dump($versions[$latest]['require']);
+        }
+
+        /*
+         * - Create a tagging Job from here // use own data!!!
+         *   - https://packagist.org/search.json?q=laravel
+         *   - https://packagist.org/search.json?tags=laravel
+         *
+         * - Filament Compatibility
+         *   - https://packagist.org/search.json?tags=filament
+         *   - https://packagist.org/search.json?tags=filamentphp
+         *   - https://packagist.org/search.json?q=filament
+         *   - https://packagist.org/search.json?q=filamentphp
+         *   - https://github.com/search?type=repositories&q=filament
+         *   - https://github.com/search?type=repositories&q=filamentphp
+         *   - https://github.com/topics/filament
+         *   - https://github.com/topics/filamentphp
+         *   - https://github.com/filamentphp
+         *   - https://filamentphp.com/plugins
+         *   - 3
+         *   - 2
+         *   - 1
+         *   - unknown
+         * - Livewire Compatibility
+         *   - 3
+         *   - 2
+         *   - 1
+         *   - unknown
+         * - Tall-Stack
+         * - Is Spatie related?
+         *   - Spatie
+         *   - Related
+         * - Inertia (Vilt)
+         *   - https://github.com/search?type=repositories&q=vilt-stack
+         * - Inertia (Rilt)
+         * - Statamic
+         *   - https://packagist.org/search.json?q=statamic
+         *   - https://statamic.com/addons
+         * - October
+         *   - https://github.com/search?type=repositories&q=octobercms
+         *   - https://github.com/topics/octobercms
+         *   - https://github.com/topics/october
+         *   - https://octobercms.com/plugins
+         * - WinterCMS
+         *   - https://github.com/wintercms/awesome-wintercms#plugins
+         *   - https://wintercms.com/marketplace
+         *   - https://packagist.org/search.json?q=wintercms
+         * - Nova
+         * - Flarum
+         * - Ball-Stack (Bootstrap, not so popular)
+         *
+         * - see config
+         * - Closed source? Like
+         *   - https://www.laraship.com/
+         *   - https://daalder.io/
+         *   - https://www.contentful.com/
+         *
+         */
+
+        /*
+        * Github Searches
+        * - https://github.com/search?type=repositories&q=Laravel
+        * - https://github.com/search?type=repositories&q=Flarum
+        * - https://github.com/search?type=repositories&q=Statamic
+        * - https://github.com/search?type=repositories&q=Eloquent
+        * - https://github.com/search?type=repositories&q=inertiajs (all Laravel?)
+        * - https://github.com/search?type=repositories&q=spatie (some PHP only)
+        * - https://github.com/search?type=repositories&q=rilt-stack
+        * - https://github.com/search?type=repositories&q=laravel-nova // https://github.com/search?type=repositories&q=laravel+nova
+        *
+        * Github Topics
+        * - https://github.com/topics/laravel
+        * - https://github.com/topics/filament
+        * - https://github.com/topics/statamic
+
+        * - https://github.com/topics/eloquent
+        * - https://github.com/topics/blade
+        * - https://github.com/topics/livewire
+        * - https://github.com/topics/laravel-livewire
+        * - https://github.com/topics/laravel-nova
+        * - https://github.com/topics/flarum
+        * - https://github.com/topics/tall-stack
+        * - https://github.com/topics/tallstack
+        * - https://github.com/topics/tall
+        * - https://github.com/topics/alpinejs
+        * - https://github.com/topics/alpine-js
+        * - https://github.com/topics/inertiajs
+        * - https://github.com/topics/spatie
+        * - https://github.com/topics/vilt-stack
+        * - Inertia, TailwindCSS, Tailwind, Vue, React are to broad
+        *
+        * Github Monitor
+        * - spatie/
+        * - livewire/
+        * - illuminate/
+        * - laravel/
+        * - barryvdh/
+        * - ... you know many more
+        */
+
+    }
+
+    /*
     public function tinkerNow()
     {
         $secretToken = config('app.laraverse_token');
@@ -121,4 +295,5 @@ class TinkerController extends Controller
             }
         }
     }
+    */
 }

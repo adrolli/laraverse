@@ -1,54 +1,171 @@
 <?php
 use App\Models\PackagistPackage;
+use Composer\Semver\Semver;
 use Composer\Semver\VersionParser;
 
-//$slug = '14four_oauth2-basecamp';
-$slug = '14four_oauth2-basecamp';
-
+$slug = 'adrolli/filament-job-manager';
+//$slug = 'laravel/framework';
+//$slug = 'laravel/laravel';
+//$slug = '00f100/cakephp-opauth';
+//$slug = 'spatie/laravel-permission';
 $package = PackagistPackage::where('slug', $slug)->first();
 
 if ($package) {
-    $jsonData = $package->data; 
-    $name = $jsonData['name'];
-    $time = $jsonData['time'];
-    // library, composer-plugin, project ... seems useless
-    $type = $jsonData['type'];
-    $favers = $jsonData['favers'];
-    $language = $jsonData['language'];
-    $description = $jsonData['description'];
-    $dependents = $jsonData['dependents'];
-    $repository = $jsonData['repository'];
-    $github_stars = $jsonData['github_stars'];
 
-    $versions = $jsonData['versions'];
+  $id = $package->id;
+  $title = $package->title;
+  $slug = $package->slug;
+  $jsonData = $package->data;
 
-    foreach($versions as $version => $versionData) {
+  $name = $jsonData['name'];
+  $time = $jsonData['time'];
+  $type = $jsonData['type'];
+  $favers = $jsonData['favers'];
+  $language = $jsonData['language'];
+  $description = $jsonData['description'];
+  $dependents = $jsonData['dependents'];
+  $repository = $jsonData['repository'];
+  $github_stars = $jsonData['github_stars'];
+  $versions = $jsonData['versions'];
+
+  $versionParser = new VersionParser();
+
+  $stableVersions = [];
+  $branches = [];
+  foreach ($versions as $versionString => $versionData) {
+
+      // the full data of all versions may not be needed
+      $ver = $versionString;
+      $versionData["dist"]["url"];
+      $versionData["dist"]["type"];
+      $versionData["dist"]["shasum"];
+      $versionData["dist"]["reference"];
+      $versionData["name"];
+      $versionData["time"];
+      $versionData["type"];
+      $versionData["source"]["url"];
+      $versionData["source"]["type"];
+      $versionData["source"]["reference"];
+
+      $authors = $versionData["authors"];
+
+      /* bugs out the latest version echo in Tinkerwell
+      if ($authors) {
+        foreach ($authors as $author) {
+          $author_name = $author["name"];
+          $author_role = $author["role"];
+          $author_email = $author["email"];
+          $author_homepage = $author["homepage"];
+        }
+      }
+      */
+
+      $licenses = $versionData["license"];
+
+      if ($licenses) {
+        foreach ($licenses as $license) {
+          $lic = $license;
+        }
+      }
+
+      $requires = $versionData["require"];
+    
+      if ($requires) {
+        foreach ($requires as $require => $version) {
+            $req = $require;
+            $ver = $version;
+          }
+      }
+      // maybe not need end
+
+      try {
+          $normalizedVersion = $versionParser->normalize($versionString);
+
+          if (preg_match('/^\d+\.\d+(\.\d+)?(\.\d+)?$/', $normalizedVersion)) {
+              $stableVersions[$normalizedVersion] = $versionString;
+          } else {
+              $branches[$versionString] = strtotime($versionData['time']);
+          }
+      } catch (\UnexpectedValueException $e) {
+          $branches[$versionString] = strtotime($versionData['time']);
+      }
+  }
+
+  if (!empty($stableVersions)) {
+      krsort($stableVersions, SORT_NATURAL);
+      $latestVersion = reset($stableVersions);
+
+      echo "Latest version of $name: $latestVersion\n";
+  } else {
+      arsort($branches);
+      $latestVersion = key($branches);
+
+      echo "Latest branch of $name: $latestVersion\n";
+  }
+
+  $latestVersionData = $versions[$latestVersion];
+
+  $latestVersionData["dist"]["url"];
+  $latestVersionData["dist"]["url"];
+  $latestVersionData["dist"]["type"];
+  $latestVersionData["dist"]["shasum"];
+  $latestVersionData["dist"]["reference"];
+  $latestVersionData["name"];
+  $latestVersionData["time"];
+  $latestVersionData["type"];
+  $latestVersionData["source"]["url"];
+  $latestVersionData["source"]["type"];
+  $latestVersionData["source"]["reference"];
+
+  $authors = $latestVersionData["authors"]; // loop
+
+  if ($authors) {
+    foreach ($authors as $author) {
+      $name = $author["name"];
+      $role = $author["role"];
+      $email = $author["email"];
+      $homepage = $author["homepage"];
+    }
+  }
+
+  $licenses = $latestVersionData["license"]; // loop
+
+  if ($licenses) {
+    foreach ($licenses as $license) {
+      $lic = $license;
+    }
+  }
+
+  $requires = $latestVersionData["require"]; // loop
+
+  if ($requires) {
+    foreach ($requires as $require => $version) {
+      if (preg_match('/^illuminate\/\w+/', $require)) {
+        echo $require . " in version " . $version . " required \n";
+      }
+      if (preg_match('/^spatie\/\w+/', $require)) {
+        echo $require . " in version " . $version . " required \n";
+      }
+      if (preg_match('/^filament\/\w+/', $require)) {
+        echo $require . " in version " . $version . " required \n";
+      }
+    }
+  }
+
+  if ($requires['php']) {
+    echo "PHP is required in version: " . $requires['php'];
+  }
+
+      // todo: that must be replaced by a more complex one
+      // to keep all versions of all well-known packages
+      // so to generate a version matrix and feed
+      // the advanced version filters
   
-//      echo "- ".$version."\n";
-//      echo "  - ".$versionData["dist"]["url"]."\n";
-//      echo "  - ".$versionData["dist"]["type"]."\n";
-//      echo "  - ".$versionData["dist"]["shasum"]."\n";
-//      echo "  - ".$versionData["dist"]["reference"]."\n";
-//      echo "  - ".$versionData["name"]."\n";
-//      echo "  - ".$versionData["time"]."\n";
-//      echo "  - ".$versionData["type"]."\n";
-//      echo "  - ".$versionData["source"]["url"]."\n";
-//      echo "  - ".$versionData["source"]["type"]."\n";
-//      echo "  - ".$versionData["source"]["reference"]."\n";
-//loop      echo "  - ".$versionData["authors"]."\n";
-//loop      echo "  - ".$versionData["license"]."\n";
-// loop require
-//var_dump($versionData);
-
-
-$requirePhp = $versionData['require']['php'];
-$requireLaravel = $$versionData['require']['laravel'];
-
-if (!$requirePhp OR !$requireLaravel) {
-  echo "not compat!\n";
-}
-
-
+  } else {
+    // todo: errorhandling
+  }
+ 
+/*
 $phpVersionConstraint = $versionData['require']['php'] ?? null;
 
 if ($phpVersionConstraint) {
@@ -89,11 +206,6 @@ if ($phpVersionConstraint) {
       //var_dump($maintainerData);
 
     }
+*/
 
 
-
-    //  var_dump($jsonData);
-
-} else {
-    echo "Package not found.";
-}

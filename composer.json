@@ -13,6 +13,7 @@
         "adrolli/filament-spatie-laravel-activitylog": "^1.1",
         "algolia/algoliasearch-client-php": "^3.4",
         "bezhansalleh/filament-shield": "^3.0@beta",
+        "composer/semver": "^3.4",
         "filament/filament": "^3.0-stable",
         "guzzlehttp/guzzle": "^7.2",
         "http-interop/http-factory-guzzle": "^1.2",

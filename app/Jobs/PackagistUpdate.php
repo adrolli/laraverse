@@ -14,7 +14,6 @@
 namespace App\Jobs;
 
 use Adrolli\FilamentJobManager\Traits\JobProgress;
-use App\Traits\Packagist\ErrorHandler;
 use App\Traits\Packagist\GetApiPackage;
 use App\Traits\Packagist\PackageUpdate;
 use Illuminate\Bus\Queueable;
@@ -25,7 +24,7 @@ use Illuminate\Queue\SerializesModels;
 
 class PackagistUpdate implements ShouldQueue
 {
-    use Dispatchable, ErrorHandler, GetApiPackage, InteractsWithQueue, JobProgress,
+    use Dispatchable, GetApiPackage, InteractsWithQueue, JobProgress,
         PackageUpdate, Queueable, SerializesModels;
 
     public $tries;
