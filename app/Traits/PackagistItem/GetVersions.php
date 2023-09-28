@@ -21,6 +21,7 @@ trait GetVersions
                 try {
                     $normalizedVersion = $versionParser->normalize($versionString);
 
+                    // Matches 9.0.1.0 and 10.0.1 and 100.0 and 10
                     if (preg_match('/^\d+\.\d+(\.\d+)?(\.\d+)?$/', $normalizedVersion)) {
                         $releases[$normalizedVersion] = $versionString;
                     } else {

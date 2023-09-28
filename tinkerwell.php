@@ -3,11 +3,40 @@ use App\Models\PackagistPackage;
 use Composer\Semver\Semver;
 use Composer\Semver\VersionParser;
 
+/*
+Todo:
+
+- maintainers 
+    - name
+    - avatar_url
+
+- Get repository url and run the repo-job
+- Andor Create item
+- Create Item relations
+  - composer-require
+  - composer-require-dev
+  - the is ones (fork etc., ough)
+- Create Tags
+- Category
+  - Laravel Package
+  - PHP Package
+  - Laravel App
+  - Other
+- Well known compatibility (at least PHP/Laravel)
+- Tech-Stack (main stacks or all stacks, will there even be all stacks?)
+  - ... wire ... by require
+- Category or Type
+  - ... wire ... from Tags?
+
+*/
+
 $slug = 'adrolli/filament-job-manager';
-//$slug = 'laravel/framework';
-//$slug = 'laravel/laravel';
-//$slug = '00f100/cakephp-opauth';
-//$slug = 'spatie/laravel-permission';
+$slug = 'laravel/framework';
+$slug = 'laravel/laravel';
+$slug = '00f100/cakephp-opauth';
+$slug = 'spatie/laravel-permission';
+//$slug = 'filament/spatie-laravel-media-library-plugin';
+//$slug = 'bezhansalleh/filament-shield';
 $package = PackagistPackage::where('slug', $slug)->first();
 
 if ($package) {
@@ -25,6 +54,12 @@ if ($package) {
   $description = $jsonData['description'];
   $dependents = $jsonData['dependents'];
   $repository = $jsonData['repository'];
+
+  // todo: this is probably a GitHub Repo URL
+  // then run the Repository Job
+  // for GitHub Repos
+  echo $repository . " \n";
+  
   $github_stars = $jsonData['github_stars'];
   $versions = $jsonData['versions'];
 
@@ -32,6 +67,9 @@ if ($package) {
 
   $stableVersions = [];
   $branches = [];
+  $allphp = [];
+  $alllaravel = [];
+  $allfilament = [];
   foreach ($versions as $versionString => $versionData) {
 
       // the full data of all versions may not be needed
@@ -47,36 +85,25 @@ if ($package) {
       $versionData["source"]["type"];
       $versionData["source"]["reference"];
 
-      $authors = $versionData["authors"];
-
-      /* bugs out the latest version echo in Tinkerwell
-      if ($authors) {
-        foreach ($authors as $author) {
-          $author_name = $author["name"];
-          $author_role = $author["role"];
-          $author_email = $author["email"];
-          $author_homepage = $author["homepage"];
-        }
-      }
-      */
-
-      $licenses = $versionData["license"];
-
-      if ($licenses) {
-        foreach ($licenses as $license) {
-          $lic = $license;
-        }
-      }
-
       $requires = $versionData["require"];
-    
+
       if ($requires) {
+        if ($requires['php']) {
+          $allphp[] = $requires['php'];
+        }
         foreach ($requires as $require => $version) {
-            $req = $require;
-            $ver = $version;
+          if (preg_match('/^illuminate\/\w+/', $require)) {
+            $alllaravel[] = $version;
           }
+          if (preg_match('/^filament\/\w+/', $require)) {
+            $allfilament[] = $version;
+          }
+        }
       }
-      // maybe not need end
+
+      // todo: if "self.version" set version, check in
+      // filament/spatie-laravel-media-library-plugin
+      // then get and sort all versions of the array
 
       try {
           $normalizedVersion = $versionParser->normalize($versionString);
@@ -90,6 +117,24 @@ if ($package) {
           $branches[$versionString] = strtotime($versionData['time']);
       }
   }
+
+  $majorVersions = [];
+
+  foreach ($alllaravel as $constraint) {
+      $versions = explode('|', $constraint);
+
+      foreach ($versions as $version) {
+
+          $normalizedVersion = str_replace(["~", "^"], "", $version);
+          list($majorVersion) = explode('.', $normalizedVersion);
+
+          $majorVersions[$majorVersion] = true;
+      }
+  }
+
+  $uniqueMajorVersions = array_keys($majorVersions);
+  rsort($uniqueMajorVersions, SORT_NUMERIC);
+
 
   if (!empty($stableVersions)) {
       krsort($stableVersions, SORT_NATURAL);
@@ -117,7 +162,7 @@ if ($package) {
   $latestVersionData["source"]["type"];
   $latestVersionData["source"]["reference"];
 
-  $authors = $latestVersionData["authors"]; // loop
+  $authors = $latestVersionData["authors"];
 
   if ($authors) {
     foreach ($authors as $author) {
@@ -128,7 +173,7 @@ if ($package) {
     }
   }
 
-  $licenses = $latestVersionData["license"]; // loop
+  $licenses = $latestVersionData["license"];
 
   if ($licenses) {
     foreach ($licenses as $license) {
@@ -136,76 +181,30 @@ if ($package) {
     }
   }
 
-  $requires = $latestVersionData["require"]; // loop
+  $requires = $latestVersionData["require"];
 
   if ($requires) {
+    echo "Latest version: \n";
+    if ($requires['php']) {
+      echo "PHP is required in version: " . $requires['php'];
+    }
     foreach ($requires as $require => $version) {
+
+      // todo: this is the place where to
+      // create all the item-relations
+
       if (preg_match('/^illuminate\/\w+/', $require)) {
-        echo $require . " in version " . $version . " required \n";
+        echo $require . " is required in version: " . $version . " \n";
       }
       if (preg_match('/^spatie\/\w+/', $require)) {
-        echo $require . " in version " . $version . " required \n";
+        echo $require . " is required in version: " . $version . " \n";
       }
       if (preg_match('/^filament\/\w+/', $require)) {
-        echo $require . " in version " . $version . " required \n";
+        echo $require . " is required in version: " . $version . " \n";
       }
     }
   }
-
-  if ($requires['php']) {
-    echo "PHP is required in version: " . $requires['php'];
-  }
-
-      // todo: that must be replaced by a more complex one
-      // to keep all versions of all well-known packages
-      // so to generate a version matrix and feed
-      // the advanced version filters
   
-  } else {
+} else {
     // todo: errorhandling
-  }
- 
-/*
-$phpVersionConstraint = $versionData['require']['php'] ?? null;
-
-if ($phpVersionConstraint) {
-    // Use Composer's VersionParser to extract the PHP version
-    $versionParser = new VersionParser();
-    $phpVersion = $versionParser->parseConstraints($phpVersionConstraint)->getPrettyString();
-
-    // Get the target PHP versions from the .env file
-    $targetPhpVersions = explode(',', env('PHP_VERSIONS', '8.1,8.2'));
-
-    // Initialize a variable to track compatibility
-    $isCompatible = false;
-
-    foreach ($targetPhpVersions as $targetPhpVersion) {
-        if (version_compare($phpVersion, $targetPhpVersion, '>=')) {
-            $isCompatible = true;
-            break;
-        }
-    }
-
-    if ($isCompatible) {
-        echo "PHP 8 compat\n";
-    }
 }
-
-
-// loop // support
-      echo "  - ".$versionData["source"]["reference"]."\n";
-      //var_dump($versionData);
-
-    }
-
-   $maintainers = $jsonData['maintainers'];
-
-    foreach($maintainers as $maintainer => $maintainerData) {
-  
-      //echo $maintainer;
-      //var_dump($maintainerData);
-
-    }
-*/
-
-

@@ -22,6 +22,7 @@ use App\Traits\Github\GetLicense;
 use App\Traits\Github\GetPackageJson;
 use App\Traits\Github\GetReadme;
 use App\Traits\Github\GetRepository;
+use App\Traits\Github\RepositoryCreate;
 use App\Traits\Packagist\GetApiAll;
 use App\Traits\Packagist\GetApiUpdates;
 use App\Traits\Packagist\GetDatabase;
@@ -37,7 +38,7 @@ class TinkerController extends Controller
     //use GetApiAll, GetApiUpdates, GetDatabase, SerializesModels;
 
     use ErrorHandler, GetChangelog, GetComposerJson, GetContents, GetLatest, GetLicense, GetPackage,
-        GetPackageJson, GetReadme, GetRepository, GetVersion, GetVersions;
+        GetPackageJson, GetReadme, GetRepository, GetVersion, GetVersions, RepositoryCreate;
 
     public $batch;
 
@@ -45,12 +46,23 @@ class TinkerController extends Controller
 
     public function __invoke()
     {
+        $secretToken = config('app.laraverse_token');
+
+        if (request('token') !== $secretToken) {
+            activity()->log('Unauthorized tinker request');
+
+            abort(403, 'Unauthorized');
+        }
+
         //$this->slug = '00f100/cakephp-opauth';
         //$this->slug = 'spatie/laravel-permission';
-        //$this->slug = 'laravel/framework';
-        //$this->slug = 'filament/spatie-laravel-media-library-plugin';
+        $this->slug = 'laravel/laravel';
+        $this->slug = 'spatie/package-skeleton-laravel';
+        //$this->slug = 'filamentphp/spatie-laravel-media-library-plugin';
         //$this->slug = 'bezhansalleh/filament-shield';
-        $this->slug = 'adrolli/filament-job-manager';
+        //$this->slug = 'adrolli/filament-job-manager';
+        //$this->slug = 'adrolli/corcel';
+        //$this->slug = 'adrolli/laraverse';
         $this->batch = config('app.laraverse_batch');
 
         $this->tinkerNow();
@@ -61,27 +73,7 @@ class TinkerController extends Controller
         $repositoryData = $this->getGitHubRepository($this->slug);
         $repositoryContents = $this->getGitHubContents($this->slug);
 
-        if ($repositoryContents['README.md'] != false) {
-            $repositoryReadme = $this->getGitHubReadme($repositoryContents['README.md']);
-        }
-
-        if ($repositoryContents['CHANGELOG.md'] != false) {
-            $repositoryChangelog = $this->getGitHubChangelog($repositoryContents['CHANGELOG.md']);
-        }
-
-        if ($repositoryContents['composer.json'] != false) {
-            $repositoryComposer = $this->getGitHubComposerJson($repositoryContents['composer.json']);
-        }
-
-        if ($repositoryContents['package.json'] != false) {
-            $repositoryPackage = $this->getGitHubPackageJson($repositoryContents['package.json']);
-        }
-
-        if ($repositoryContents['LICENSE.md'] != false) {
-            $repositoryLicense = $this->getGitHubLicense($repositoryContents['LICENSE.md']);
-        }
-
-        dd($repositoryComposer);
+        $this->prepareGitHubRepository($repositoryData, $repositoryContents);
     }
 
     public function packageData()
@@ -208,14 +200,6 @@ class TinkerController extends Controller
     /*
     public function tinkerNow()
     {
-        $secretToken = config('app.laraverse_token');
-
-        if (request('token') !== $secretToken) {
-            activity()->log('Unauthorized tinker request');
-
-            abort(403, 'Unauthorized');
-        }
-
         activity()->log('Packagist Worker started');
 
         $batchSize = $this->batch;

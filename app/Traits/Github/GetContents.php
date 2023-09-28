@@ -51,7 +51,12 @@ trait GetContents
                     $found = false;
                     foreach ($contents as $contentItem) {
                         if ($contentItem['name'] === $item) {
-                            $results[$item] = $contentItem['download_url'];
+
+                            if ($contentItem['type'] === 'file') {
+                                $results[$item] = $contentItem['download_url'];
+                            } else {
+                                $results[$item] = $contentItem['url'];
+                            }
                             $found = true;
                             break;
                         }
