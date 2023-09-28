@@ -11,6 +11,7 @@ use Filament\Forms\Components\KeyValue;
 use Filament\Forms\Components\RichEditor;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TextInput;
+use Filament\Forms\Components\Toggle;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
@@ -88,6 +89,27 @@ class RepositoryResource extends Resource
                             'lg' => 12,
                         ]),
 
+                    TextInput::make('homepage')
+                        ->rules(['string'])
+                        ->required()
+                        ->placeholder('Homepage')
+                        ->columnSpan([
+                            'default' => 12,
+                            'md' => 12,
+                            'lg' => 12,
+                        ]),
+
+                    TextInput::make('ghid')
+                        ->rules(['integer'])
+                        ->required()
+                        ->placeholder('GitHub ID')
+                        ->label('GitHub ID')
+                        ->columnSpan([
+                            'default' => 12,
+                            'md' => 12,
+                            'lg' => 12,
+                        ]),
+
                     RichEditor::make('readme')
                         ->rules(['string'])
                         ->required()
@@ -98,8 +120,27 @@ class RepositoryResource extends Resource
                             'lg' => 12,
                         ]),
 
-                    KeyValue::make('data')
+                    RichEditor::make('changelog')
+                        ->rules(['string'])
                         ->required()
+                        ->placeholder('Changelog')
+                        ->columnSpan([
+                            'default' => 12,
+                            'md' => 12,
+                            'lg' => 12,
+                        ]),
+
+                    RichEditor::make('licensefile')
+                        ->rules(['string'])
+                        ->required()
+                        ->placeholder('License file')
+                        ->columnSpan([
+                            'default' => 12,
+                            'md' => 12,
+                            'lg' => 12,
+                        ]),
+
+                    KeyValue::make('data')
                         ->required()
                         ->columnSpan([
                             'default' => 12,
@@ -109,7 +150,6 @@ class RepositoryResource extends Resource
 
                     KeyValue::make('composer')
                         ->required()
-                        ->required()
                         ->columnSpan([
                             'default' => 12,
                             'md' => 12,
@@ -118,7 +158,6 @@ class RepositoryResource extends Resource
 
                     KeyValue::make('npm')
                         ->required()
-                        ->required()
                         ->columnSpan([
                             'default' => 12,
                             'md' => 12,
@@ -126,18 +165,6 @@ class RepositoryResource extends Resource
                         ]),
 
                     KeyValue::make('code_analyzer')
-                        ->required()
-                        ->required()
-                        ->columnSpan([
-                            'default' => 12,
-                            'md' => 12,
-                            'lg' => 12,
-                        ]),
-
-                    TextInput::make('package_type')
-                        ->rules(['max:255', 'string'])
-                        ->required()
-                        ->placeholder('Package Type')
                         ->columnSpan([
                             'default' => 12,
                             'md' => 12,
@@ -158,7 +185,6 @@ class RepositoryResource extends Resource
 
                     Select::make('organization_id')
                         ->rules(['exists:organizations,id'])
-                        ->required()
                         ->relationship('organization', 'title')
                         ->searchable()
                         ->placeholder('Organization')
@@ -170,10 +196,99 @@ class RepositoryResource extends Resource
 
                     Select::make('owner_id')
                         ->rules(['exists:owners,id'])
-                        ->required()
                         ->relationship('owner', 'title')
                         ->searchable()
                         ->placeholder('Owner')
+                        ->columnSpan([
+                            'default' => 12,
+                            'md' => 12,
+                            'lg' => 12,
+                        ]),
+
+                    Toggle::make('private')
+                        ->rules(['boolean'])
+                        ->required()
+                        ->columnSpan([
+                            'default' => 12,
+                            'md' => 12,
+                            'lg' => 12,
+                        ]),
+
+                    Toggle::make('public')
+                        ->rules(['boolean'])
+                        ->required()
+                        ->columnSpan([
+                            'default' => 12,
+                            'md' => 12,
+                            'lg' => 12,
+                        ]),
+
+                    Toggle::make('archived')
+                        ->rules(['boolean'])
+                        ->required()
+                        ->columnSpan([
+                            'default' => 12,
+                            'md' => 12,
+                            'lg' => 12,
+                        ]),
+
+                    Toggle::make('disabled')
+                        ->rules(['boolean'])
+                        ->required()
+                        ->columnSpan([
+                            'default' => 12,
+                            'md' => 12,
+                            'lg' => 12,
+                        ]),
+
+                    Toggle::make('fork')
+                        ->rules(['boolean'])
+                        ->required()
+                        ->columnSpan([
+                            'default' => 12,
+                            'md' => 12,
+                            'lg' => 12,
+                        ]),
+
+                    Toggle::make('template')
+                        ->rules(['boolean'])
+                        ->required()
+                        ->columnSpan([
+                            'default' => 12,
+                            'md' => 12,
+                            'lg' => 12,
+                        ]),
+
+                    Toggle::make('vite')
+                        ->rules(['boolean'])
+                        ->required()
+                        ->columnSpan([
+                            'default' => 12,
+                            'md' => 12,
+                            'lg' => 12,
+                        ]),
+
+                    Toggle::make('tailwind')
+                        ->rules(['boolean'])
+                        ->required()
+                        ->columnSpan([
+                            'default' => 12,
+                            'md' => 12,
+                            'lg' => 12,
+                        ]),
+
+                    Toggle::make('docker')
+                        ->rules(['boolean'])
+                        ->required()
+                        ->columnSpan([
+                            'default' => 12,
+                            'md' => 12,
+                            'lg' => 12,
+                        ]),
+
+                    Toggle::make('database')
+                        ->rules(['boolean'])
+                        ->required()
                         ->columnSpan([
                             'default' => 12,
                             'md' => 12,

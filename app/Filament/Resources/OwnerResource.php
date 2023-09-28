@@ -5,9 +5,9 @@ namespace App\Filament\Resources;
 use App\Filament\Filters\DateRangeFilter;
 use App\Filament\Resources\OwnerResource\Pages;
 use App\Models\Owner;
-use Filament\Forms\Components\Card;
 use Filament\Forms\Components\Grid;
 use Filament\Forms\Components\KeyValue;
+use Filament\Forms\Components\Section;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
@@ -43,7 +43,7 @@ class OwnerResource extends Resource
     public static function form(Form $form): Form
     {
         return $form->schema([
-            Card::make()->schema([
+            Section::make()->schema([
                 Grid::make(['default' => 0])->schema([
                     TextInput::make('title')
                         ->rules(['max:255', 'string'])
@@ -65,8 +65,35 @@ class OwnerResource extends Resource
                             'lg' => 12,
                         ]),
 
-                    KeyValue::make('data')
+                    TextInput::make('ghid')
                         ->required()
+                        ->placeholder('GitHub ID')
+                        ->label('GitHub ID')
+                        ->columnSpan([
+                            'default' => 12,
+                            'md' => 12,
+                            'lg' => 12,
+                        ]),
+
+                    TextInput::make('avatar')
+                        ->required()
+                        ->placeholder('Avatar')
+                        ->columnSpan([
+                            'default' => 12,
+                            'md' => 12,
+                            'lg' => 12,
+                        ]),
+
+                    TextInput::make('gravatar')
+                        ->required()
+                        ->placeholder('Gravatar')
+                        ->columnSpan([
+                            'default' => 12,
+                            'md' => 12,
+                            'lg' => 12,
+                        ]),
+
+                    KeyValue::make('data')
                         ->required()
                         ->columnSpan([
                             'default' => 12,

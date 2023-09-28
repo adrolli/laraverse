@@ -3,8 +3,8 @@
 namespace App\Models;
 
 use App\Models\Scopes\Searchable;
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
 
 class Repository extends Model
 {
@@ -21,10 +21,23 @@ class Repository extends Model
         'composer',
         'npm',
         'code_analyzer',
-        'package_type',
         'repository_type_id',
         'organization_id',
         'owner_id',
+        'ghid',
+        'homepage',
+        'changelog',
+        'licensefile',
+        'private',
+        'public',
+        'archived',
+        'disabled',
+        'fork',
+        'template',
+        'vite',
+        'tailwind',
+        'docker',
+        'database',
     ];
 
     protected $searchableFields = ['*'];

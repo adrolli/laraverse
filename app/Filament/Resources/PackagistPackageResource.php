@@ -68,7 +68,6 @@ class PackagistPackageResource extends Resource
 
                     KeyValue::make('data')
                         ->required()
-                        ->required()
                         ->columnSpan([
                             'default' => 12,
                             'md' => 12,
