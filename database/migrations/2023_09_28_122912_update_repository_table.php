@@ -14,9 +14,13 @@ return new class extends Migration
         Schema::table('repositories', function (Blueprint $table) {
 
             $table->bigInteger('ghid');
-            $table->string('homepage');
-            $table->longText('changelog');
-            $table->longText('licensefile');
+            $table->string('homepage')->nullable();
+            $table->text('description')->nullable()->change();
+            $table->longText('composer')->nullable()->change();
+            $table->longText('npm')->nullable()->change();
+            $table->longText('readme')->nullable()->change();
+            $table->longText('changelog')->nullable()->change();
+            $table->longText('licensefile')->nullable()->change();
             $table->dropColumn('package_type');
             $table->json('code_analyzer')->nullable()->change();
             $table->unsignedBigInteger('organization_id')->nullable()->change();
@@ -46,6 +50,11 @@ return new class extends Migration
             $table->dropColumn('licensefile');
             $table->string('package_type');
             $table->json('code_analyzer')->nullable(false)->change();
+            $table->longText('composer')->nullable(false)->change();
+            $table->longText('npm')->nullable(false)->change();
+            $table->longText('readme')->nullable(false)->change();
+            $table->longText('changelog')->nullable(false)->change();
+            $table->longText('licensefile')->nullable(false)->change();
             $table->unsignedBigInteger('organization_id')->nullable(false)->change();
             $table->unsignedBigInteger('owner_id')->nullable(false)->change();
             $table->dropColumn('private');

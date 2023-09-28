@@ -9,167 +9,176 @@ use App\Models\RepositoryTag;
 
 trait RepositoryCreate
 {
-    public function prepareGitHubRepository($repositoryData, $repositoryContents)
-    {
+    use GetOwner;
 
-        $ghid = $repositoryData['id'];
-        $slug = $repositoryData['full_name'];
+    public function createGitHubRepository($slug)
+    {
+        $repositoryData = $this->getGitHubRepository($slug);
+        $repositoryContents = $this->getGitHubContents($slug);
+
+        $createRepo['ghid'] = $repositoryData['id'];
+        $createRepo['slug'] = $repositoryData['full_name'];
 
         try {
-            $name = $repositoryData['name'];
-            $description = $repositoryData['description'];
-            $homepage = $repositoryData['homepage'];
+            $createRepo['title'] = $repositoryData['name'];
+            $createRepo['description'] = $repositoryData['description'];
+            $createRepo['homepage'] = $repositoryData['homepage'];
 
             $owner = $repositoryData['owner'];
-            $ownid = $owner['id'];
-            $oname = $owner['login'];
-            $otype = $owner['type'];
-            $owurl = $owner['html_url'];
-            $avatar = $owner['avatar_url'];
-            $gravatar = $owner['gravatar_id'];
+            $createOwner['ghid'] = $owner['id'];
+            $createOwner['title'] = $owner['login'];
+            $createOwner['slug'] = $owner['login'];
+            $createOwner['type'] = $owner['type'];
+            $createOwner['url'] = $owner['html_url'];
+            $createOwner['avatar'] = $owner['avatar_url'];
+            $createOwner['gravatar'] = $owner['gravatar_id'];
+            $ownerApiUrl = $owner['url'];
+            $createOwner['data'] = $this->getGitHubOwner($ownerApiUrl);
 
             $license = $repositoryData['license'];
             if ($license != null) {
-                $lic_key = $license['key'];
-                $licname = $license['name'];
-                $spdx_id = $license['spdx_id'];
+                $createRepo['license'] = $license['key'];
             }
 
-            $private = $repositoryData['private'];
-            $fork = $repositoryData['fork'];
-            $archived = $repositoryData['archived'];
-            $disabled = $repositoryData['disabled'];
-            $template = $repositoryData['is_template'];
-
-            if ($repositoryContents['artisan'] != false and $repositoryContents['app'] != false) {
-                $type = 'App';
-            } elseif ($template == 1) {
-                $type = 'Template';
-            } elseif ($repositoryContents['src'] != false and $repositoryContents['composer.json'] != false) {
-                $type = 'Package';
-            } else {
-                $type = 'Unknown';
-            }
+            $createRepo['private'] = $repositoryData['private'];
+            $createRepo['fork'] = $repositoryData['fork'];
+            $createRepo['archived'] = $repositoryData['archived'];
+            $createRepo['disabled'] = $repositoryData['disabled'];
+            $createRepo['template'] = $repositoryData['is_template'];
 
             if ($repositoryContents['database'] != false) {
-                $hasDatabase = true;
+                $createRepo['database'] = true;
+            } else {
+                $createRepo['database'] = false;
+
             }
 
             if ($repositoryContents['resources'] != false) {
-                $hasResources = true;
+                $createRepo['resources'] = true;
+            } else {
+                $createRepo['resources'] = false;
+
             }
 
             if ($repositoryContents['public'] != false) {
-                $hasPublic = true;
+                $createRepo['public'] = true;
+            } else {
+                $createRepo['public'] = false;
+
             }
 
             if ($repositoryContents['routes'] != false) {
-                $hasRoutes = true;
+                $createRepo['routes'] = true;
+            } else {
+                $createRepo['routes'] = false;
+
             }
 
             if ($repositoryContents['tests'] != false) {
-                $hasTests = true;
+                $createRepo['tests'] = true;
+            } else {
+                $createRepo['tests'] = false;
+
             }
 
             if ($repositoryContents['vite.config.js'] != false) {
-                $hasVite = true;
+                $createRepo['vite'] = true;
+            } else {
+                $createRepo['vite'] = false;
+
             }
 
             if ($repositoryContents['tailwind.config.js'] != false) {
-                $hasTailwind = true;
+                $createRepo['tailwind'] = true;
+            } else {
+                $createRepo['tailwind'] = false;
+
             }
 
             if ($repositoryContents['docker-compose.yml'] != false) {
-                $hasDocker = true;
+                $createRepo['docker'] = true;
+            } else {
+                $createRepo['docker'] = false;
+
             }
 
             if ($repositoryContents['README.md'] != false) {
-                $readmeMd = $this->getGitHubReadme($repositoryContents['README.md']);
+                $createRepo['readme'] = $this->getGitHubReadme($repositoryContents['README.md']);
             }
 
             if ($repositoryContents['CHANGELOG.md'] != false) {
-                $changelogMd = $this->getGitHubChangelog($repositoryContents['CHANGELOG.md']);
+                $createRepo['changelog'] = $this->getGitHubChangelog($repositoryContents['CHANGELOG.md']);
             }
 
             if ($repositoryContents['composer.json'] != false) {
-                $composerJson = $this->getGitHubComposerJson($repositoryContents['composer.json']);
+                $composer = $this->getGitHubComposerJson($repositoryContents['composer.json']);
+                $createRepo['composer'] = json_decode($composer);
             }
 
             if ($repositoryContents['package.json'] != false) {
-                $packageJson = $this->getGitHubPackageJson($repositoryContents['package.json']);
+                $npm = $this->getGitHubPackageJson($repositoryContents['package.json']);
+                $createRepo['npm'] = json_decode($npm);
             }
 
             if ($repositoryContents['LICENSE.md'] != false) {
-                $licenseMd = $this->getGitHubLicense($repositoryContents['LICENSE.md']);
+                $createRepo['licensefile'] = $this->getGitHubLicense($repositoryContents['LICENSE.md']);
             }
 
-            $repositoryCreateData = [
-                'title' => 'My Repository',
-                'slug' => 'my-repo',
-                'description' => 'A sample repository',
-                'license' => 'MIT',
-                'readme' => 'readme',
-                'data' => 'data',
-                'composer' => 'data',
-                'npm' => 'data',
-                'code_analyzer' => 'data',
-                'package_type' => 'data', // delete this?
-            ];
-
-            if ($otype = 'User') {
-                //
-            } elseif ($otype = 'Organization') {
-                //
+            if ($repositoryContents['artisan'] != false and $repositoryContents['app'] != false) {
+                $createRepo['repository_type_id'] = 36;
+            } elseif ($createRepo['template'] === true) {
+                $createRepo['repository_type_id'] = 38;
+            } elseif ($repositoryContents['src'] != false and $repositoryContents['composer.json'] != false) {
+                $createRepo['repository_type_id'] = 37;
+            } else {
+                $createRepo['repository_type_id'] = 39;
             }
 
-            $ownerData = [
-                'title' => 'John Doe',
-                'slug' => 'john-doe',
-                'data' => 'john-doe-avatar.jpg',
-            ];
+            $createRepo['data'] = $repositoryData;
 
-            $orgData = [
-                'title' => 'My Organization',
-                'slug' => 'my-org',
-                'data' => 'org-avatar.jpg',
-            ];
-
-            $topics = $repositoryData['topics'];
-            foreach ($topics as $topic) {
-                $tag = RepositoryTag::firstOrCreate(['slug' => $topic],
-                    [
-                        'title' => ucfirst($topic),
-                        'slug' => $topic,
-                    ]);
-            }
-
-            // check type
-            if ($owner) {
-                $owner = Owner::firstOrCreate(['slug' => $ownerData['slug']], $ownerData);
-                $org = Organization::firstOrCreate(['slug' => $orgData['slug']], $orgData);
-            }
-
-            // repository_type ???
-
-            // finish with fields
             $repository = Repository::updateOrCreate(
-                ['slug' => $slug],
-                $repositoryCreateData
+                ['slug' => $createRepo['slug']],
+                $createRepo
             );
 
-            $repository->tag()->associate($tag);
-            $repository->owner()->associate($owner);
-            $repository->organisation()->associate($org);
+            if ($owner) {
+                if ($createOwner['type'] == 'Organization') {
+                    $organization = Organization::updateOrCreate(['slug' => $createOwner['slug']], $createOwner);
+                    $repository->organization()->associate($organization);
+                } else {
+                    $owner = Owner::updateOrCreate(['slug' => $createOwner['slug']], $createOwner);
+                    $repository->owner()->associate($owner);
+                }
+            }
 
-            $tag->save();
-            $owner->save();
-            $org->save();
+            $topics = $repositoryData['topics'];
+
+            if ($topics) {
+                foreach ($topics as $topic) {
+                    if (strlen($topic) > 3) {
+                        $tagtitle = ucfirst($topic);
+                    } else {
+                        $tagtitle = strtoupper($topic);
+                    }
+
+                    $tag = RepositoryTag::firstOrCreate(['slug' => $topic],
+                        [
+                            'title' => $tagtitle,
+                            'slug' => $topic,
+                        ]);
+
+                    $repository->repositoryTags()->syncWithoutDetaching($tag);
+                }
+            }
+
             $repository->save();
+
+            activity()->log("GitHub repo {$createRepo['slug']} created");
 
         } catch (\Exception $e) {
 
-            if ($slug) {
-                activity()->log("GitHub repo {$slug} create failed: ".$e);
+            if ($createRepo['slug']) {
+                activity()->log("GitHub repo {$createRepo['slug']} create failed: ".$e);
             } else {
                 activity()->log('GitHub repo (unknown slug) create failed: '.$e);
 
