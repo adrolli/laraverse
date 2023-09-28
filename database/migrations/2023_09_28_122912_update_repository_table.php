@@ -19,7 +19,7 @@ return new class extends Migration
             $table->longText('composer')->nullable()->change();
             $table->longText('npm')->nullable()->change();
             $table->longText('readme')->nullable()->change();
-            $table->longText('changelog')->nullable()->change();
+            $table->longText('changelog')->nullable();
             $table->longText('licensefile')->nullable()->change();
             $table->dropColumn('package_type');
             $table->json('code_analyzer')->nullable()->change();
