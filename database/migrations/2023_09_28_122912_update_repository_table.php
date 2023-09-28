@@ -20,7 +20,7 @@ return new class extends Migration
             $table->longText('npm')->nullable()->change();
             $table->longText('readme')->nullable()->change();
             $table->longText('changelog')->nullable();
-            $table->longText('licensefile')->nullable()->change();
+            $table->longText('licensefile')->nullable();
             $table->dropColumn('package_type');
             $table->json('code_analyzer')->nullable()->change();
             $table->unsignedBigInteger('organization_id')->nullable()->change();
