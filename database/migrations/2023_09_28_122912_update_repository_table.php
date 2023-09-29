@@ -35,6 +35,7 @@ return new class extends Migration
             $table->boolean('tailwind');
             $table->boolean('docker');
             $table->boolean('database');
+            $table->unsignedBigInteger('repository_type_id')->nullable()->change();
         });
     }
 
@@ -67,6 +68,7 @@ return new class extends Migration
             $table->dropColumn('tailwind');
             $table->dropColumn('docker');
             $table->dropColumn('database');
+            $table->unsignedBigInteger('repository_type_id')->nullable(false)->change();
         });
     }
 };
