@@ -6,6 +6,7 @@ use App\Models\Organization;
 use App\Models\Owner;
 use App\Models\Repository;
 use App\Models\RepositoryTag;
+use App\Models\RepositoryType;
 
 trait RepositoryCreate
 {
@@ -124,22 +125,30 @@ trait RepositoryCreate
                 $createRepo['licensefile'] = $this->getGitHubLicense($repositoryContents['LICENSE.md']);
             }
 
+            $createRepo['data'] = $repositoryData;
+
             if ($repositoryContents['artisan'] != false and $repositoryContents['app'] != false) {
-                $createRepo['repository_type_id'] = 36;
+                $settype = 'app';
             } elseif ($createRepo['template'] === true) {
-                $createRepo['repository_type_id'] = 38;
+                $settype = 'template';
             } elseif ($repositoryContents['src'] != false and $repositoryContents['composer.json'] != false) {
-                $createRepo['repository_type_id'] = 37;
+                $settype = 'package';
             } else {
-                $createRepo['repository_type_id'] = 39;
+                $settype = 'unknown';
             }
 
-            $createRepo['data'] = $repositoryData;
+            $type = RepositoryType::firstOrCreate(
+                ['slug' => $settype], [
+                    'title' => ucfirst($settype),
+                    'slug' => $settype,
+                ]);
 
             $repository = Repository::updateOrCreate(
                 ['slug' => $createRepo['slug']],
                 $createRepo
             );
+
+            $repository->repositoryType()->associate($type);
 
             if ($owner) {
                 if ($createOwner['type'] == 'Organization') {

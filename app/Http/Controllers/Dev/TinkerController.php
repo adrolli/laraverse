@@ -54,20 +54,6 @@ class TinkerController extends Controller
             abort(403, 'Unauthorized');
         }
 
-        //$this->slug = '00f100/cakephp-opauth';
-        //$this->slug = 'spatie/laravel-permission';
-        $this->slug = 'laravel/framework';
-        $this->slug = 'spatie/package-skeleton-laravel';
-        $this->slug = 'hopeseekr-contribs/composer-include-files';
-        $this->slug = 'beriba/project_0';
-        $this->slug = 'beriba/vim-tools';
-        $this->slug = 'adrolli/tallui-vscode';
-        //$this->slug = 'filamentphp/spatie-laravel-media-library-plugin';
-        //$this->slug = 'bezhansalleh/filament-shield';
-        //$this->slug = 'adrolli/filament-job-manager';
-        //$this->slug = 'adrolli/corcel';
-        //$this->slug = 'adrolli/laraverse';
-
         $this->batch = config('app.laraverse_batch');
 
         $this->tinkerNow();
@@ -75,9 +61,25 @@ class TinkerController extends Controller
 
     public function tinkerNow()
     {
+        $slugs = [
+            '00f100/cakephp-opauth',
+            'spatie/laravel-permission',
+            'laravel/framework',
+            'spatie/package-skeleton-laravel',
+            'hopeseekr-contribs/composer-include-files',
+            'beriba/project_0',
+            'beriba/vim-tools',
+            'adrolli/tallui-vscode',
+            'filamentphp/spatie-laravel-media-library-plugin',
+            'bezhansalleh/filament-shield',
+            'adrolli/filament-job-manager',
+            'adrolli/corcel',
+            'adrolli/laraverse',
+        ];
 
-        $this->createGitHubRepository($this->slug);
-
+        foreach ($slugs as $slug) {
+            $this->createGitHubRepository($slug);
+        }
     }
 
     public function packageData()

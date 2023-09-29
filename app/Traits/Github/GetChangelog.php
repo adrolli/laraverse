@@ -15,7 +15,7 @@ trait GetChangelog
         try {
             $response = $client->get($apiUrl, [
                 'headers' => [
-                    'Authorization' => 'Bearer '.config('app.github_api_token'), // Updated config
+                    'Authorization' => 'Bearer '.config('app.github_api_token'),
                     'Accept' => 'application/vnd.github.v3.raw',
                 ],
             ]);
