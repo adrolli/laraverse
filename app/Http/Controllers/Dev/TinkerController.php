@@ -22,6 +22,8 @@ use App\Traits\Github\GetLicense;
 use App\Traits\Github\GetPackageJson;
 use App\Traits\Github\GetReadme;
 use App\Traits\Github\GetRepository;
+use App\Traits\Github\GetSearch;
+use App\Traits\Github\RateLimits;
 use App\Traits\Github\RepositoryCreate;
 use App\Traits\Packagist\GetApiAll;
 use App\Traits\Packagist\GetApiUpdates;
@@ -37,8 +39,8 @@ class TinkerController extends Controller
 {
     //use GetApiAll, GetApiUpdates, GetDatabase, SerializesModels;
 
-    use ErrorHandler, GetChangelog, GetComposerJson, GetContents, GetLatest, GetLicense, GetPackage,
-        GetPackageJson, GetReadme, GetRepository, GetVersion, GetVersions, RepositoryCreate;
+    use ErrorHandler, GetChangelog, GetComposerJson, GetContents, GetLatest, GetLicense, GetPackage, GetPackageJson,
+        GetReadme, GetRepository, GetSearch, GetVersion, GetVersions, RateLimits, RepositoryCreate;
 
     public $batch;
 
@@ -61,6 +63,12 @@ class TinkerController extends Controller
 
     public function tinkerNow()
     {
+
+        $keyPhrase = 'filamentphp';
+        $perPage = 10;
+        $searchResult = $this->getGitHubSearch($keyPhrase, $perPage);
+        dd($searchResult);
+
         $slugs = [
             '00f100/cakephp-opauth',
             'spatie/laravel-permission',
@@ -78,8 +86,45 @@ class TinkerController extends Controller
         ];
 
         foreach ($slugs as $slug) {
-            $this->createGitHubRepository($slug);
+            //$this->createGitHubRepository($slug);
         }
+
+        $rateLimits = $this->monitorRateLimits();
+
+        echo '<h2>Rate</h2>';
+        echo 'Rate Limit: '.$rateLimits['rate']['limit'];
+        echo '<br>';
+        echo 'Used Limit: '.$rateLimits['rate']['used'];
+        echo '<br>';
+        echo 'Remaining: '.$rateLimits['rate']['remaining'];
+        echo '<br>';
+        echo 'Reset date: '.date('Y-m-d H:i:s', $rateLimits['rate']['reset']);
+        echo '<br>';
+        echo 'Reset mins: '.round(abs($rateLimits['rate']['reset'] - time()) / 60, 2).' minutes';
+        echo '<br>';
+        echo '<br>';
+
+        echo '<h2>Core</h2>';
+        echo $rateLimits['resources']['core']['limit'];
+        echo '<br>';
+        echo $rateLimits['resources']['core']['used'];
+        echo '<br>';
+        echo $rateLimits['resources']['core']['remaining'];
+        echo '<br>';
+        echo $rateLimits['resources']['core']['reset'];
+        echo '<br>';
+        echo '<br>';
+
+        echo '<h2>Search</h2>';
+        echo $rateLimits['resources']['search']['limit'];
+        echo '<br>';
+        echo $rateLimits['resources']['search']['used'];
+        echo '<br>';
+        echo $rateLimits['resources']['search']['remaining'];
+        echo '<br>';
+        echo $rateLimits['resources']['search']['reset'];
+        echo '<br>';
+
     }
 
     public function packageData()
