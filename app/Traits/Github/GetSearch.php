@@ -16,10 +16,6 @@ trait GetSearch
 
         $apiUrl = "https://api.github.com/search/repositories?q={$keyphrase}&per_page={$perPage}&page={$page}";
 
-        // Todo:
-        // - Iterate over pages
-        // - Place and run the job
-
         try {
             $response = $client->get($apiUrl, [
                 'headers' => [

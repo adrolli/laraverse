@@ -64,11 +64,13 @@ class TinkerController extends Controller
     public function tinkerNow()
     {
 
+        // GitHub Search
         $keyPhrase = 'filamentphp';
         $perPage = 10;
         $searchResult = $this->getGitHubSearch($keyPhrase, $perPage);
         dd($searchResult);
 
+        // GitHub Repo Create
         $slugs = [
             '00f100/cakephp-opauth',
             'spatie/laravel-permission',
@@ -89,6 +91,7 @@ class TinkerController extends Controller
             //$this->createGitHubRepository($slug);
         }
 
+        // GitHub Rate Limits
         $rateLimits = $this->monitorRateLimits();
 
         echo '<h2>Rate</h2>';
@@ -129,6 +132,8 @@ class TinkerController extends Controller
 
     public function packageData()
     {
+        // Packagist Items
+
         $packageData = $this->getPackage($this->slug);
 
         echo 'Start job for: '.$packageData['repository'].'<br>';
