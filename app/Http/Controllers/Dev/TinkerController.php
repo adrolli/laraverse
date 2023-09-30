@@ -15,16 +15,9 @@ use App\Http\Controllers\Controller;
 use App\Jobs\PackagistCreate;
 use App\Jobs\PackagistDelete;
 use App\Jobs\PackagistUpdate;
-use App\Traits\Github\GetChangelog;
-use App\Traits\Github\GetComposerJson;
-use App\Traits\Github\GetContents;
-use App\Traits\Github\GetLicense;
-use App\Traits\Github\GetPackageJson;
-use App\Traits\Github\GetReadme;
 use App\Traits\Github\GetRepository;
 use App\Traits\Github\GetSearch;
 use App\Traits\Github\RateLimits;
-use App\Traits\Github\RepositoryCreate;
 use App\Traits\Packagist\GetApiAll;
 use App\Traits\Packagist\GetApiUpdates;
 use App\Traits\Packagist\GetDatabase;
@@ -38,9 +31,8 @@ use Illuminate\Queue\SerializesModels;
 class TinkerController extends Controller
 {
     //use GetApiAll, GetApiUpdates, GetDatabase, SerializesModels;
-
-    use ErrorHandler, GetChangelog, GetComposerJson, GetContents, GetLatest, GetLicense, GetPackage, GetPackageJson,
-        GetReadme, GetRepository, GetSearch, GetVersion, GetVersions, RateLimits, RepositoryCreate;
+    //use GetLatest, GetPackage, GetVersion, GetVersions;
+    use ErrorHandler, GetRepository, GetSearch, RateLimits;
 
     public $batch;
 
@@ -63,38 +55,18 @@ class TinkerController extends Controller
 
     public function tinkerNow()
     {
+        $this->getGitHubSearch();
 
-        // GitHub Search
-        $keyPhrase = 'filamentphp';
-        $perPage = 10;
-        $searchResult = $this->getGitHubSearch($keyPhrase, $perPage);
-        dd($searchResult);
-
-        // GitHub Repo Create
-        $slugs = [
-            '00f100/cakephp-opauth',
-            'spatie/laravel-permission',
-            'laravel/framework',
-            'spatie/package-skeleton-laravel',
-            'hopeseekr-contribs/composer-include-files',
-            'beriba/project_0',
-            'beriba/vim-tools',
-            'adrolli/tallui-vscode',
-            'filamentphp/spatie-laravel-media-library-plugin',
-            'bezhansalleh/filament-shield',
-            'adrolli/filament-job-manager',
-            'adrolli/corcel',
-            'adrolli/laraverse',
-        ];
-
-        foreach ($slugs as $slug) {
-            //$this->createGitHubRepository($slug);
+        /* can do max 30 pages! not to be done at once
+        for ($page = 2; $page <= $pages; $page++) {
+            $searchResults[$page] = $this->getGitHubSearchPage($keyPhrase, $perPage, $page);
         }
+        */
 
         // GitHub Rate Limits
         $rateLimits = $this->monitorRateLimits();
 
-        echo '<h2>Rate</h2>';
+        echo '<h2>Rate limits</h2>';
         echo 'Rate Limit: '.$rateLimits['rate']['limit'];
         echo '<br>';
         echo 'Used Limit: '.$rateLimits['rate']['used'];
@@ -107,25 +79,29 @@ class TinkerController extends Controller
         echo '<br>';
         echo '<br>';
 
-        echo '<h2>Core</h2>';
-        echo $rateLimits['resources']['core']['limit'];
+        echo '<h2>Core API</h2>';
+        echo 'Rate Limit: '.$rateLimits['resources']['core']['limit'];
         echo '<br>';
-        echo $rateLimits['resources']['core']['used'];
+        echo 'Used Limit: '.$rateLimits['resources']['core']['used'];
         echo '<br>';
-        echo $rateLimits['resources']['core']['remaining'];
+        echo 'Remaining: '.$rateLimits['resources']['core']['remaining'];
         echo '<br>';
-        echo $rateLimits['resources']['core']['reset'];
+        echo 'Reset date: '.date('Y-m-d H:i:s', $rateLimits['resources']['core']['reset']);
+        echo '<br>';
+        echo 'Reset mins: '.round(abs($rateLimits['resources']['core']['reset'] - time()) / 60, 2).' minutes';
         echo '<br>';
         echo '<br>';
 
-        echo '<h2>Search</h2>';
-        echo $rateLimits['resources']['search']['limit'];
+        echo '<h2>Search API</h2>';
+        echo 'Rate Limit: '.$rateLimits['resources']['search']['limit'];
         echo '<br>';
-        echo $rateLimits['resources']['search']['used'];
+        echo 'Used Limit: '.$rateLimits['resources']['search']['used'];
         echo '<br>';
-        echo $rateLimits['resources']['search']['remaining'];
+        echo 'Remaining: '.$rateLimits['resources']['search']['remaining'];
         echo '<br>';
-        echo $rateLimits['resources']['search']['reset'];
+        echo 'Reset date: '.date('Y-m-d H:i:s', $rateLimits['resources']['search']['reset']);
+        echo '<br>';
+        echo 'Reset mins: '.round(abs($rateLimits['resources']['search']['reset'] - time()) / 60, 2).' minutes';
         echo '<br>';
 
     }

@@ -21,7 +21,7 @@ trait GetApiSearch
             $packagesToTag = json_decode($response->getBody(), true);
 
             foreach ($packagesToTag as $package) {
-                // tag the package or item
+                // Todo: tag the package or item
                 echo $package.'<br>';
             }
 

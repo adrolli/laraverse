@@ -2,44 +2,45 @@
 
 namespace App\Traits\Github;
 
-use GuzzleHttp\Client;
+use App\Models\GithubSearch;
 
 trait GetSearch
 {
-    use ErrorHandler;
+    use ErrorHandler, GetSearchPage, RepositoryCreate;
 
-    public function getGitHubSearch($keyphrase, $perPage)
+    public function getGitHubSearch()
     {
-        $client = new Client();
-
-        $page = 1;
-
-        $apiUrl = "https://api.github.com/search/repositories?q={$keyphrase}&per_page={$perPage}&page={$page}";
 
         try {
-            $response = $client->get($apiUrl, [
-                'headers' => [
-                    'Authorization' => 'Bearer '.config('app.github_api_token'),
-                    'Accept' => 'application/json',
-                ],
-            ]);
 
-            if ($response->getStatusCode() === 200) {
+            foreach (config('app.github_search') as $keyPhrase) {
+                $page = 1;
+                $perPage = 10;
 
-                $searchResult = json_decode($response->getBody(), true);
+                $searchResults = $this->getGitHubSearchPage($keyPhrase, $perPage, $page);
 
-                return $searchResult;
+                $count = $searchResults['total_count'];
+                $pages = $count / $perPage;
+                $nextpage = 2;
 
-            } else {
+                if ($pages < $nextpage) {
+                    $githubSearch = new GithubSearch;
+                    $githubSearch->keyphrase = $keyPhrase;
+                    $githubSearch->count = $count;
+                    $githubSearch->pages = $pages;
+                    $githubSearch->nextpage = $nextpage;
+                    $githubSearch->save();
+                }
 
-                $this->handleApiError($response, $keyphrase);
-
-                return null;
+                foreach ($searchResults['items'] as $item) {
+                    $this->createGitHubRepository($item);
+                }
 
             }
+
         } catch (\Exception $e) {
 
-            $this->handleApiError($e, $keyphrase);
+            $this->handleApiError($e, 'GitHub Search');
 
             return null;
         }

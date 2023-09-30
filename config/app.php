@@ -205,6 +205,11 @@ return [
     'laraverse_exceptions' => env('LARAVERSE_EXCEPTIONS', 1),
     'laraverse_backoff' => env('LARAVERSE_BACKOFF', 120),
     'laraverse_batch' => env('LARAVERSE_BATCH', 25),
+
+    'laraverse_api_web' => env('LARAVERSE_API_WEB'),
+    'laraverse_api_identifier' => env('LARAVERSE_API_IDENTIFIER'),
+    'laraverse_api_mail' => env('LARAVERSE_API_MAIL'),
+
     'github_api_token' => env('GITHUB_API_TOKEN'),
 
     /*
@@ -411,10 +416,13 @@ return [
     |
     | This array is for all keyword-based searches, using the GitHub Search
     | API. Key = search, Content = tags to be set for the Package.
+    | Due to API limits currently only 30 keywords please.
     |
     */
 
     'github_search' => [
+        'filamentphp',
+
         /*
         https://github.com/search?q=laravel&type=repositories = 566k repos
         https://github.com/search?q=filament&type=repositories = 3k
