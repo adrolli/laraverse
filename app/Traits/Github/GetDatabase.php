@@ -3,17 +3,22 @@
 namespace App\Traits\Github;
 
 use App\Models\Repository;
+use Illuminate\Support\Str;
 
 trait GetDatabase
 {
-    public function getGithubRepositoriesFromDb()
+    public function getGithubRepositoriesFromDb($keyPhrase)
     {
 
         try {
 
-            $localPackageSlugs = Repository::pluck('slug')->toArray();
+            $slug = 'github-search-'.Str::slug($keyPhrase);
 
-            return $localPackageSlugs;
+            $slugsArray = Repository::whereHas('repositorySource', function ($query) use ($slug) {
+                $query->where('slug', $slug);
+            })->pluck('slug')->toArray();
+
+            return $slugsArray;
 
         } catch (\Exception $e) {
 

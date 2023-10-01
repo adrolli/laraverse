@@ -15,12 +15,12 @@ use App\Http\Controllers\Controller;
 use App\Jobs\PackagistCreate;
 use App\Jobs\PackagistDelete;
 use App\Jobs\PackagistUpdate;
+use App\Traits\Github\GetDatabase;
 use App\Traits\Github\GetRepository;
 use App\Traits\Github\GetSearch;
 use App\Traits\Github\RateLimits;
 use App\Traits\Packagist\GetApiAll;
 use App\Traits\Packagist\GetApiUpdates;
-use App\Traits\Packagist\GetDatabase;
 use App\Traits\PackagistItem\ErrorHandler;
 use App\Traits\PackagistItem\GetLatest;
 use App\Traits\PackagistItem\GetPackage;
@@ -32,7 +32,7 @@ class TinkerController extends Controller
 {
     //use GetApiAll, GetApiUpdates, GetDatabase, SerializesModels;
     //use GetLatest, GetPackage, GetVersion, GetVersions;
-    use ErrorHandler, GetRepository, GetSearch, RateLimits;
+    use ErrorHandler, GetDatabase, GetRepository, GetSearch, RateLimits;
 
     public $batch;
 
@@ -55,7 +55,16 @@ class TinkerController extends Controller
 
     public function tinkerNow()
     {
-        $this->getGitHubSearch();
+
+        $keyPhrase = 'FilamentPHP';
+        $reposFromDb = $this->getGithubRepositoriesFromDb($keyPhrase);
+        $reposFromDbCount = count($reposFromDb);
+
+        $reposFromApiCount = $this->getGitHubSearch();
+
+        // no need to count
+        // create Job to fetch the rest of the pages when limit is sufficient
+        // limit sufficient should be used by search job, too
 
         /* can do max 30 pages! not to be done at once
         for ($page = 2; $page <= $pages; $page++) {

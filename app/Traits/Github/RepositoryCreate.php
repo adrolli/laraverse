@@ -6,9 +6,9 @@ use App\Models\Repository;
 
 trait RepositoryCreate
 {
-    use RepoCreateContents, RepoCreateOwner, RepoCreateTopics, RepoCreateType;
+    use RepoCreateContents, RepoCreateOwner, RepoCreateSource, RepoCreateTopics, RepoCreateType;
 
-    public function createGitHubRepository($repositoryData)
+    public function createGitHubRepository($repositoryData, $repositorySource)
     {
         $createRepo['slug'] = $repositoryData['full_name'];
 
@@ -35,6 +35,7 @@ trait RepositoryCreate
 
             $repositoryContents = $createGitHubContents['repositoryContents'];
             $type = $this->createGitHubType($repositoryContents, $createRepo);
+            $source = $this->createGitHubSource($repositorySource);
 
             $repository = Repository::updateOrCreate(
                 ['slug' => $createRepo['slug']],
@@ -43,6 +44,10 @@ trait RepositoryCreate
 
             if ($type) {
                 $repository->repositoryType()->associate($type);
+            }
+
+            if ($source) {
+                $repository->repositorySource()->associate($source);
             }
 
             $owner = $repositoryData['owner'];

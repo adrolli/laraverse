@@ -12,7 +12,7 @@ return new class extends Migration
     public function up(): void
     {
         Schema::table('repositories', function (Blueprint $table) {
-            $table->unsignedBigInteger('repository_source_id');
+            $table->unsignedBigInteger('repository_source_id')->nullable();
         });
     }
 

@@ -422,7 +422,7 @@ return [
 
     'github_search' => [
         'filamentphp',
-
+        'statamic',
         /*
         https://github.com/search?q=laravel&type=repositories = 566k repos
         https://github.com/search?q=filament&type=repositories = 3k

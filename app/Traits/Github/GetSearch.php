@@ -3,6 +3,7 @@
 namespace App\Traits\Github;
 
 use App\Models\GithubSearch;
+use Illuminate\Support\Str;
 
 trait GetSearch
 {
@@ -33,8 +34,10 @@ trait GetSearch
                 }
 
                 foreach ($searchResults['items'] as $item) {
-                    $this->createGitHubRepository($item);
+                    $this->createGitHubRepository($item, 'github-search-'.Str::slug($keyPhrase));
                 }
+
+                return $count;
 
             }
 

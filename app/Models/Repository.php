@@ -69,6 +69,11 @@ class Repository extends Model
         return $this->belongsTo(RepositoryType::class);
     }
 
+    public function repositorySource()
+    {
+        return $this->belongsTo(RepositorySource::class);
+    }
+
     public function repositoryTags()
     {
         return $this->belongsToMany(
