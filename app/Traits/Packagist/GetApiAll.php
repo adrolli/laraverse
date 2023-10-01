@@ -2,8 +2,8 @@
 
 namespace App\Traits\Packagist;
 
-use GuzzleHttp\Client;
-use GuzzleHttp\Exception\RequestException;
+use Illuminate\Http\Client\RequestException;
+use Illuminate\Support\Facades\Http;
 
 trait GetApiAll
 {
@@ -14,11 +14,14 @@ trait GetApiAll
 
         $packagistApiUrl = 'https://packagist.org/packages/list.json';
 
-        $client = new Client();
-
         try {
 
-            $response = $client->get($packagistApiUrl);
+            $response = Http::withHeaders([
+                'User-Agent' => config('laraverse_api_identifier'),
+                'Contact' => config('laraverse_api_mail'),
+                'Website' => config('laraverse_api_web'),
+            ])->get($packagistApiUrl);
+
             $data = json_decode($response->getBody(), true);
             $packageNames = $data['packageNames'];
 

@@ -2,8 +2,8 @@
 
 namespace App\Traits\Packagist;
 
-use GuzzleHttp\Client;
-use GuzzleHttp\Exception\RequestException;
+use Illuminate\Http\Client\RequestException;
+use Illuminate\Support\Facades\Http;
 
 trait GetApiPackage
 {
@@ -11,11 +11,17 @@ trait GetApiPackage
 
     public function getPackage($packageName)
     {
+        $packagistApiUrl = "https://packagist.org/packages/{$packageName}.json";
+
         try {
 
-            $client = new Client();
-            $packageInfo = $client->get("https://packagist.org/packages/{$packageName}.json");
-            $packageJson = json_decode($packageInfo->getBody(), true);
+            $response = Http::withHeaders([
+                'User-Agent' => config('laraverse_api_identifier'),
+                'Contact' => config('laraverse_api_mail'),
+                'Website' => config('laraverse_api_web'),
+            ])->get($packagistApiUrl);
+
+            $packageJson = json_decode($response->getBody(), true);
 
             return $packageJson;
 

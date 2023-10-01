@@ -2,8 +2,8 @@
 
 namespace App\Traits\Packagist;
 
-use GuzzleHttp\Client;
-use GuzzleHttp\Exception\RequestException;
+use Illuminate\Http\Client\RequestException;
+use Illuminate\Support\Facades\Http;
 
 trait GetApiSearch
 {
@@ -11,14 +11,16 @@ trait GetApiSearch
 
     public function getPackagistSearchFromApi($search)
     {
-
         $packagistApiUrl = "https://packagist.org/search.json?q=$search";
 
-        $client = new Client();
-
         try {
-            $response = $client->get($packagistApiUrl);
-            $packagesToTag = json_decode($response->getBody(), true);
+            $response = Http::withHeaders([
+                'User-Agent' => config('laraverse_api_identifier'),
+                'Contact' => config('laraverse_api_mail'),
+                'Website' => config('laraverse_api_web'),
+            ])->get($packagistApiUrl);
+
+            $packagesToTag = $response->json();
 
             foreach ($packagesToTag as $package) {
                 // Todo: tag the package or item
@@ -26,11 +28,8 @@ trait GetApiSearch
             }
 
             return $packagesToTag;
-
         } catch (RequestException $requestException) {
-
             return $this->handleApiError($requestException, $search);
-
         }
     }
 }

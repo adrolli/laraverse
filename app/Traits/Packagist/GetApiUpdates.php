@@ -2,8 +2,8 @@
 
 namespace App\Traits\Packagist;
 
-use GuzzleHttp\Client;
-use GuzzleHttp\Exception\RequestException;
+use Illuminate\Http\Client\RequestException;
+use Illuminate\Support\Facades\Http;
 
 trait GetApiUpdates
 {
@@ -14,10 +14,13 @@ trait GetApiUpdates
 
         $packagistApiUrl = "https://packagist.org/metadata/changes.json?since=$timestamp";
 
-        $client = new Client();
-
         try {
-            $response = $client->get($packagistApiUrl);
+            $response = Http::withHeaders([
+                'User-Agent' => config('laraverse_api_identifier'),
+                'Contact' => config('laraverse_api_mail'),
+                'Website' => config('laraverse_api_web'),
+            ])->get($packagistApiUrl);
+
             $packageChanges = json_decode($response->getBody(), true);
 
             $packagesToCreate = [];
