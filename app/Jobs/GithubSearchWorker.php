@@ -105,7 +105,9 @@ class GithubSearchWorker implements ShouldQueue
 
         }
 
-        Cache::lock($lockName)->release();
+        $lock->release();
+
+        activity()->log('GitHub Search lock released');
 
         $this->setProgress(100);
 
