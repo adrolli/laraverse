@@ -424,7 +424,12 @@ return [
 
     'github_search' => [
         'filamentphp',
+        'filament',
         'statamic',
+        'laravel',
+        'flarum',
+        'livewire',
+        'octobercms',
         /*
         https://github.com/search?q=laravel&type=repositories = 566k repos
         https://github.com/search?q=filament&type=repositories = 3k

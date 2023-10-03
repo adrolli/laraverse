@@ -58,6 +58,7 @@ class TinkerController extends Controller
 
     public function tinkerNow()
     {
+        // Todo: adjust locktime to jobtime
         $perPage = config('app.laraverse_github_pages');
 
         $pagesInQueue = $this->getGitHubSearchesInQueue();
