@@ -16,12 +16,13 @@ use App\Jobs\PackagistCreate;
 use App\Jobs\PackagistDelete;
 use App\Jobs\PackagistUpdate;
 use App\Traits\Github\GetDatabase;
+use App\Traits\Github\GetRateLimits;
 use App\Traits\Github\GetRepository;
 use App\Traits\Github\GetSearch;
-use App\Traits\Github\RateLimits;
+use App\Traits\Github\GetSearchesInQueue;
+use App\Traits\Github\ShowRateLimits;
 use App\Traits\Packagist\GetApiAll;
 use App\Traits\Packagist\GetApiUpdates;
-use App\Traits\PackagistItem\ErrorHandler;
 use App\Traits\PackagistItem\GetLatest;
 use App\Traits\PackagistItem\GetPackage;
 use App\Traits\PackagistItem\GetVersion;
@@ -32,7 +33,7 @@ class TinkerController extends Controller
 {
     //use GetApiAll, GetApiUpdates, GetDatabase, SerializesModels;
     //use GetLatest, GetPackage, GetVersion, GetVersions;
-    use ErrorHandler, GetDatabase, GetRepository, GetSearch, RateLimits;
+    use GetDatabase, GetRateLimits, GetRepository, GetSearch, GetSearchesInQueue, ShowRateLimits;
 
     public $batch;
 
@@ -56,62 +57,33 @@ class TinkerController extends Controller
     public function tinkerNow()
     {
 
-        $keyPhrase = 'FilamentPHP';
-        $reposFromDb = $this->getGithubRepositoriesFromDb($keyPhrase);
-        $reposFromDbCount = count($reposFromDb);
+        //$allPagesPending = $this->getGitHubSearchesInQueue();
+        // that may be not sufficient, allpages, how to pick jobs within rate limits?
 
-        $reposFromApiCount = $this->getGitHubSearch();
+        //$rates = $this->getGithubRateLimits();
 
-        // no need to count
-        // create Job to fetch the rest of the pages when limit is sufficient
-        // limit sufficient should be used by search job, too
+        // you have XX pages left ...
+        //dd($rates['search']['remaining']);
+
+        // what is the catch?
+        // count the rate limit for search (pages)
+        // collect what to do with that rate limit
+        // problem: rate limit is not used, when job runs next
+
+        // lockfile for job?
+        // current value for rate limit in db? hmm...
+
+        //$this->showGithubRateLimits($rates);
+
+        //$keyPhrase = 'FilamentPHP';
+
+        //$reposFromApiCount = $this->getGitHubSearch();
 
         /* can do max 30 pages! not to be done at once
         for ($page = 2; $page <= $pages; $page++) {
             $searchResults[$page] = $this->getGitHubSearchPage($keyPhrase, $perPage, $page);
         }
         */
-
-        // GitHub Rate Limits
-        $rateLimits = $this->monitorRateLimits();
-
-        echo '<h2>Rate limits</h2>';
-        echo 'Rate Limit: '.$rateLimits['rate']['limit'];
-        echo '<br>';
-        echo 'Used Limit: '.$rateLimits['rate']['used'];
-        echo '<br>';
-        echo 'Remaining: '.$rateLimits['rate']['remaining'];
-        echo '<br>';
-        echo 'Reset date: '.date('Y-m-d H:i:s', $rateLimits['rate']['reset']);
-        echo '<br>';
-        echo 'Reset mins: '.round(abs($rateLimits['rate']['reset'] - time()) / 60, 2).' minutes';
-        echo '<br>';
-        echo '<br>';
-
-        echo '<h2>Core API</h2>';
-        echo 'Rate Limit: '.$rateLimits['resources']['core']['limit'];
-        echo '<br>';
-        echo 'Used Limit: '.$rateLimits['resources']['core']['used'];
-        echo '<br>';
-        echo 'Remaining: '.$rateLimits['resources']['core']['remaining'];
-        echo '<br>';
-        echo 'Reset date: '.date('Y-m-d H:i:s', $rateLimits['resources']['core']['reset']);
-        echo '<br>';
-        echo 'Reset mins: '.round(abs($rateLimits['resources']['core']['reset'] - time()) / 60, 2).' minutes';
-        echo '<br>';
-        echo '<br>';
-
-        echo '<h2>Search API</h2>';
-        echo 'Rate Limit: '.$rateLimits['resources']['search']['limit'];
-        echo '<br>';
-        echo 'Used Limit: '.$rateLimits['resources']['search']['used'];
-        echo '<br>';
-        echo 'Remaining: '.$rateLimits['resources']['search']['remaining'];
-        echo '<br>';
-        echo 'Reset date: '.date('Y-m-d H:i:s', $rateLimits['resources']['search']['reset']);
-        echo '<br>';
-        echo 'Reset mins: '.round(abs($rateLimits['resources']['search']['reset'] - time()) / 60, 2).' minutes';
-        echo '<br>';
 
     }
 

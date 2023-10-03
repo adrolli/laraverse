@@ -2,6 +2,7 @@
 
 namespace App\Traits\Github;
 
+use App\Traits\ErrorHandler;
 use GuzzleHttp\Client;
 
 trait GetContents
@@ -70,13 +71,15 @@ trait GetContents
 
             } else {
 
-                $this->handleApiError($response, $slug);
+                $this->handleApiError($apiUrl, $response->getBody());
 
                 return null;
+
             }
+
         } catch (\Exception $e) {
 
-            $this->handleApiError($e, $slug);
+            $this->handleApiError($apiUrl, $e);
 
             return null;
         }

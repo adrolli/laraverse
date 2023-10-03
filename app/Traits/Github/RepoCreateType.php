@@ -3,6 +3,7 @@
 namespace App\Traits\Github;
 
 use App\Models\RepositoryType;
+use App\Traits\ErrorHandler;
 
 trait RepoCreateType
 {
@@ -33,7 +34,7 @@ trait RepoCreateType
 
         } catch (\Exception $e) {
 
-            $this->handleApiError($e, 'GitHub Type');
+            $this->handleError('GitHub Type', $e);
 
             return null;
         }

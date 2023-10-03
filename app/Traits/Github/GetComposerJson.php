@@ -2,6 +2,7 @@
 
 namespace App\Traits\Github;
 
+use App\Traits\ErrorHandler;
 use GuzzleHttp\Client;
 
 trait GetComposerJson
@@ -25,15 +26,18 @@ trait GetComposerJson
                 $composerJson = $response->getBody()->getContents();
 
                 return $composerJson;
+
             } else {
 
-                $this->handleApiError($response, $apiUrl);
+                $this->handleApiError($apiUrl, $response->getBody());
 
                 return null;
+
             }
+
         } catch (\Exception $e) {
 
-            $this->handleApiError($e, $apiUrl);
+            $this->handleApiError($apiUrl, $e);
 
             return null;
         }

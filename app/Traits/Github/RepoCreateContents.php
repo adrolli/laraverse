@@ -2,6 +2,8 @@
 
 namespace App\Traits\Github;
 
+use App\Traits\ErrorHandler;
+
 trait RepoCreateContents
 {
     use ErrorHandler, GetChangelog, GetComposerJson, GetContents, GetLicense, GetPackageJson, GetReadme;
@@ -92,7 +94,7 @@ trait RepoCreateContents
 
         } catch (\Exception $e) {
 
-            $this->handleApiError($e, 'GitHub Contents');
+            $this->handleError('GitHub Contents', $e);
 
             return null;
         }

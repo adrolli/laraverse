@@ -4,6 +4,7 @@ namespace App\Traits\Github;
 
 use App\Models\Organization;
 use App\Models\Owner;
+use App\Traits\ErrorHandler;
 
 trait RepoCreateOwner
 {
@@ -34,7 +35,7 @@ trait RepoCreateOwner
 
         } catch (\Exception $e) {
 
-            $this->handleApiError($e, 'GitHub Owner');
+            $this->handleError('GitHub Owner', $e);
 
             return null;
         }

@@ -3,6 +3,7 @@
 namespace App\Traits\Github;
 
 use App\Models\RepositoryTag;
+use App\Traits\ErrorHandler;
 
 trait RepoCreateTopics
 {
@@ -31,7 +32,7 @@ trait RepoCreateTopics
 
         } catch (\Exception $e) {
 
-            $this->handleApiError($e, 'GitHub Topics');
+            $this->handleError('GitHub Topics', $e);
 
             return null;
         }

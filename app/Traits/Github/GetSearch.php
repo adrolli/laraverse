@@ -3,6 +3,7 @@
 namespace App\Traits\Github;
 
 use App\Models\GithubSearch;
+use App\Traits\ErrorHandler;
 use Illuminate\Support\Str;
 
 trait GetSearch
@@ -16,7 +17,7 @@ trait GetSearch
 
             foreach (config('app.github_search') as $keyPhrase) {
                 $page = 1;
-                $perPage = 10;
+                $perPage = 100;
 
                 $searchResults = $this->getGitHubSearchPage($keyPhrase, $perPage, $page);
 
@@ -33,17 +34,17 @@ trait GetSearch
                     $githubSearch->save();
                 }
 
-                foreach ($searchResults['items'] as $item) {
-                    $this->createGitHubRepository($item, 'github-search-'.Str::slug($keyPhrase));
-                }
+                $repositorySource = 'github-search-'.Str::slug($keyPhrase);
 
-                return $count;
+                foreach ($searchResults['items'] as $item) {
+                    $this->createGitHubRepository($item, $repositorySource);
+                }
 
             }
 
         } catch (\Exception $e) {
 
-            $this->handleApiError($e, 'GitHub Search');
+            $this->handleApiError('GitHub Search', $e);
 
             return null;
         }

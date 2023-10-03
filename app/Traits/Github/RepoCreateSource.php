@@ -3,6 +3,7 @@
 namespace App\Traits\Github;
 
 use App\Models\RepositorySource;
+use App\Traits\ErrorHandler;
 
 trait RepoCreateSource
 {
@@ -23,7 +24,7 @@ trait RepoCreateSource
 
         } catch (\Exception $e) {
 
-            $this->handleApiError($e, 'GitHub Source');
+            $this->handleError('GitHub Source', $e);
 
             return null;
         }

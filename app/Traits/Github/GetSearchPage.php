@@ -2,6 +2,7 @@
 
 namespace App\Traits\Github;
 
+use App\Traits\ErrorHandler;
 use GuzzleHttp\Client;
 
 trait GetSearchPage
@@ -30,14 +31,14 @@ trait GetSearchPage
 
             } else {
 
-                $this->handleApiError($response, $keyPhrase);
+                $this->handleApiError($keyPhrase, $response);
 
                 return null;
 
             }
         } catch (\Exception $e) {
 
-            $this->handleApiError($e, $keyPhrase);
+            $this->handleApiError($keyPhrase, $e);
 
             return null;
         }
