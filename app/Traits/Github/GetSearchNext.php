@@ -15,17 +15,17 @@ trait GetSearchNext
 
         try {
 
-            $githubSearches = GithubSearch::select('*')
+            $githubSearch = GithubSearch::select('*')
                 ->inRandomOrder()
                 ->first();
 
-            if ($githubSearches) {
-                foreach ($githubSearches as $githubSearch) {
-                    $keyPhrase = $githubSearch->keyphrase;
-                    $pages = $githubSearch->pages;
-                    $nextPage = $githubSearch->nextpage;
-                }
+            if ($githubSearch) {
+                $keyPhrase = $githubSearch->keyphrase;
+                $pages = $githubSearch->pages;
+                $nextPage = $githubSearch->nextpage;
             }
+
+            activity()->log("GitHub Worker starts on keyPhrase: {$keyPhrase}");
 
             $searchResults = $this->getGitHubSearchPage($keyPhrase, $perPage, $nextPage);
 
@@ -36,10 +36,10 @@ trait GetSearchNext
             }
 
             if ($pages == $nextPage) {
-                $githubSearches->delete();
+                $githubSearch->delete();
             } else {
-                $githubSearches->nextpage = $nextPage + 1;
-                $githubSearches->save();
+                $githubSearch->nextpage = $nextPage + 1;
+                $githubSearch->save();
             }
 
         } catch (\Exception $e) {
