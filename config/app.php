@@ -206,6 +206,8 @@ return [
     'laraverse_backoff' => env('LARAVERSE_BACKOFF', 120),
     'laraverse_batch' => env('LARAVERSE_BATCH', 25),
 
+    'laraverse_github_pages' => env('LARAVERSE_GITHUB_PAGES', 25),
+
     'laraverse_api_web' => env('LARAVERSE_API_WEB'),
     'laraverse_api_identifier' => env('LARAVERSE_API_IDENTIFIER'),
     'laraverse_api_mail' => env('LARAVERSE_API_MAIL'),

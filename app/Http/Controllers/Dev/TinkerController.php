@@ -20,6 +20,7 @@ use App\Traits\Github\GetRateLimits;
 use App\Traits\Github\GetRepository;
 use App\Traits\Github\GetSearch;
 use App\Traits\Github\GetSearchesInQueue;
+use App\Traits\Github\GetSearchNext;
 use App\Traits\Github\ShowRateLimits;
 use App\Traits\Packagist\GetApiAll;
 use App\Traits\Packagist\GetApiUpdates;
@@ -33,7 +34,8 @@ class TinkerController extends Controller
 {
     //use GetApiAll, GetApiUpdates, GetDatabase, SerializesModels;
     //use GetLatest, GetPackage, GetVersion, GetVersions;
-    use GetDatabase, GetRateLimits, GetRepository, GetSearch, GetSearchesInQueue, ShowRateLimits;
+    use GetDatabase, GetRateLimits, GetRepository, GetSearch, GetSearchesInQueue,
+        GetSearchNext, ShowRateLimits;
 
     public $batch;
 
@@ -56,34 +58,36 @@ class TinkerController extends Controller
 
     public function tinkerNow()
     {
+        $perPage = config('app.laraverse_github_pages');
 
-        //$allPagesPending = $this->getGitHubSearchesInQueue();
-        // that may be not sufficient, allpages, how to pick jobs within rate limits?
+        $pagesInQueue = $this->getGitHubSearchesInQueue();
 
-        //$rates = $this->getGithubRateLimits();
+        $rates = $this->getGithubRateLimits();
 
-        // you have XX pages left ...
-        //dd($rates['search']['remaining']);
+        $currentLimits = $rates['search']['remaining'];
 
-        // what is the catch?
-        // count the rate limit for search (pages)
-        // collect what to do with that rate limit
-        // problem: rate limit is not used, when job runs next
+        if ($currentLimits >= 1 and $pagesInQueue == true) {
 
-        // lockfile for job?
-        // current value for rate limit in db? hmm...
+            $this->getGitHubSearchNext($perPage);
 
-        //$this->showGithubRateLimits($rates);
+            activity()->log('GitHub Search Pages ran successfully');
 
-        //$keyPhrase = 'FilamentPHP';
+            // Todo: automize 30 from config
+        } elseif ($currentLimits >= 30 and $pagesInQueue == false) {
 
-        //$reposFromApiCount = $this->getGitHubSearch();
+            $this->getGitHubSearch();
 
-        /* can do max 30 pages! not to be done at once
-        for ($page = 2; $page <= $pages; $page++) {
-            $searchResults[$page] = $this->getGitHubSearchPage($keyPhrase, $perPage, $page);
+            activity()->log('GitHub Search ran successfully');
+
+        } elseif ($pagesInQueue == true) {
+
+            activity()->log("GitHub Search has only {$currentLimits} left for doing pages");
+
+        } elseif ($pagesInQueue == false) {
+
+            activity()->log("GitHub Search has only {$currentLimits} left for doing searches");
+
         }
-        */
 
     }
 

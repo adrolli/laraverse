@@ -16,9 +16,9 @@ trait GetApiPackage
         try {
 
             $response = Http::withHeaders([
-                'User-Agent' => config('laraverse_api_identifier'),
-                'Contact' => config('laraverse_api_mail'),
-                'Website' => config('laraverse_api_web'),
+                'User-Agent' => config('app.laraverse_api_identifier'),
+                'Contact' => config('app.laraverse_api_mail'),
+                'Website' => config('app.laraverse_api_web'),
             ])->get($packagistApiUrl);
 
             $packageJson = json_decode($response->getBody(), true);

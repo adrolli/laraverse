@@ -44,7 +44,7 @@ trait GetSearchNext
 
         } catch (\Exception $e) {
 
-            $this->handleError('GitHub Search', $e);
+            $this->handleError('GitHub Search Next', $e);
 
             return null;
         }

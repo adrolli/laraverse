@@ -17,15 +17,20 @@ trait GetSearch
 
             foreach (config('app.github_search') as $keyPhrase) {
                 $page = 1;
-                $perPage = 100;
+                $perPage = config('app.laraverse_github_pages');
 
                 $searchResults = $this->getGitHubSearchPage($keyPhrase, $perPage, $page);
+
+                activity()->log("Create a new GithubSearch for {$keyPhrase}");
 
                 $count = $searchResults['total_count'];
                 $pages = $count / $perPage;
                 $nextpage = 2;
 
-                if ($pages < $nextpage) {
+                if ($pages > $nextpage) {
+
+                    activity()->log("Create a new GithubSearch for {$keyPhrase} with {$pages} pages and {$nextpage} next");
+
                     $githubSearch = new GithubSearch;
                     $githubSearch->keyphrase = $keyPhrase;
                     $githubSearch->count = $count;
