@@ -59,7 +59,7 @@ class GithubSearchWorker implements ShouldQueue
         $lockName = 'github-worker-lock';
         $maxLockTimeInSeconds = 3600;
 
-        $perPage = 100;
+        $perPage = 10;
 
         $lock = Cache::lock($lockName, $maxLockTimeInSeconds);
 
