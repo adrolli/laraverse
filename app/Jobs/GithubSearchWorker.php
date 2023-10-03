@@ -65,15 +65,24 @@ class GithubSearchWorker implements ShouldQueue
 
         if ($lock->get()) {
 
+            // Todo: remove debug
+            activity()->log('GitHub Search is not locked');
+
             $pagesInQueue = $this->getGitHubSearchesInQueue();
 
             $rates = $this->getGithubRateLimits();
 
             $currentLimits = $rates['search']['remaining'];
 
+            // Todo: remove debug
+            activity()->log("GitHub Search Limit is {$currentLimits}");
+
             $this->setProgress(10);
 
             if ($currentLimits >= 1 and $pagesInQueue == true) {
+
+                // Todo: remove debug
+                activity()->log('GitHub Search PagesInQueue is true');
 
                 $this->getGitHubSearchNext($perPage);
 
@@ -82,6 +91,9 @@ class GithubSearchWorker implements ShouldQueue
                 activity()->log('GitHub Search Pages ran successfully');
 
             } elseif ($currentLimits >= 30 and $pagesInQueue == false) {
+
+                // Todo: remove debug
+                activity()->log('GitHub Search PagesInQueue is false');
 
                 $this->getGitHubSearch();
 
@@ -105,7 +117,8 @@ class GithubSearchWorker implements ShouldQueue
 
         }
 
-        $lock->release();
+        // Todo, was $lock->release();
+        $lock->forceRelease();
 
         activity()->log('GitHub Search lock released');
 
