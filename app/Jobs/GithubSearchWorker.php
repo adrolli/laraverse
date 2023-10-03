@@ -61,7 +61,9 @@ class GithubSearchWorker implements ShouldQueue
 
         $perPage = 100;
 
-        if (Cache::lock($lockName, $maxLockTimeInSeconds)->get()) {
+        $lock = Cache::lock($lockName, $maxLockTimeInSeconds);
+
+        if ($lock->get()) {
 
             $pagesInQueue = $this->getGitHubSearchesInQueue();
 
@@ -97,13 +99,13 @@ class GithubSearchWorker implements ShouldQueue
 
             }
 
-            Cache::lock($lockName)->release();
-
         } else {
 
             activity()->log('GitHub Search is already running');
 
         }
+
+        Cache::lock($lockName)->release();
 
         $this->setProgress(100);
 
