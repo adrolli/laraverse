@@ -20,7 +20,9 @@ trait GetSearch
                 $nextpage = 2;
                 $perPage = config('app.laraverse_github_pages');
 
-                $searchResults = $this->getGitHubSearchPage($keyPhrase, $perPage, $page);
+                $query = $keyPhrase.'+in:name,description,readme,topics';
+
+                $searchResults = $this->getGitHubSearchPage($query, $perPage, $page);
 
                 $count = $searchResults['total_count'];
                 $pages = $count / $perPage;
@@ -31,19 +33,21 @@ trait GetSearch
 
                 if ($pages > $nextpage) {
                     foreach ($queries as $query) {
-                        activity()->log("Create a new GithubSearch with query: {$query}");
-
                         $searchResultsInner = $this->getGitHubSearchPage($query, $perPage, $page);
 
                         $countInner = $searchResultsInner['total_count'];
                         $pagesInner = $countInner / $perPage;
 
-                        $githubSearch = new GithubSearch;
-                        $githubSearch->keyphrase = $query;
-                        $githubSearch->count = $countInner;
-                        $githubSearch->pages = $pagesInner;
-                        $githubSearch->nextpage = $nextpage;
-                        $githubSearch->save();
+                        if ($pagesInner > $nextpage) {
+                            activity()->log("Create a new GithubSearch to get {$countInner} with query: {$query}");
+
+                            $githubSearch = new GithubSearch;
+                            $githubSearch->keyphrase = $query;
+                            $githubSearch->count = $countInner;
+                            $githubSearch->pages = $pagesInner;
+                            $githubSearch->nextpage = $nextpage;
+                            $githubSearch->save();
+                        }
                     }
                 }
 
