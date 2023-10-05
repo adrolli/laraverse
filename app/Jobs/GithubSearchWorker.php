@@ -73,7 +73,9 @@ class GithubSearchWorker implements ShouldQueue
 
             $this->setProgress(10);
 
-            if ($currentLimits >= 1 and $pagesInQueue == true) {
+            if ($currentLimits >= 1 and $pagesInQueue > 0) {
+
+                activity()->log("GitHub Search Pages started working on {$pagesInQueue} pages in queue");
 
                 $this->getGitHubSearchNext($perPage);
 
@@ -81,7 +83,7 @@ class GithubSearchWorker implements ShouldQueue
 
                 activity()->log('GitHub Search Pages ran successfully');
 
-            } elseif ($currentLimits >= 30 and $pagesInQueue == false) {
+            } elseif ($currentLimits >= 30) {
 
                 $this->getGitHubSearch();
 
@@ -89,13 +91,9 @@ class GithubSearchWorker implements ShouldQueue
 
                 activity()->log('GitHub Search ran successfully');
 
-            } elseif ($pagesInQueue == true) {
+            } else {
 
-                activity()->log("GitHub Search has only {$currentLimits} left for doing pages");
-
-            } elseif ($pagesInQueue == false) {
-
-                activity()->log("GitHub Search has only {$currentLimits} left for doing searches");
+                activity()->log("GitHub Search is rate limited at {$currentLimits}");
 
             }
 
