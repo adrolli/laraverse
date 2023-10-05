@@ -38,8 +38,8 @@ trait GetSearchNext
                 if ($count == 0) {
                     $count = $searchResults['total_count'];
                     $pages = $count / $perPage;
-                    $githubSearch->count;
-                    $githubSearch->pages;
+                    $githubSearch->count = $count;
+                    $githubSearch->pages = $pages;
                 }
 
                 if ($pages == $nextPage) {
