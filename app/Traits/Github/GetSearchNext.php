@@ -42,7 +42,7 @@ trait GetSearchNext
                     $githubSearch->pages = $pages;
                 }
 
-                if ($pages == $nextPage) {
+                if ($pages <= $nextPage) {
                     $githubSearch->delete();
                 } else {
                     $githubSearch->nextpage = $nextPage + 1;
