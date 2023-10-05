@@ -35,15 +35,15 @@ trait GetSearch
 
                         activity()->log("Create a new GithubSearch with query: {$query}");
 
-                        $searchResults = $this->getGitHubSearchPage($query, $perPage, $page);
+                        $searchResultsInner = $this->getGitHubSearchPage($query, $perPage, $page);
 
-                        $count = $searchResults['total_count'];
-                        $pages = $count / $perPage;
+                        $countInner = $searchResultsInner['total_count'];
+                        $pagesInner = $countInner / $perPage;
 
                         $githubSearch = new GithubSearch;
                         $githubSearch->keyphrase = $query;
-                        $githubSearch->count = $count;
-                        $githubSearch->pages = $pages;
+                        $githubSearch->count = $countInner;
+                        $githubSearch->pages = $pagesInner;
                         $githubSearch->nextpage = $nextpage;
                         $githubSearch->save();
                     }

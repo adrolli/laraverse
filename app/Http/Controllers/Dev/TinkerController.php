@@ -12,6 +12,7 @@
 namespace App\Http\Controllers\Dev;
 
 use App\Http\Controllers\Controller;
+use App\Jobs\GithubSearchWorker;
 use App\Traits\Github\GetDatabase;
 use App\Traits\Github\GetRateLimits;
 use App\Traits\Github\GetRepository;
@@ -55,6 +56,15 @@ class TinkerController extends Controller
     }
 
     public function tinkerNow()
+    {
+        $this->info('Starting GitHub Search Worker');
+
+        GithubSearchWorker::dispatch();
+
+        $this->info('Packagist GitHub Search finished');
+    }
+
+    public function oldtinkerNow()
     {
 
         // Todo: adjust locktime to jobtime
