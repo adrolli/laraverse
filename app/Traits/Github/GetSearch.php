@@ -29,7 +29,7 @@ trait GetSearch
 
                 $queries = $this->generateSearchQueries($keyPhrase, $count);
 
-                activity()->log("Create new GithubSearches to get {$count} results for {$keyPhrase}");
+                activity()->log("Create new GithubSearches to get {$count} results for {$query}");
 
                 if ($pages > $nextpage) {
                     foreach ($queries as $query) {
