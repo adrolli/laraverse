@@ -29,10 +29,8 @@ trait GetSearch
 
                 activity()->log("Create new GithubSearches to get {$count} results for {$keyPhrase}");
 
-                foreach ($queries as $query) {
-
-                    if ($pages > $nextpage) {
-
+                if ($pages > $nextpage) {
+                    foreach ($queries as $query) {
                         activity()->log("Create a new GithubSearch with query: {$query}");
 
                         $searchResultsInner = $this->getGitHubSearchPage($query, $perPage, $page);
