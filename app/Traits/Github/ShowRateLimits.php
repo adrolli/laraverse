@@ -29,7 +29,7 @@ trait ShowRateLimits
 
         } catch (\Exception $e) {
 
-            $this->handleApiError('Show Rate Limits', $e);
+            $this->handleError('Show Rate Limits', $e);
 
             return null;
         }

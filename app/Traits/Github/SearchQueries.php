@@ -165,7 +165,7 @@ trait SearchQueries
 
         } catch (\Exception $e) {
 
-            $this->handleApiError('Search Queries', $e);
+            $this->handleError('Search Queries', $e);
 
             return null;
         }

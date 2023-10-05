@@ -9,11 +9,11 @@ trait GetSearchPage
 {
     use ErrorHandler;
 
-    public function getGitHubSearchPage($keyPhrase, $perPage, $page)
+    public function getGitHubSearchPage($query, $perPage, $page)
     {
         $client = new Client();
 
-        $apiUrl = "https://api.github.com/search/repositories?q={$keyPhrase}&per_page={$perPage}&page={$page}";
+        $apiUrl = "https://api.github.com/search/repositories?q={$query}&per_page={$perPage}&page={$page}";
 
         try {
             $response = $client->get($apiUrl, [
@@ -31,14 +31,14 @@ trait GetSearchPage
 
             } else {
 
-                $this->handleApiError($keyPhrase, $response);
+                $this->handleApiError($query, $response);
 
                 return null;
 
             }
         } catch (\Exception $e) {
 
-            $this->handleApiError($keyPhrase, $e);
+            $this->handleApiError($query, $e);
 
             return null;
         }
