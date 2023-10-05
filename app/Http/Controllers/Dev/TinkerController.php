@@ -12,15 +12,13 @@
 namespace App\Http\Controllers\Dev;
 
 use App\Http\Controllers\Controller;
-use App\Jobs\PackagistCreate;
-use App\Jobs\PackagistDelete;
-use App\Jobs\PackagistUpdate;
 use App\Traits\Github\GetDatabase;
 use App\Traits\Github\GetRateLimits;
 use App\Traits\Github\GetRepository;
 use App\Traits\Github\GetSearch;
 use App\Traits\Github\GetSearchesInQueue;
 use App\Traits\Github\GetSearchNext;
+use App\Traits\Github\SearchQueries;
 use App\Traits\Github\ShowRateLimits;
 use App\Traits\Packagist\GetApiAll;
 use App\Traits\Packagist\GetApiUpdates;
@@ -35,7 +33,7 @@ class TinkerController extends Controller
     //use GetApiAll, GetApiUpdates, GetDatabase, SerializesModels;
     //use GetLatest, GetPackage, GetVersion, GetVersions;
     use GetDatabase, GetRateLimits, GetRepository, GetSearch, GetSearchesInQueue,
-        GetSearchNext, ShowRateLimits;
+        GetSearchNext, SearchQueries, ShowRateLimits;
 
     public $batch;
 
@@ -58,6 +56,10 @@ class TinkerController extends Controller
 
     public function tinkerNow()
     {
+
+        $queries = $this->generateSearchQueries($keyPhrase = 'laravel', $resultCount = 11111);
+        dd($queries);
+
         // Todo: adjust locktime to jobtime
         $perPage = config('app.laraverse_github_pages');
 

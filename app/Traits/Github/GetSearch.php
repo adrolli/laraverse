@@ -8,7 +8,7 @@ use Illuminate\Support\Str;
 
 trait GetSearch
 {
-    use ErrorHandler, GetSearchPage, RepositoryCreate;
+    use ErrorHandler, GetSearchPage, RepositoryCreate, SearchQueries;
 
     public function getGitHubSearch()
     {
@@ -21,22 +21,29 @@ trait GetSearch
 
                 $searchResults = $this->getGitHubSearchPage($keyPhrase, $perPage, $page);
 
-                activity()->log("Create a new GithubSearch for {$keyPhrase}");
-
                 $count = $searchResults['total_count'];
                 $pages = $count / $perPage;
                 $nextpage = 2;
 
-                if ($pages > $nextpage) {
+                $queries = $this->generateSearchQueries($keyPhrase, $count);
 
-                    activity()->log("Create a new GithubSearch for {$keyPhrase} with {$pages} pages and {$nextpage} next");
+                activity()->log("Create new GithubSearches to get {$count} results for {$keyPhrase}");
 
-                    $githubSearch = new GithubSearch;
-                    $githubSearch->keyphrase = $keyPhrase;
-                    $githubSearch->count = $count;
-                    $githubSearch->pages = $pages;
-                    $githubSearch->nextpage = $nextpage;
-                    $githubSearch->save();
+                foreach ($queries as $query) {
+
+                    if ($pages > $nextpage) {
+
+                        activity()->log("Create a new GithubSearch with query: {$query}");
+
+                        $searchResults = $this->getGitHubSearchPage($query, $perPage, $page);
+
+                        $githubSearch = new GithubSearch;
+                        $githubSearch->keyphrase = $query;
+                        $githubSearch->count = $count;
+                        $githubSearch->pages = $pages;
+                        $githubSearch->nextpage = $nextpage;
+                        $githubSearch->save();
+                    }
                 }
 
                 $repositorySource = 'github-search-'.Str::slug($keyPhrase);

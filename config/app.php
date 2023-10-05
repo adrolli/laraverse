@@ -426,11 +426,12 @@ return [
         'filamentphp',
         'filament',
         'statamic',
-        'laravel',
         'flarum',
         'livewire',
         'octobercms',
         /*
+        'laravel',
+
         https://github.com/search?q=laravel&type=repositories = 566k repos
         https://github.com/search?q=filament&type=repositories = 3k
         https://github.com/search?q=livewire&type=repositories = 8.1k
