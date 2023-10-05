@@ -17,13 +17,13 @@ trait GetSearch
 
             foreach (config('app.github_search') as $keyPhrase) {
                 $page = 1;
+                $nextpage = 2;
                 $perPage = config('app.laraverse_github_pages');
 
                 $searchResults = $this->getGitHubSearchPage($keyPhrase, $perPage, $page);
 
                 $count = $searchResults['total_count'];
                 $pages = $count / $perPage;
-                $nextpage = 2;
 
                 $queries = $this->generateSearchQueries($keyPhrase, $count);
 
@@ -36,6 +36,9 @@ trait GetSearch
                         activity()->log("Create a new GithubSearch with query: {$query}");
 
                         $searchResults = $this->getGitHubSearchPage($query, $perPage, $page);
+
+                        $count = $searchResults['total_count'];
+                        $pages = $count / $perPage;
 
                         $githubSearch = new GithubSearch;
                         $githubSearch->keyphrase = $query;
@@ -56,7 +59,7 @@ trait GetSearch
 
         } catch (\Exception $e) {
 
-            $this->handleApiError('GitHub Search', $e);
+            $this->handleError('GitHub Search', $e);
 
             return null;
         }
