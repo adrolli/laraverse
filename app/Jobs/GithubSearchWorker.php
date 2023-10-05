@@ -65,7 +65,7 @@ class GithubSearchWorker implements ShouldQueue
 
         if ($lock->get()) {
 
-            $pagesInQueue = $this->getGitHubSearchesInQueue();
+            $jobsInQueue = $this->getGitHubSearchesInQueue();
 
             $rates = $this->getGithubRateLimits();
 
@@ -73,9 +73,9 @@ class GithubSearchWorker implements ShouldQueue
 
             $this->setProgress(10);
 
-            if ($currentLimits >= 1 and $pagesInQueue > 0) {
+            if ($currentLimits >= 1 and $jobsInQueue > 0) {
 
-                activity()->log("GitHub Search Pages started working on {$pagesInQueue} pages in queue");
+                activity()->log("GitHub Search Pages started working on {$jobsInQueue} pages in queue");
 
                 $this->getGitHubSearchNext($perPage);
 

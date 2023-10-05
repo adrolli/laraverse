@@ -29,9 +29,9 @@ trait GetSearchesInQueue
                 }
             }
 
-            $allPagesPending = $allPages - $allPagesDone;
+            $jobsPending = count($githubSearches);
 
-            return $allPagesPending;
+            return $jobsPending;
 
         } catch (\Exception $e) {
 
