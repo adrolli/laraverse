@@ -57,9 +57,6 @@ class TinkerController extends Controller
     public function tinkerNow()
     {
 
-        $queries = $this->generateSearchQueries($keyPhrase = 'laravel', $resultCount = 11111);
-        dd($queries);
-
         // Todo: adjust locktime to jobtime
         $perPage = config('app.laraverse_github_pages');
 
