@@ -33,21 +33,23 @@ trait GetSearch
 
                 if ($pages > $nextpage) {
                     foreach ($queries as $query) {
-                        $searchResultsInner = $this->getGitHubSearchPage($query, $perPage, $page);
+                        // to many requests, triggering api limits, save search without count and pages
+                        // then starting from page 1 and update information then
+                        //$searchResultsInner = $this->getGitHubSearchPage($query, $perPage, $page);
 
-                        $countInner = $searchResultsInner['total_count'];
-                        $pagesInner = $countInner / $perPage;
+                        //$countInner = $searchResultsInner['total_count'];
+                        //$pagesInner = $countInner / $perPage;
 
-                        if ($pagesInner > $nextpage) {
-                            activity()->log("Create a new GithubSearch to get {$countInner} with query: {$query}");
+                        //if ($pagesInner > $nextpage) {
+                        activity()->log("Create a new GithubSearch with query: {$query}");
 
-                            $githubSearch = new GithubSearch;
-                            $githubSearch->keyphrase = $query;
-                            $githubSearch->count = $countInner;
-                            $githubSearch->pages = $pagesInner;
-                            $githubSearch->nextpage = $nextpage;
-                            $githubSearch->save();
-                        }
+                        $githubSearch = new GithubSearch;
+                        $githubSearch->keyphrase = $query;
+                        $githubSearch->count = 0;
+                        $githubSearch->pages = 0;
+                        $githubSearch->nextpage = $page;
+                        $githubSearch->save();
+                        //}
                     }
                 }
 

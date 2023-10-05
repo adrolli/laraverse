@@ -21,27 +21,35 @@ trait GetSearchNext
 
             if ($githubSearch) {
                 $keyPhrase = $githubSearch->keyphrase;
+                $count = $githubSearch->count;
                 $pages = $githubSearch->pages;
                 $nextPage = $githubSearch->nextpage;
+
+                activity()->log("GitHub Worker starts on keyPhrase: {$keyPhrase}");
+
+                $searchResults = $this->getGitHubSearchPage($keyPhrase, $perPage, $nextPage);
+
+                $repositorySource = 'github-search-'.Str::slug($keyPhrase);
+
+                foreach ($searchResults['items'] as $item) {
+                    $this->createGitHubRepository($item, $repositorySource);
+                }
+
+                if ($count == 0) {
+                    $count = $searchResults['total_count'];
+                    $pages = $count / $perPage;
+                    $githubSearch->count;
+                    $githubSearch->pages;
+                }
+
+                if ($pages == $nextPage) {
+                    $githubSearch->delete();
+                } else {
+                    $githubSearch->nextpage = $nextPage + 1;
+                    $githubSearch->save();
+                }
+
             }
-
-            activity()->log("GitHub Worker starts on keyPhrase: {$keyPhrase}");
-
-            $searchResults = $this->getGitHubSearchPage($keyPhrase, $perPage, $nextPage);
-
-            $repositorySource = 'github-search-'.Str::slug($keyPhrase);
-
-            foreach ($searchResults['items'] as $item) {
-                $this->createGitHubRepository($item, $repositorySource);
-            }
-
-            if ($pages == $nextPage) {
-                $githubSearch->delete();
-            } else {
-                $githubSearch->nextpage = $nextPage + 1;
-                $githubSearch->save();
-            }
-
         } catch (\Exception $e) {
 
             $this->handleError('GitHub Search Next', $e);
