@@ -57,11 +57,9 @@ class TinkerController extends Controller
 
     public function tinkerNow()
     {
-        $this->info('Starting GitHub Search Worker');
 
         GithubSearchWorker::dispatch();
 
-        $this->info('Packagist GitHub Search finished');
     }
 
     public function oldtinkerNow()
