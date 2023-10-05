@@ -20,7 +20,7 @@ trait GetSearch
                 $nextpage = 2;
                 $perPage = config('app.laraverse_github_pages');
 
-                $query = $keyPhrase.'+in:name,description,readme,topics';
+                $query = $keyPhrase.'+in:name,description,readme,topics+fork=true';
 
                 $searchResults = $this->getGitHubSearchPage($query, $perPage, $page);
 
