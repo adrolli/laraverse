@@ -329,7 +329,6 @@ return [
             'composer' => 'Composer',
             'npm' => 'Npm',
             'code_analyzer' => 'Code Analyzer',
-            'package_type' => 'Package Type',
             'repository_type_id' => 'Repository Type',
             'organization_id' => 'Organization',
             'owner_id' => 'Owner',

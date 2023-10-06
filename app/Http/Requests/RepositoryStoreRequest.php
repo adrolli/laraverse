@@ -29,7 +29,6 @@ class RepositoryStoreRequest extends FormRequest
             'composer' => ['required', 'max:255', 'json'],
             'npm' => ['required', 'max:255', 'json'],
             'code_analyzer' => ['required', 'max:255', 'json'],
-            'package_type' => ['required', 'max:255', 'string'],
             'repository_type_id' => ['required', 'exists:repository_types,id'],
             'organization_id' => ['required', 'exists:organizations,id'],
             'owner_id' => ['required', 'exists:owners,id'],

@@ -2,11 +2,11 @@
 
 namespace App\Http\Controllers\Api;
 
+use App\Http\Controllers\Controller;
+use App\Http\Resources\RepositoryCollection;
+use App\Http\Resources\RepositoryResource;
 use App\Models\Owner;
 use Illuminate\Http\Request;
-use App\Http\Controllers\Controller;
-use App\Http\Resources\RepositoryResource;
-use App\Http\Resources\RepositoryCollection;
 
 class OwnerRepositoriesController extends Controller
 {
@@ -39,7 +39,6 @@ class OwnerRepositoriesController extends Controller
             'composer' => ['required', 'max:255', 'json'],
             'npm' => ['required', 'max:255', 'json'],
             'code_analyzer' => ['required', 'max:255', 'json'],
-            'package_type' => ['required', 'max:255', 'string'],
             'repository_type_id' => ['required', 'exists:repository_types,id'],
             'organization_id' => ['required', 'exists:organizations,id'],
         ]);

@@ -324,10 +324,6 @@ class RepositoryResource extends Resource
                     ->toggleable()
                     ->searchable()
                     ->limit(50),
-                Tables\Columns\TextColumn::make('package_type')
-                    ->toggleable()
-                    ->searchable(true, null, true)
-                    ->limit(50),
                 Tables\Columns\TextColumn::make('repositoryType.title')
                     ->toggleable()
                     ->limit(50),

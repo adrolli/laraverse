@@ -3,7 +3,6 @@
 namespace Database\Factories;
 
 use App\Models\Repository;
-use Illuminate\Support\Str;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 class RepositoryFactory extends Factory
@@ -32,7 +31,6 @@ class RepositoryFactory extends Factory
             'composer' => [],
             'npm' => [],
             'code_analyzer' => [],
-            'package_type' => $this->faker->text(255),
             'organization_id' => \App\Models\Organization::factory(),
             'owner_id' => \App\Models\Owner::factory(),
             'repository_type_id' => \App\Models\RepositoryType::factory(),

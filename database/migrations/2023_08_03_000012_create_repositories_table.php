@@ -1,10 +1,11 @@
 <?php
 
-use Illuminate\Support\Facades\Schema;
-use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
 
-return new class extends Migration {
+return new class extends Migration
+{
     /**
      * Run the migrations.
      */
@@ -21,7 +22,6 @@ return new class extends Migration {
             $table->json('composer');
             $table->json('npm');
             $table->json('code_analyzer');
-            $table->string('package_type');
             $table->unsignedBigInteger('repository_type_id');
             $table->unsignedBigInteger('organization_id');
             $table->unsignedBigInteger('owner_id');

@@ -106,15 +106,6 @@ class RepositoriesRelationManager extends RelationManager
                         'lg' => 12,
                     ]),
 
-                TextInput::make('package_type')
-                    ->rules(['max:255', 'string'])
-                    ->placeholder('Package Type')
-                    ->columnSpan([
-                        'default' => 12,
-                        'md' => 12,
-                        'lg' => 12,
-                    ]),
-
                 Select::make('organization_id')
                     ->rules(['exists:organizations,id'])
                     ->relationship('organization', 'title')
@@ -149,7 +140,6 @@ class RepositoriesRelationManager extends RelationManager
                 Tables\Columns\TextColumn::make('description')->limit(50),
                 Tables\Columns\TextColumn::make('license')->limit(50),
                 Tables\Columns\TextColumn::make('readme')->limit(50),
-                Tables\Columns\TextColumn::make('package_type')->limit(50),
                 Tables\Columns\TextColumn::make('repositoryType.title')->limit(
                     50
                 ),

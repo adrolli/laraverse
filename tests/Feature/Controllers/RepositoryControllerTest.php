@@ -2,16 +2,14 @@
 
 namespace Tests\Feature\Controllers;
 
-use App\Models\User;
-use App\Models\Repository;
-
-use App\Models\Owner;
 use App\Models\Organization;
+use App\Models\Owner;
+use App\Models\Repository;
 use App\Models\RepositoryType;
-
-use Tests\TestCase;
-use Illuminate\Foundation\Testing\WithFaker;
+use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Foundation\Testing\WithFaker;
+use Tests\TestCase;
 
 class RepositoryControllerTest extends TestCase
 {
@@ -149,7 +147,6 @@ class RepositoryControllerTest extends TestCase
             'composer' => [],
             'npm' => [],
             'code_analyzer' => [],
-            'package_type' => $this->faker->text(255),
             'organization_id' => $organization->id,
             'owner_id' => $owner->id,
             'repository_type_id' => $repositoryType->id,

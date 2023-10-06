@@ -2,11 +2,11 @@
 
 namespace App\Http\Controllers\Api;
 
-use Illuminate\Http\Request;
-use App\Models\RepositoryType;
 use App\Http\Controllers\Controller;
-use App\Http\Resources\RepositoryResource;
 use App\Http\Resources\RepositoryCollection;
+use App\Http\Resources\RepositoryResource;
+use App\Models\RepositoryType;
+use Illuminate\Http\Request;
 
 class RepositoryTypeRepositoriesController extends Controller
 {
@@ -43,7 +43,6 @@ class RepositoryTypeRepositoriesController extends Controller
             'composer' => ['required', 'max:255', 'json'],
             'npm' => ['required', 'max:255', 'json'],
             'code_analyzer' => ['required', 'max:255', 'json'],
-            'package_type' => ['required', 'max:255', 'string'],
             'organization_id' => ['required', 'exists:organizations,id'],
             'owner_id' => ['required', 'exists:owners,id'],
         ]);

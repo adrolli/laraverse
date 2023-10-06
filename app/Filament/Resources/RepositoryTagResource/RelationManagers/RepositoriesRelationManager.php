@@ -3,22 +3,21 @@
 namespace App\Filament\Resources\RepositoryTagResource\RelationManagers;
 
 use Filament\Forms;
-use Filament\Tables;
-use Filament\Forms\Form;
-use Filament\Tables\Table;
 use Filament\Forms\Components\Grid;
-use Filament\Forms\Components\Select;
-use Filament\Tables\Actions\EditAction;
 use Filament\Forms\Components\KeyValue;
+use Filament\Forms\Components\RichEditor;
+use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TextInput;
+use Filament\Forms\Form;
+use Filament\Resources\RelationManagers\RelationManager;
+use Filament\Tables;
 use Filament\Tables\Actions\CreateAction;
 use Filament\Tables\Actions\DeleteAction;
-use Filament\Forms\Components\RichEditor;
-use Filament\Tables\Filters\SelectFilter;
-use Illuminate\Database\Eloquent\Builder;
 use Filament\Tables\Actions\DeleteBulkAction;
-use Filament\Forms\Components\BelongsToSelect;
-use Filament\Resources\RelationManagers\RelationManager;
+use Filament\Tables\Actions\EditAction;
+use Filament\Tables\Filters\SelectFilter;
+use Filament\Tables\Table;
+use Illuminate\Database\Eloquent\Builder;
 
 class RepositoriesRelationManager extends RelationManager
 {
@@ -107,15 +106,6 @@ class RepositoriesRelationManager extends RelationManager
                         'lg' => 12,
                     ]),
 
-                TextInput::make('package_type')
-                    ->rules(['max:255', 'string'])
-                    ->placeholder('Package Type')
-                    ->columnSpan([
-                        'default' => 12,
-                        'md' => 12,
-                        'lg' => 12,
-                    ]),
-
                 Select::make('repository_type_id')
                     ->rules(['exists:repository_types,id'])
                     ->relationship('repositoryType', 'title')
@@ -161,7 +151,6 @@ class RepositoriesRelationManager extends RelationManager
                 Tables\Columns\TextColumn::make('description')->limit(50),
                 Tables\Columns\TextColumn::make('license')->limit(50),
                 Tables\Columns\TextColumn::make('readme')->limit(50),
-                Tables\Columns\TextColumn::make('package_type')->limit(50),
                 Tables\Columns\TextColumn::make('repositoryType.title')->limit(
                     50
                 ),
@@ -180,7 +169,7 @@ class RepositoriesRelationManager extends RelationManager
                         return $query
                             ->when(
                                 $data['created_from'],
-                                fn(
+                                fn (
                                     Builder $query,
                                     $date
                                 ): Builder => $query->whereDate(
@@ -191,7 +180,7 @@ class RepositoriesRelationManager extends RelationManager
                             )
                             ->when(
                                 $data['created_until'],
-                                fn(
+                                fn (
                                     Builder $query,
                                     $date
                                 ): Builder => $query->whereDate(

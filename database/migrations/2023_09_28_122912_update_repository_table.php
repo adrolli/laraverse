@@ -22,7 +22,6 @@ return new class extends Migration
             $table->longText('changelog')->nullable();
             $table->longText('licensefile')->nullable();
             $table->longText('license')->nullable()->change();
-            $table->dropColumn('package_type');
             $table->json('code_analyzer')->nullable()->change();
             $table->unsignedBigInteger('organization_id')->nullable()->change();
             $table->unsignedBigInteger('owner_id')->nullable()->change();
@@ -51,7 +50,6 @@ return new class extends Migration
             $table->dropColumn('changelog');
             $table->dropColumn('licensefile');
             $table->longText('license')->nullable(false)->change();
-            $table->string('package_type');
             $table->json('code_analyzer')->nullable(false)->change();
             $table->longText('composer')->nullable(false)->change();
             $table->longText('npm')->nullable(false)->change();

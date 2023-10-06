@@ -89,17 +89,6 @@
     </x-inputs.group>
 
     <x-inputs.group class="w-full">
-        <x-inputs.text
-            name="package_type"
-            label="Package Type"
-            :value="old('package_type', ($editing ? $repository->package_type : ''))"
-            maxlength="255"
-            placeholder="Package Type"
-            required
-        ></x-inputs.text>
-    </x-inputs.group>
-
-    <x-inputs.group class="w-full">
         <x-inputs.select
             name="repository_type_id"
             label="Repository Type"

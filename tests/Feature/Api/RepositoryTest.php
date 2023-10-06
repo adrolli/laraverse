@@ -2,17 +2,15 @@
 
 namespace Tests\Feature\Api;
 
-use App\Models\User;
-use App\Models\Repository;
-
-use App\Models\Owner;
 use App\Models\Organization;
+use App\Models\Owner;
+use App\Models\Repository;
 use App\Models\RepositoryType;
-
-use Tests\TestCase;
-use Laravel\Sanctum\Sanctum;
-use Illuminate\Foundation\Testing\WithFaker;
+use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Foundation\Testing\WithFaker;
+use Laravel\Sanctum\Sanctum;
+use Tests\TestCase;
 
 class RepositoryTest extends TestCase
 {
@@ -82,7 +80,6 @@ class RepositoryTest extends TestCase
             'composer' => [],
             'npm' => [],
             'code_analyzer' => [],
-            'package_type' => $this->faker->text(255),
             'organization_id' => $organization->id,
             'owner_id' => $owner->id,
             'repository_type_id' => $repositoryType->id,
