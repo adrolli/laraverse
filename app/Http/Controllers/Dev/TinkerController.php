@@ -13,11 +13,11 @@ namespace App\Http\Controllers\Dev;
 
 use App\Http\Controllers\Controller;
 use App\Jobs\GithubSearchWorker;
+use App\Models\GithubSearch;
 use App\Traits\Github\GetDatabase;
 use App\Traits\Github\GetRateLimits;
 use App\Traits\Github\GetRepository;
 use App\Traits\Github\GetSearch;
-use App\Traits\Github\GetSearchesInQueue;
 use App\Traits\Github\GetSearchNext;
 use App\Traits\Github\SearchQueries;
 use App\Traits\Github\ShowRateLimits;
@@ -33,7 +33,7 @@ class TinkerController extends Controller
 {
     //use GetApiAll, GetApiUpdates, GetDatabase, SerializesModels;
     //use GetLatest, GetPackage, GetVersion, GetVersions;
-    use GetDatabase, GetRateLimits, GetRepository, GetSearch, GetSearchesInQueue,
+    use GetDatabase, GetRateLimits, GetRepository, GetSearch,
         GetSearchNext, SearchQueries, ShowRateLimits;
 
     public $batch;
@@ -68,30 +68,31 @@ class TinkerController extends Controller
         // Todo: adjust locktime to jobtime
         $perPage = config('app.laraverse_github_pages');
 
-        $pagesInQueue = $this->getGitHubSearchesInQueue();
+        $githubSearches = GithubSearch::all();
+        $jobsInQueue = count($githubSearches);
 
         $rates = $this->getGithubRateLimits();
 
         $currentLimits = $rates['search']['remaining'];
 
-        if ($currentLimits >= 1 and $pagesInQueue == true) {
+        if ($currentLimits >= 1 and $jobsInQueue == true) {
 
             $this->getGitHubSearchNext($perPage);
 
             activity()->log('GitHub Search Pages ran successfully');
 
             // Todo: automize 30 from config
-        } elseif ($currentLimits >= 30 and $pagesInQueue == false) {
+        } elseif ($currentLimits >= 30 and $jobsInQueue == false) {
 
             $this->getGitHubSearch();
 
             activity()->log('GitHub Search ran successfully');
 
-        } elseif ($pagesInQueue == true) {
+        } elseif ($jobsInQueue == true) {
 
             activity()->log("GitHub Search has only {$currentLimits} left for doing pages");
 
-        } elseif ($pagesInQueue == false) {
+        } elseif ($jobsInQueue == false) {
 
             activity()->log("GitHub Search has only {$currentLimits} left for doing searches");
 
