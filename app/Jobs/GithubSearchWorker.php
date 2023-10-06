@@ -14,9 +14,9 @@
 namespace App\Jobs;
 
 use Adrolli\FilamentJobManager\Traits\JobProgress;
-use App\Models\GithubSearch;
 use App\Traits\Github\GetRateLimits;
 use App\Traits\Github\GetSearch;
+use App\Traits\Github\GetSearchesInQueue;
 use App\Traits\Github\GetSearchNext;
 use App\Traits\Github\GetSearchPage;
 use Illuminate\Bus\Queueable;
@@ -28,7 +28,7 @@ use Illuminate\Support\Facades\Cache;
 
 class GithubSearchWorker implements ShouldQueue
 {
-    use Dispatchable, GetRateLimits, GetSearch, GetSearchNext,
+    use Dispatchable, GetRateLimits, GetSearch, GetSearchesInQueue, GetSearchNext,
         GetSearchPage, InteractsWithQueue, JobProgress, Queueable, SerializesModels;
 
     public $tries;
@@ -65,8 +65,7 @@ class GithubSearchWorker implements ShouldQueue
 
         if ($lock->get()) {
 
-            $githubSearches = GithubSearch::all();
-            $jobsInQueue = count($githubSearches);
+            $jobsInQueue = $this->getGitHubSearchesInQueue();
 
             $rates = $this->getGithubRateLimits();
 

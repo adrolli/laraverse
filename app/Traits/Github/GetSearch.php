@@ -3,7 +3,6 @@
 namespace App\Traits\Github;
 
 use App\Models\GithubSearch;
-use App\Models\SearchWorker;
 use App\Traits\ErrorHandler;
 use Illuminate\Support\Str;
 
@@ -16,83 +15,48 @@ trait GetSearch
 
         try {
 
-            $searchQueries = SearchWorker::all();
+            foreach (config('app.github_search') as $keyPhrase) {
+                $page = 1;
+                $nextpage = 2;
+                $perPage = config('app.laraverse_github_pages');
 
-            foreach ($searchQueries as $searchQuery) {
+                $query = $keyPhrase.'+in:name,description,readme,topics+fork:true';
 
-                $topicsValue = '';
-                $readmeValue = '';
-                $forksValue = '';
-                $starrValue = '';
+                $searchResults = $this->getGitHubSearchPage($query, $perPage, $page);
 
-                $keyPhrase = $searchQuery->keyphrase;
-                $github = $searchQuery->githubsearch;
-                $topics = $searchQuery->githubtopics;
-                $readme = $searchQuery->githubreadme;
-                $forks = $searchQuery->githubforks;
-                $starr = $searchQuery->githubstarred;
+                $count = $searchResults['total_count'];
+                $pages = $count / $perPage;
 
-                if ($github == true) {
+                $queries = $this->generateSearchQueries($keyPhrase, $count);
 
-                    $page = 1;
-                    $nextpage = 2;
-                    $perPage = config('app.laraverse_github_pages');
+                activity()->log("Create new GithubSearches to get {$count} results for {$query}");
 
-                    if ($topics == true) {
-                        $topicsValue = ',topics';
+                if ($pages > $nextpage) {
+                    foreach ($queries as $query) {
+                        // to many requests, triggering api limits, save search without count and pages
+                        // then starting from page 1 and update information then
+                        //$searchResultsInner = $this->getGitHubSearchPage($query, $perPage, $page);
+
+                        //$countInner = $searchResultsInner['total_count'];
+                        //$pagesInner = $countInner / $perPage;
+
+                        //if ($pagesInner > $nextpage) {
+                        activity()->log("Create a new GithubSearch with query: {$query}");
+
+                        $githubSearch = new GithubSearch;
+                        $githubSearch->keyphrase = $query;
+                        $githubSearch->count = 0;
+                        $githubSearch->pages = 0;
+                        $githubSearch->nextpage = $page;
+                        $githubSearch->save();
+                        //}
                     }
+                }
 
-                    if ($readme == true) {
-                        $readmeValue = ',readme';
-                    }
+                $repositorySource = 'github-search-'.Str::slug($keyPhrase);
 
-                    if ($forks == true) {
-                        $forksValue = '+fork:true';
-                    }
-
-                    if ($starr == true) {
-                        $starrValue = '+fork:true';
-                    }
-
-                    $query = "{$keyPhrase}+in:name,description{$topicsValue}{$readmeValue}{$forksValue}";
-
-                    $searchResults = $this->getGitHubSearchPage($query, $perPage, $page);
-
-                    $count = $searchResults['total_count'];
-                    $pages = $count / $perPage;
-
-                    $queries = $this->generateSearchQueries($keyPhrase, $count);
-
-                    activity()->log("Create new GithubSearches to get {$count} results for {$query}");
-
-                    if ($pages > $nextpage) {
-                        foreach ($queries as $query) {
-                            // to many requests, triggering api limits, save search without count and pages
-                            // then starting from page 1 and update information then
-                            //$searchResultsInner = $this->getGitHubSearchPage($query, $perPage, $page);
-
-                            //$countInner = $searchResultsInner['total_count'];
-                            //$pagesInner = $countInner / $perPage;
-
-                            //if ($pagesInner > $nextpage) {
-                            activity()->log("Create a new GithubSearch with query: {$query}");
-
-                            $githubSearch = new GithubSearch;
-                            $githubSearch->keyphrase = $query;
-                            $githubSearch->count = 0;
-                            $githubSearch->pages = 0;
-                            $githubSearch->nextpage = $page;
-                            $githubSearch->save();
-                            //}
-                        }
-                    }
-
-                    $repositorySource = 'github-search-'.Str::slug($keyPhrase);
-
-                    foreach ($searchResults['items'] as $item) {
-                        $this->createGitHubRepository($item, $repositorySource);
-                    }
-
+                foreach ($searchResults['items'] as $item) {
+                    $this->createGitHubRepository($item, $repositorySource);
                 }
 
             }
