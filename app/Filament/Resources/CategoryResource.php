@@ -5,9 +5,9 @@ namespace App\Filament\Resources;
 use App\Filament\Filters\DateRangeFilter;
 use App\Filament\Resources\CategoryResource\Pages;
 use App\Models\Category;
-use Filament\Forms\Components\Card;
 use Filament\Forms\Components\Grid;
 use Filament\Forms\Components\RichEditor;
+use Filament\Forms\Components\Section;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
@@ -43,7 +43,7 @@ class CategoryResource extends Resource
     public static function form(Form $form): Form
     {
         return $form->schema([
-            Card::make()->schema([
+            Section::make()->schema([
                 Grid::make(['default' => 0])->schema([
                     TextInput::make('title')
                         ->rules(['max:255', 'string'])
@@ -86,6 +86,7 @@ class CategoryResource extends Resource
             ->columns([
                 Tables\Columns\TextColumn::make('title')
                     ->toggleable()
+                    ->sortable()
                     ->searchable(true, null, true)
                     ->limit(50),
                 Tables\Columns\TextColumn::make('slug')

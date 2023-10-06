@@ -40,6 +40,7 @@ trait GetSearchNext
                     $pages = $count / $perPage;
                     $githubSearch->count = $count;
                     $githubSearch->pages = $pages;
+                    $githubSearch->save();
                 }
 
                 if ($pages <= $nextPage) {

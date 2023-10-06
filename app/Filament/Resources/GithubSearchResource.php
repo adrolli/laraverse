@@ -98,17 +98,21 @@ class GithubSearchResource extends Resource
             ->columns([
                 Tables\Columns\TextColumn::make('keyphrase')
                     ->toggleable()
+                    ->sortable()
                     ->searchable(true, null, true)
                     ->limit(50),
                 Tables\Columns\TextColumn::make('count')
                     ->toggleable()
+                    ->sortable()
                     ->searchable(true, null, true)
                     ->limit(50),
                 Tables\Columns\TextColumn::make('pages')
                     ->toggleable()
-                    ->searchable()
+                    ->sortable()
+                    ->searchable(true, null, true)
                     ->limit(50),
                 Tables\Columns\TextColumn::make('nextpage')
+                    ->sortable()
                     ->toggleable()
                     ->searchable(true, null, true),
             ])
