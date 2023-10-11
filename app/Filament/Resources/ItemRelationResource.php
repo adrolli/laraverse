@@ -5,10 +5,10 @@ namespace App\Filament\Resources;
 use App\Filament\Filters\DateRangeFilter;
 use App\Filament\Resources\ItemRelationResource\Pages;
 use App\Models\ItemRelation;
-use Filament\Forms\Components\Card;
 use Filament\Forms\Components\Grid;
 use Filament\Forms\Components\KeyValue;
 use Filament\Forms\Components\RichEditor;
+use Filament\Forms\Components\Section;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Form;
@@ -41,7 +41,7 @@ class ItemRelationResource extends Resource
     public static function form(Form $form): Form
     {
         return $form->schema([
-            Card::make()->schema([
+            Section::make()->schema([
                 Grid::make(['default' => 0])->schema([
                     TextInput::make('title')
                         ->rules(['max:255', 'string'])
@@ -86,17 +86,19 @@ class ItemRelationResource extends Resource
                         ->required()
                         ->relationship('item', 'title')
                         ->searchable()
-                        ->placeholder('Item')
+                        ->placeholder('Item from')
                         ->columnSpan([
                             'default' => 12,
                             'md' => 12,
                             'lg' => 12,
                         ]),
 
-                    TextInput::make('itemto_id')
-                        ->rules(['max:255'])
+                    Select::make('itemto_id')
+                        ->rules(['exists:items,id'])
                         ->required()
-                        ->placeholder('Itemto Id')
+                        ->relationship('item', 'title')
+                        ->searchable()
+                        ->placeholder('Item to')
                         ->columnSpan([
                             'default' => 12,
                             'md' => 12,
