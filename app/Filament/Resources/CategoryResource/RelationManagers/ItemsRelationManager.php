@@ -11,9 +11,12 @@ use Filament\Forms\Components\TextInput;
 use Filament\Forms\Form;
 use Filament\Resources\RelationManagers\RelationManager;
 use Filament\Tables;
+use Filament\Tables\Actions\AttachAction;
 use Filament\Tables\Actions\CreateAction;
 use Filament\Tables\Actions\DeleteAction;
 use Filament\Tables\Actions\DeleteBulkAction;
+use Filament\Tables\Actions\DetachAction;
+use Filament\Tables\Actions\DetachBulkAction;
 use Filament\Tables\Actions\EditAction;
 use Filament\Tables\Filters\SelectFilter;
 use Filament\Tables\Table;
@@ -377,8 +380,17 @@ class ItemsRelationManager extends RelationManager
                     ->multiple()
                     ->relationship('packagistPackage', 'title'),
             ])
-            ->headerActions([CreateAction::make()])
-            ->actions([EditAction::make(), DeleteAction::make()])
-            ->bulkActions([DeleteBulkAction::make()]);
+            ->headerActions([
+                AttachAction::make(),
+                CreateAction::make(),
+            ])
+            ->actions([
+                EditAction::make(),
+                DetachAction::make(),
+                DeleteAction::make()])
+            ->bulkActions([
+                DeleteBulkAction::make(),
+                DetachBulkAction::make(),
+            ]);
     }
 }
