@@ -75,7 +75,7 @@ class VendorResource extends Resource
                         ]),
 
                     RichEditor::make('description')
-                        ->rules(['max:255', 'string'])
+                        ->rules(['string'])
                         ->nullable()
                         ->placeholder('Description')
                         ->columnSpan([
