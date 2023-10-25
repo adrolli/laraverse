@@ -7,6 +7,12 @@
         "framework"
     ],
     "license": "MIT",
+    "repositories": [
+        {
+            "type": "composer",
+            "url": "https://satis.spatie.be"
+        }
+    ],
     "require": {
         "php": "^8.1",
         "adrolli/filament-job-manager": "^1.0",
@@ -30,6 +36,7 @@
         "pxlrbt/filament-spotlight": "^1.0",
         "spatie/eloquent-sortable": "^4.0",
         "spatie/laravel-activitylog": "^4.7",
+        "spatie/laravel-mailcoach": "^7.0",
         "spatie/laravel-permission": "^5.5"
     },
     "require-dev": {
@@ -83,6 +90,6 @@
             "php-http/discovery": true
         }
     },
-    "minimum-stability": "stable",
+    "minimum-stability": "dev",
     "prefer-stable": true
 }

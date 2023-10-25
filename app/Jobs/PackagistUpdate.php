@@ -39,10 +39,10 @@ class PackagistUpdate implements ShouldQueue
 
     public function __construct(array $packageNames)
     {
-        $this->tries = config('app.laraverse_tries');
-        $this->timeout = config('app.laraverse_timeout');
-        $this->maxExceptions = config('app.laraverse_exceptions');
-        $this->backoff = config('app.laraverse_backoff');
+        $this->tries = config('app.laraverse_packagist_tries');
+        $this->timeout = config('app.laraverse_packagist_timeout');
+        $this->maxExceptions = config('app.laraverse_packagist_exceptions');
+        $this->backoff = config('app.laraverse_packagist_backoff');
         $this->packageNames = $packageNames;
     }
 

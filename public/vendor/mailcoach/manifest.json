@@ -1,0 +1,31 @@
+{
+  "__commonjsHelpers-725317a4.js": {
+    "file": "assets/_commonjsHelpers-725317a4.js"
+  },
+  "resources/css/app.css": {
+    "file": "assets/app-25bd9ec1.css",
+    "isEntry": true,
+    "src": "resources/css/app.css"
+  },
+  "resources/js/app.js": {
+    "file": "assets/app-a72a5c7e.js",
+    "imports": [
+      "__commonjsHelpers-725317a4.js"
+    ],
+    "isEntry": true,
+    "src": "resources/js/app.js"
+  },
+  "resources/js/editors/codemirror/codemirror.js": {
+    "file": "assets/codemirror-3c15f22d.js",
+    "isEntry": true,
+    "src": "resources/js/editors/codemirror/codemirror.js"
+  },
+  "resources/js/editors/markdown/markdown.js": {
+    "file": "assets/markdown-d44bd344.js",
+    "imports": [
+      "__commonjsHelpers-725317a4.js"
+    ],
+    "isEntry": true,
+    "src": "resources/js/editors/markdown/markdown.js"
+  }
+}

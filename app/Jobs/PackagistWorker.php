@@ -41,11 +41,11 @@ class PackagistWorker implements ShouldQueue
 
     public function __construct()
     {
-        $this->tries = config('app.laraverse_tries');
-        $this->timeout = config('app.laraverse_timeout');
-        $this->maxExceptions = config('app.laraverse_exceptions');
-        $this->backoff = config('app.laraverse_backoff');
-        $this->batch = config('app.laraverse_batch');
+        $this->tries = config('app.laraverse_packagist_tries');
+        $this->timeout = config('app.laraverse_packagist_timeout');
+        $this->maxExceptions = config('app.laraverse_packagist_exceptions');
+        $this->backoff = config('app.laraverse_packagist_backoff');
+        $this->batch = config('app.laraverse_packagist_batch');
     }
 
     public function handle(): void

@@ -200,18 +200,25 @@ return [
     */
 
     'laraverse_token' => env('LARAVERSE_TOKEN', 'laraverse'),
-    'laraverse_tries' => env('LARAVERSE_TRIES', 3),
-    'laraverse_timeout' => env('LARAVERSE_TIMEOUT', 60),
-    'laraverse_exceptions' => env('LARAVERSE_EXCEPTIONS', 1),
-    'laraverse_backoff' => env('LARAVERSE_BACKOFF', 120),
-    'laraverse_batch' => env('LARAVERSE_BATCH', 25),
 
+    'laraverse_packagist_tries' => env('LARAVERSE_PACKAGIST_TRIES', 3),
+    'laraverse_packagist_timeout' => env('LARAVERSE_PACKAGIST_TIMEOUT', 60),
+    'laraverse_packagist_exceptions' => env('LARAVERSE_PACKAGIST_EXCEPTIONS', 1),
+    'laraverse_packagist_backoff' => env('LARAVERSE_PACKAGIST_BACKOFF', 120),
+    'laraverse_packagist_batch' => env('LARAVERSE_PACKAGIST_BATCH', 25),
+    'laraverse_packagist_web' => env('LARAVERSE_PACKAGIST_WEB'),
+    'laraverse_packagist_identifier' => env('LARAVERSE_PACKAGIST_IDENTIFIER'),
+    'laraverse_packagist_mail' => env('LARAVERSE_PACKAGIST_MAIL'),
+
+    'laraverse_github_tries' => env('LARAVERSE_GITHUB_TRIES', 3),
+    'laraverse_github_timeout' => env('LARAVERSE_GITHUB_TIMEOUT', 60),
+    'laraverse_github_exceptions' => env('LARAVERSE_GITHUB_EXCEPTIONS', 1),
+    'laraverse_github_backoff' => env('LARAVERSE_GITHUB_BACKOFF', 120),
+    'laraverse_github_batch' => env('LARAVERSE_GITHUB_BATCH', 25),
     'laraverse_github_pages' => env('LARAVERSE_GITHUB_PAGES', 25),
-
-    'laraverse_api_web' => env('LARAVERSE_API_WEB'),
-    'laraverse_api_identifier' => env('LARAVERSE_API_IDENTIFIER'),
-    'laraverse_api_mail' => env('LARAVERSE_API_MAIL'),
-
+    'laraverse_github_locktime' => env('LARAVERSE_GITHUB_LOCKTIME', 600),
+    'laraverse_github_corelimit' => env('LARAVERSE_GITHUB_SEARCHLIMIT', 10),
+    'laraverse_github_searchlimit' => env('LARAVERSE_GITHUB_SEARCHLIMIT', 10),
     'github_api_token' => env('GITHUB_API_TOKEN'),
 
     /*
