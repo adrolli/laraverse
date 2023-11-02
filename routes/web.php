@@ -24,6 +24,8 @@ use App\Http\Controllers\StackController;
 use App\Http\Controllers\TagController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\VendorController;
+use App\Livewire\Frontend\Planet;
+use App\Livewire\Frontend\Planets;
 use App\Livewire\Frontend\Welcome;
 use Illuminate\Support\Facades\Route;
 
@@ -39,6 +41,10 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', Welcome::class);
+
+Route::get('/planets', Planets::class);
+
+Route::get('/planet', Planet::class);
 
 Route::get('/dev', TinkerController::class);
 
