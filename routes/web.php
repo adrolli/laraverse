@@ -44,6 +44,8 @@ Route::get('/', Welcome::class);
 
 Route::get('/planets', Planets::class);
 
+Route::get('/planetos', Planets::class);
+
 Route::get('/planet', Planet::class);
 
 Route::get('/dev', TinkerController::class);
