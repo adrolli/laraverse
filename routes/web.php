@@ -42,9 +42,7 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', Welcome::class);
 
-Route::get('/planets', Planets::class);
-
-Route::get('/planetos', Planets::class);
+Route::get('/vr', Planets::class);
 
 Route::get('/planet', Planet::class);
 
