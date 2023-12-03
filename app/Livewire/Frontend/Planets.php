@@ -14,9 +14,9 @@ class Planets extends Component
 
     public $search;
 
-    public function jump()
+    public function jump($planet)
     {
-        return $this->redirect('/planet', navigate: true);
+        return $this->redirect("/$planet", navigate: true);
     }
 
     public function mount()

@@ -18,6 +18,11 @@
         margin: 0;
         overflow: hidden;
       }
+      #canvas {
+        width: 100%;
+        height: 100%;
+        margin: 0;
+      }
       #solarSystem {
         position: absolute;
         top: 0;
@@ -69,6 +74,11 @@
         pointer-events: auto;
         font-family: "Noto Sans", sans-serif;
         width: 50%;
+      }
+      #space-pilgrim {
+        position: fixed;
+        top: 59%;
+        opacity: 0;
       }
 
     </style>

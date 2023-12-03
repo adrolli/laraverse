@@ -1,7 +1,7 @@
 
 <div id="root">
     <div id="header">
-        <div id="logo">Laravel</div>
+        <div id="logo"><img src="planets/laraverse.png" width="300"/></div>
 
         <input
         wire:model.live.debounce.500ms="search"
@@ -60,12 +60,15 @@
           </div>
     </div>
     <div id="solarSystem"></div>
+    <video id="video-background" loop muted>
+        <source src="planets/laraverse-hd.mp4" type="video/mp4">
+    </video>
     <div id="footer">
-    <div id="menu">
-        <div id="link"><a href="submit">Submit</a></div>
-        <div id="link"><a href="about">About</a></div>
-        <div id="link"><a href="contact">Contact</a></div>
-    </div>
+        <div id="menu">
+            <div id="link"><a href="submit">Submit</a></div>
+            <div id="link"><a href="about">About</a></div>
+            <div id="link"><a href="contact">Contact</a></div>
+        </div>
     </div>
 </div>
 
@@ -85,27 +88,16 @@ function initializeThreeJS() {
   document.getElementById("solarSystem").appendChild(renderer.domElement);
 
   var loader = new THREE.TextureLoader();
-  var backgroundTexture = loader.load("planets/background.jpg");
 
-  var aspectRatio = 2240 / 1592;
-  var bgHeight = 50;
-  var bgWidth = bgHeight * aspectRatio;
-  var backgroundGeometry = new THREE.PlaneGeometry(
-    bgWidth,
-    bgHeight,
-    1,
-    1
-  );
-  var backgroundMaterial = new THREE.MeshBasicMaterial({
-    map: backgroundTexture,
-    side: THREE.DoubleSide,
-  });
-  var backgroundMesh = new THREE.Mesh(
-    backgroundGeometry,
-    backgroundMaterial
-  );
-  backgroundMesh.position.z = -50;
-  scene.add(backgroundMesh);
+  const video = document.getElementById('video-background');
+video.play();
+const texture = new THREE.VideoTexture(video);
+const backgroundGeometry = new THREE.PlaneGeometry(100, 100); // Adjust size as needed
+const backgroundMaterial = new THREE.MeshBasicMaterial({ map: texture });
+const backgroundMesh = new THREE.Mesh(backgroundGeometry, backgroundMaterial);
+backgroundMesh.position.z = -50; // Adjust position as needed
+scene.add(backgroundMesh);
+
 
   var directionalLight = new THREE.DirectionalLight(0xffffff, 1);
   directionalLight.position.set(-12, 5, 17);
@@ -220,6 +212,11 @@ function initializeThreeJS() {
 
 
   function adjustCamera() {
+
+    var aspectRatio = 4 / 3;  // Adjust this value based on your video or desired aspect ratio
+    var bgWidth = 75;  // Example width, adjust as needed
+    var bgHeight = bgWidth / aspectRatio;  // Height calculated based on the aspect ratio
+
     var windowAspectRatio = window.innerWidth / window.innerHeight;
     var imageAspectRatio = aspectRatio;
     if (windowAspectRatio > imageAspectRatio) {

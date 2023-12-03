@@ -1,5 +1,5 @@
-
     <div id="root">
+
         <div id="header">
             <div id="logo">Laraverse</div>
 
@@ -59,8 +59,13 @@
 
               </div>
         </div>
+
         <div id="solarSystem"></div>
+
         <div id="footer">
+            <div id="space-pilgrim">
+                <img id="space-pilgrim-image" src="planets/space-pilgrim.png" />
+            </div>
         <div id="menu">
             <div id="link"><a href="submit">Submit</a></div>
             <div id="link"><a href="about">About</a></div>
@@ -88,7 +93,9 @@
         document.getElementById("solarSystem").appendChild(renderer.domElement);
 
         var loader = new THREE.TextureLoader();
-        var backgroundTexture = loader.load("planets/background.jpg");
+        var backgroundTexture = loader.load("planets/backgrounds.jpg");
+
+
 
         var aspectRatio = 2240 / 1592;
         var bgHeight = 50;
@@ -115,75 +122,75 @@
         scene.add(directionalLight);
 
         camera.position.z = 25;
-        const pointLight = new THREE.PointLight(0xffffff, 1, 100);  // white light, intensity 1, distance 100
-        pointLight.position.set(0, 0, 0);  // position at the center
+        const pointLight = new THREE.PointLight(0xF7B05B, 1, 100);
+        pointLight.position.set(0, 0, 0);
         scene.add(pointLight);
 
         @php (
             $planets = [
                 'laravel' => [
                     'texture' => 'planets/laravel.jpg',
-                    'geometry' => '1.2, 32, 32',
-                    'opacity' => '0.8',
+                    'geometry' => '1.3, 32, 32',
+                    'opacity' => '1',
                     'position' => '2, 2, 0',
                     'rotation' => ' -= 0.003',
-                    'redirect' => 'planet'
+                    'redirect' => 'laravel'
                 ],
                 'filament' => [
                     'texture' => 'planets/filament.jpg',
                     'geometry' => '0.6, 32, 32',
-                    'opacity' => '0.8',
+                    'opacity' => '1',
                     'position' => '-0.6, -0.3, 0',
                     'rotation' => '-= 0.009',
-                    'redirect' => 'filament.html'
+                    'redirect' => 'filament'
                 ],
                 'livewire' => [
                     'texture' => 'planets/livewire.jpg',
                     'geometry' => '1, 32, 32',
-                    'opacity' => '0.8',
+                    'opacity' => '1',
                     'position' => '-4, 2, 0',
                     'rotation' => '-= 0.007',
-                    'redirect' => 'livewire.html'
+                    'redirect' => 'livewire'
                 ],
                 'inertia' => [
                     'texture' => 'planets/inertia.jpg',
-                    'geometry' => '0.7, 32, 32',
-                    'opacity' => '0.7',
+                    'geometry' => '0.8, 32, 32',
+                    'opacity' => '1',
                     'position' => '-3, -3, 0',
                     'rotation' => '-= 0.004',
-                    'redirect' => 'inertia.html'
+                    'redirect' => 'inertia'
                 ],
                 'php' => [
                     'texture' => 'planets/php.jpg',
-                    'geometry' => '1.1, 32, 32',
-                    'opacity' => '0.8',
+                    'geometry' => '1, 32, 32',
+                    'opacity' => '1',
                     'position' => '4.5, 0.5, 0',
                     'rotation' => '-= 0.001',
-                    'redirect' => 'php.html'
+                    'redirect' => 'php'
                 ],
                 'vue' => [
                     'texture' => 'planets/vue.jpg',
                     'geometry' => '0.7, 32, 32',
-                    'opacity' => '0.8',
+                    'opacity' => '1',
                     'position' => '-5, -1, 0',
                     'rotation' => '-= 0.004',
-                    'redirect' => 'vue.html'
+                    'redirect' => 'vue'
                 ],
                 'react' => [
                     'texture' => 'planets/vue.jpg',
                     'geometry' => '0.3, 32, 32',
-                    'opacity' => '0.8',
+                    'opacity' => '1',
                     'position' => '-6, 3, 0',
                     'rotation' => '-= 0.004',
-                    'redirect' => 'react.html'
+                    'redirect' => 'react'
                 ],
                 'svelte' => [
                     'texture' => 'planets/vue.jpg',
                     'geometry' => '0.4, 32, 32',
-                    'opacity' => '0.8',
+                    'opacity' => '1',
                     'position' => '-7, 1, 0',
                     'rotation' => '-= 0.004',
-                    'redirect' => 'svelte.html'
+                    'redirect' => 'svelte'
                 ]
             ]
         )
@@ -234,12 +241,12 @@
         const starGeometry = new THREE.SphereGeometry(0.01, 16, 16);
         const starMaterial = new THREE.MeshBasicMaterial({ color: 0xffffff });
 
-        for (let i = 0; i < 1000; i++) {
+        for (let i = 0; i < 2000; i++) {
         const star = new THREE.Mesh(starGeometry, starMaterial);
         star.position.set(
             Math.random() * 20 - 10,
-            Math.random() * 20 - 10,
-            Math.random() * 20 - 10
+            Math.random() * 30 - 10,
+            Math.random() * 20 - 20
         );
         scene.add(star);
         stars.push(star);
@@ -253,6 +260,40 @@
                 star.scale.set(scale, scale, scale);
             });
         }
+
+        function createShootingStar() {
+            const geometry = new THREE.SphereGeometry(0.02, 8, 8);
+            const material = new THREE.MeshStandardMaterial({ color: 0xffffff, transparent: true });
+            const star = new THREE.Mesh(geometry, material);
+            star.material.opacity = 0.2;
+            scene.add(star);
+
+            const startPos = { x: Math.random() * 10 - 5, y: Math.random() * 10 + 5, z: Math.random() * 10 - 5 };
+            const endPos = { x: Math.random() * 10 - 5, y: Math.random() * 10 - 5, z: Math.random() * 10 - 5 };
+
+            let tl = gsap.timeline({
+                onComplete: () => scene.remove(star)
+            });
+
+            tl.to(star.position, {
+                x: endPos.x,
+                y: endPos.y,
+                z: endPos.z,
+                duration: 2,
+                ease: "power4.inOut"
+            }, 0)
+            .fromTo(star.material, { opacity: 0 }, { opacity: 1, duration: 1, ease: "power2.inOut"}, 0)
+            .to(star.material, { opacity: 0, duration: 1, ease: "power2.inOut"}, "<1");
+        }
+
+        function randomShootingStar() {
+        setTimeout(() => {
+            createShootingStar();
+            randomShootingStar();
+        }, Math.random() * 5000 + 1000);
+        }
+
+        randomShootingStar();
 
         function animate() {
             requestAnimationFrame(animate);
@@ -274,8 +315,8 @@
         window.onmousemove = function (ev) {
             var changex = ev.x - oldx;
             var changey = ev.y - oldy;
-            camera.position.x += changex / 4000;
-            camera.position.y -= changey / 4000;
+            camera.position.x += changex / 1000;
+            camera.position.y -= changey / 1000;
 
             oldx = ev.x;
             oldy = ev.y;
@@ -310,11 +351,11 @@
             .add(new THREE.Vector3(0, 0, 1));
 
             var tl = gsap.timeline({
-            onComplete: () => {
-                //window.location.href = url;
-                @this.call('jump');
+                onComplete: () => {
 
-            },
+                    @this.call('jump', url);
+
+                },
             });
 
             tl.to(camera.position, {
@@ -346,14 +387,24 @@
 
                 @endforeach
             }
-            }
         }
+    }
 
-        window.addEventListener("mousemove", onMouseMove, false);
-        window.addEventListener("click", onMouseClick, false);
+    window.addEventListener("mousemove", onMouseMove, false);
+    window.addEventListener("click", onMouseClick, false);
 
     }
 
+    setTimeout(function(){
+        gsap.to("#space-pilgrim", {
+            duration: 2,
+            opacity: 1,
+            ease: "power2.out"
+        });
+    }, 4000);
+
     initializeThreeJS();
+
+    window.addEventListener("popstate", function (event) { window.location.reload(); });
 
     </script>
