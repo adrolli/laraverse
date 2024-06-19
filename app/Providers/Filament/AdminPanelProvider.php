@@ -2,10 +2,6 @@
 
 namespace App\Providers\Filament;
 
-use Adrolli\FilamentJobManager\FilamentFailedJobsPlugin;
-use Adrolli\FilamentJobManager\FilamentJobBatchesPlugin;
-use Adrolli\FilamentJobManager\FilamentJobsPlugin;
-use Adrolli\FilamentJobManager\FilamentWaitingJobsPlugin;
 use AlexJustesen\FilamentSpatieLaravelActivitylog\FilamentSpatieLaravelActivitylogPlugin;
 use BezhanSalleh\FilamentShield\FilamentShieldPlugin;
 use Filament\Http\Middleware\Authenticate;
@@ -16,7 +12,6 @@ use Filament\Panel;
 use Filament\PanelProvider;
 use Filament\Support\Colors\Color;
 use Filament\Widgets;
-use HusamTariq\FilamentDatabaseSchedule\FilamentDatabaseSchedulePlugin;
 use Illuminate\Cookie\Middleware\AddQueuedCookiesToResponse;
 use Illuminate\Cookie\Middleware\EncryptCookies;
 use Illuminate\Foundation\Http\Middleware\VerifyCsrfToken;
@@ -36,7 +31,7 @@ class AdminPanelProvider extends PanelProvider
             ->path('admin')
             ->login()
             ->colors([
-                'primary' => Color::Cyan,
+                'primary' => Color::Amber,
             ])
             ->discoverResources(in: app_path('Filament/Resources'), for: 'App\\Filament\\Resources')
             ->discoverPages(in: app_path('Filament/Pages'), for: 'App\\Filament\\Pages')
@@ -64,23 +59,34 @@ class AdminPanelProvider extends PanelProvider
             ])
             ->plugins([
                 FilamentShieldPlugin::make(),
+
                 BreezyCore::make()
+
                     ->myProfile(
+
                         shouldRegisterUserMenu: true, // Sets the 'account' link in the panel User Menu (default = true)
+
                         shouldRegisterNavigation: false, // Adds a main navigation item for the My Profile page (default = false)
+
                         hasAvatars: false, // Enables the avatar upload form component (default = false)
+
                         slug: 'my-profile' // Sets the slug for the profile page (default = 'my-profile')
+
                     )
+
                     ->enableTwoFactorAuthentication(
+
                         force: false, // force the user to enable 2FA before they can use the application (default = false)
+
                     ),
+
                 new FilamentSpatieLaravelActivitylogPlugin(),
-                FilamentJobsPlugin::make(),
-                FilamentWaitingJobsPlugin::make(),
-                FilamentFailedJobsPlugin::make(),
-                FilamentJobBatchesPlugin::make(),
-                FilamentDatabaseSchedulePlugin::make(),
-            ])
-            ->maxContentWidth('full');
+                \Moox\Jobs\JobsPlugin::make(),
+                \Moox\Jobs\JobsWaitingPlugin::make(),
+                \Moox\Jobs\JobsFailedPlugin::make(),
+                \Moox\Jobs\JobsBatchesPlugin::make(),
+                \HusamTariq\FilamentDatabaseSchedule\FilamentDatabaseSchedulePlugin::make(),
+
+            ]);
     }
 }
